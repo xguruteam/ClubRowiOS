@@ -1,0 +1,6 @@
+target 'socket_client' do
+
+    pod "SwiftPhoenixClient"
+    pod 'SwiftyJSON', '~> 4.2'
+
+end

@@ -1,0 +1,6 @@
+module Pods_socket_client {
+  umbrella header "Pods-socket_client-umbrella.h"
+
+  export *
+  module * { export * }
+}
