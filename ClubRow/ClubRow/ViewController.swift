@@ -24,7 +24,7 @@ class ViewController: SuperViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             
-            let vc = self.getStoryboardWithIdentifier(identifier: "LoginViewController")
+            let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
             self.navigationController?.pushViewController(vc, animated: true)
 //            KRProgressHUD.show()
 //            let loginRequest: String = SERVER_URL + KEY_API_SIGNIN

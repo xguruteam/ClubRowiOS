@@ -47,9 +47,7 @@
 		3EFFA68B21760CE4002B5678 /* ClassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFFA68A21760CE4002B5678 /* ClassTableViewController.swift */; };
 		A40297BB2194170200F69E60 /* ProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40297BA2194170200F69E60 /* ProgressManager.swift */; };
 		A40297BD2194834200F69E60 /* ClassMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40297BC2194834200F69E60 /* ClassMember.swift */; };
-		A40297BF219498F200F69E60 /* ClassMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40297BE219498F200F69E60 /* ClassMemberCell.swift */; };
 		A403D0132191E995007833C1 /* SelectedTeacherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A403D0122191E995007833C1 /* SelectedTeacherCell.swift */; };
-		A403D0152191E9BA007833C1 /* TeacherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A403D0142191E9BA007833C1 /* TeacherCell.swift */; };
 		A406238021954AAB00077B0B /* BluetoothModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406237F21954AAB00077B0B /* BluetoothModel.swift */; };
 		A406F8D2219DA5BC00777374 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406F8D1219DA5BC00777374 /* DescriptionCell.swift */; };
 		A40951AE217C7B91001EE7A5 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40951AD217C7B91001EE7A5 /* Log.swift */; };
@@ -79,10 +77,12 @@
 		A43D96EF21A839A2007ACD56 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43D96EE21A839A1007ACD56 /* SignUpViewController.swift */; };
 		A463F1FA219276C30091B7ED /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463F1F9219276C30091B7ED /* Teacher.swift */; };
 		A463F1FE21928A2B0091B7ED /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463F1FD21928A2B0091B7ED /* HttpRequest.swift */; };
+		A4780E1D21B1F87500F047F6 /* ClassMemberForDistanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4780E1A21B1F87500F047F6 /* ClassMemberForDistanceCell.swift */; };
+		A4780E1E21B1F87500F047F6 /* ClassMemberForSpeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4780E1B21B1F87500F047F6 /* ClassMemberForSpeedCell.swift */; };
+		A4780E1F21B1F87500F047F6 /* ClassMemberForTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4780E1C21B1F87500F047F6 /* ClassMemberForTimeCell.swift */; };
 		A4809BFC21AC722D005C041B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4809BFB21AC722D005C041B /* Constant.swift */; };
 		A4809BFE21AC753A005C041B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4809BFD21AC753A005C041B /* Util.swift */; };
 		A481149B21A4CD1A00E9B242 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A481149A21A4CD1A00E9B242 /* LoginViewController.swift */; };
-		A48C9A4B21A31910009326EF /* TeacherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48C9A4A21A31910009326EF /* TeacherCollectionViewCell.swift */; };
 		A492E44F219A7427001A6766 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A492E44E219A7427001A6766 /* Shadow.swift */; };
 		A492E48E219B3EFB001A6766 /* bg_white.png in Resources */ = {isa = PBXBuildFile; fileRef = A492E450219B3EF1001A6766 /* bg_white.png */; };
 		A492E48F219B3EFB001A6766 /* ic_bell_select.png in Resources */ = {isa = PBXBuildFile; fileRef = A492E451219B3EF2001A6766 /* ic_bell_select.png */; };
@@ -147,6 +147,9 @@
 		A492E4CA219B3EFB001A6766 /* ic_play_unselect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A492E48C219B3EFB001A6766 /* ic_play_unselect@2x.png */; };
 		A492E4CB219B3EFB001A6766 /* ic_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = A492E48D219B3EFB001A6766 /* ic_triangle.png */; };
 		A493DD76219F0E380057C3A9 /* TSCDesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A493DD75219F0E380057C3A9 /* TSCDesignableView.swift */; };
+		A4973DAD21AF1C9900A29EBD /* ClassLobbyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4973DAB21AF1C9800A29EBD /* ClassLobbyCollectionViewCell.swift */; };
+		A4973DAE21AF1C9900A29EBD /* ClassLobbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4973DAC21AF1C9900A29EBD /* ClassLobbyCell.swift */; };
+		A4973DB021AF23D000A29EBD /* LiveClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4973DAF21AF23D000A29EBD /* LiveClass.swift */; };
 		A4DD2178219820ED00D7DC2E /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD2177219820EC00D7DC2E /* UIDevice.swift */; };
 		CA1F42CF21A3E87B00901ADB /* ic_bell_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42C921A3E86C00901ADB /* ic_bell_selected@3x.png */; };
 		CA1F42D021A3E87B00901ADB /* ic_bell_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CA21A3E87000901ADB /* ic_bell_selected@2x.png */; };
@@ -202,9 +205,7 @@
 		667035B6151B7E70C9524D86 /* Pods-ClubRow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClubRow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClubRow/Pods-ClubRow.debug.xcconfig"; sourceTree = "<group>"; };
 		A40297BA2194170200F69E60 /* ProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressManager.swift; sourceTree = "<group>"; };
 		A40297BC2194834200F69E60 /* ClassMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMember.swift; sourceTree = "<group>"; };
-		A40297BE219498F200F69E60 /* ClassMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberCell.swift; sourceTree = "<group>"; };
 		A403D0122191E995007833C1 /* SelectedTeacherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTeacherCell.swift; sourceTree = "<group>"; };
-		A403D0142191E9BA007833C1 /* TeacherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCell.swift; sourceTree = "<group>"; };
 		A406237F21954AAB00077B0B /* BluetoothModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothModel.swift; sourceTree = "<group>"; };
 		A406F8D1219DA5BC00777374 /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		A40951AD217C7B91001EE7A5 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -234,10 +235,12 @@
 		A43D96EE21A839A1007ACD56 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A463F1F9219276C30091B7ED /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		A463F1FD21928A2B0091B7ED /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
+		A4780E1A21B1F87500F047F6 /* ClassMemberForDistanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassMemberForDistanceCell.swift; sourceTree = "<group>"; };
+		A4780E1B21B1F87500F047F6 /* ClassMemberForSpeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassMemberForSpeedCell.swift; sourceTree = "<group>"; };
+		A4780E1C21B1F87500F047F6 /* ClassMemberForTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassMemberForTimeCell.swift; sourceTree = "<group>"; };
 		A4809BFB21AC722D005C041B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A4809BFD21AC753A005C041B /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		A481149A21A4CD1A00E9B242 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		A48C9A4A21A31910009326EF /* TeacherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCollectionViewCell.swift; sourceTree = "<group>"; };
 		A492E44E219A7427001A6766 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		A492E450219B3EF1001A6766 /* bg_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_white.png; sourceTree = "<group>"; };
 		A492E451219B3EF2001A6766 /* ic_bell_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_select.png; sourceTree = "<group>"; };
@@ -302,6 +305,9 @@
 		A492E48C219B3EFB001A6766 /* ic_play_unselect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_play_unselect@2x.png"; sourceTree = "<group>"; };
 		A492E48D219B3EFB001A6766 /* ic_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_triangle.png; sourceTree = "<group>"; };
 		A493DD75219F0E380057C3A9 /* TSCDesignableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSCDesignableView.swift; sourceTree = "<group>"; };
+		A4973DAB21AF1C9800A29EBD /* ClassLobbyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassLobbyCollectionViewCell.swift; sourceTree = "<group>"; };
+		A4973DAC21AF1C9900A29EBD /* ClassLobbyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassLobbyCell.swift; sourceTree = "<group>"; };
+		A4973DAF21AF23D000A29EBD /* LiveClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveClass.swift; sourceTree = "<group>"; };
 		A4DD2177219820EC00D7DC2E /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		A9D769B2ED5F887EC1438CC1 /* Pods_ClubRow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClubRow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4029E6216D84F85705C9137 /* Pods-ClubRow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClubRow.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClubRow/Pods-ClubRow.release.xcconfig"; sourceTree = "<group>"; };
@@ -543,16 +549,18 @@
 		A403D00F2191E64E007833C1 /* Cellls */ = {
 			isa = PBXGroup;
 			children = (
+				A4780E1A21B1F87500F047F6 /* ClassMemberForDistanceCell.swift */,
+				A4780E1B21B1F87500F047F6 /* ClassMemberForSpeedCell.swift */,
+				A4780E1C21B1F87500F047F6 /* ClassMemberForTimeCell.swift */,
+				A4973DAC21AF1C9900A29EBD /* ClassLobbyCell.swift */,
+				A4973DAB21AF1C9800A29EBD /* ClassLobbyCollectionViewCell.swift */,
 				A403D0122191E995007833C1 /* SelectedTeacherCell.swift */,
-				A403D0142191E9BA007833C1 /* TeacherCell.swift */,
 				A4208199219252EF00169232 /* SelectedTeacherCollectionCell.swift */,
-				A40297BE219498F200F69E60 /* ClassMemberCell.swift */,
 				A416C29E219C71560038D67E /* ClassDetailCell.swift */,
 				A416C2A6219D08BC0038D67E /* ProfileDetailCell.swift */,
 				A416C2A8219D08DA0038D67E /* ProfileHistoryCell.swift */,
 				A416C2B0219D23050038D67E /* ClassesCell.swift */,
 				A406F8D1219DA5BC00777374 /* DescriptionCell.swift */,
-				A48C9A4A21A31910009326EF /* TeacherCollectionViewCell.swift */,
 				A40AABC321AB176D00D7E371 /* LobbyTableViewCell.swift */,
 			);
 			path = Cellls;
@@ -575,6 +583,7 @@
 				A463F1F9219276C30091B7ED /* Teacher.swift */,
 				A40297BC2194834200F69E60 /* ClassMember.swift */,
 				A406237F21954AAB00077B0B /* BluetoothModel.swift */,
+				A4973DAF21AF23D000A29EBD /* LiveClass.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -773,6 +782,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyAvatar/SwiftyAvatar.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/XLSlidingContainer/XLSlidingContainer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -795,6 +805,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyAvatar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLSlidingContainer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -839,6 +850,9 @@
 				3E3DA4232163488B00B5055C /* ViewController.swift in Sources */,
 				A40297BD2194834200F69E60 /* ClassMember.swift in Sources */,
 				A4DD2178219820ED00D7DC2E /* UIDevice.swift in Sources */,
+				A4780E1D21B1F87500F047F6 /* ClassMemberForDistanceCell.swift in Sources */,
+				A4780E1F21B1F87500F047F6 /* ClassMemberForTimeCell.swift in Sources */,
+				A4973DAD21AF1C9900A29EBD /* ClassLobbyCollectionViewCell.swift in Sources */,
 				A463F1FE21928A2B0091B7ED /* HttpRequest.swift in Sources */,
 				3EE73C2B216AAEFB00A20AF4 /* UIView+Nib.swift in Sources */,
 				A4809BFC21AC722D005C041B /* Constant.swift in Sources */,
@@ -852,11 +866,10 @@
 				3E3DA44B21634A1800B5055C /* SuperViewController.swift in Sources */,
 				3EFFA6812175E6A8002B5678 /* MyImageCollectionViewCell.swift in Sources */,
 				A403D0132191E995007833C1 /* SelectedTeacherCell.swift in Sources */,
-				A48C9A4B21A31910009326EF /* TeacherCollectionViewCell.swift in Sources */,
 				A431BABA219322D8002BB3EF /* SocketManager.swift in Sources */,
-				A403D0152191E9BA007833C1 /* TeacherCell.swift in Sources */,
 				3EE73C2A216AAEFB00A20AF4 /* UIScreen+Utils.swift in Sources */,
 				3EE73C26216AAEFB00A20AF4 /* CGRect+Utils.swift in Sources */,
+				A4780E1E21B1F87500F047F6 /* ClassMemberForSpeedCell.swift in Sources */,
 				3E3DA45B21635A2900B5055C /* ClassesViewController.swift in Sources */,
 				3EFFA6822175E6A8002B5678 /* CollectionViewController.swift in Sources */,
 				3EE73C29216AAEFB00A20AF4 /* UIColor+Utils.swift in Sources */,
@@ -868,9 +881,9 @@
 				A420819A219252EF00169232 /* SelectedTeacherCollectionCell.swift in Sources */,
 				3EDED40E216B42C400167FEF /* DateFilterViewController.swift in Sources */,
 				3EE73C36216AB72800A20AF4 /* PresetsDataSource.swift in Sources */,
-				A40297BF219498F200F69E60 /* ClassMemberCell.swift in Sources */,
 				A40951B5217C8093001EE7A5 /* DevicesViewController.swift in Sources */,
 				3EE73C1E216AAC2600A20AF4 /* NibDateView.swift in Sources */,
+				A4973DAE21AF1C9900A29EBD /* ClassLobbyCell.swift in Sources */,
 				A406F8D2219DA5BC00777374 /* DescriptionCell.swift in Sources */,
 				3E3DA45D21635A4B00B5055C /* ProfileViewController.swift in Sources */,
 				A481149B21A4CD1A00E9B242 /* LoginViewController.swift in Sources */,
@@ -880,6 +893,7 @@
 				3EFFA67D2175DA22002B5678 /* ContainerViewController.swift in Sources */,
 				A416C2A9219D08DA0038D67E /* ProfileHistoryCell.swift in Sources */,
 				3E0D70D8216A432A00F6BC95 /* ClassCell.swift in Sources */,
+				A4973DB021AF23D000A29EBD /* LiveClass.swift in Sources */,
 				3E565587216DEEDC00EF8964 /* SummaryTwoViewController.swift in Sources */,
 				3EDED410216B535B00167FEF /* SortFilterViewController.swift in Sources */,
 				A463F1FA219276C30091B7ED /* Teacher.swift in Sources */,
@@ -1033,9 +1047,9 @@
 			baseConfigurationReference = 667035B6151B7E70C9524D86 /* Pods-ClubRow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CQ6T4PP523;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jeff Lee (A676BC532X)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = D4J7AW2S69;
 				INFOPLIST_FILE = ClubRow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1044,7 +1058,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness.clubrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = All_Dev_160129;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1055,9 +1069,9 @@
 			baseConfigurationReference = C4029E6216D84F85705C9137 /* Pods-ClubRow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CQ6T4PP523;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jeff Lee (A676BC532X)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ClubRow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1066,7 +1080,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness.clubrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = All_Dev_160129;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

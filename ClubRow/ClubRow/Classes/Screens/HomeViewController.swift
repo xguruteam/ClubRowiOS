@@ -20,9 +20,13 @@ class HomeViewController: SuperViewController {
     
     @IBOutlet weak var top: NSLayoutConstraint!
     
+    var aryLiveClasses = [LiveClass]()
     var teachers = [Teacher]()
     var members = [ClassMember]()
     var lobbies = [Lobby]()
+    var tmpLobbies = [Lobby]() //TODO
+    var lobbyList = [NSDictionary]()//TODO
+    var selectedLobbyState: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,47 +35,14 @@ class HomeViewController: SuperViewController {
         self.homeTableView.delegate = self
         self.homeTableView.dataSource = self
         
-        // resize
-//        resizeTopView()
-        
         // shadow
         titleBarView.layer.shadowColor = UIColor.black.cgColor
         titleBarView.layer.shadowOffset = CGSize(width: 0, height: 3)
         titleBarView.layer.shadowOpacity = 0.07
         titleBarView.layer.shadowRadius = 3
-
-        // API
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        KRProgressHUD.show()
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/json",
-            "Authorization": "Token token=\(appDelegate.g_token)"
-        ]
-        let url = SERVER_URL + KEY_API_LOAD_LOBBIES
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
-            .responseJSON { response in
-                KRProgressHUD.dismiss()
-                switch response.result
-                {
-                case .failure( _): break
-                    
-                case .success( _):
-                
-                    let dic = response.result.value as! NSDictionary
-                    
-                    let list =  dic["data"] as! NSArray
-                    print(list)
-                    
-                    for item in list {
-                        let dic = item as! NSDictionary
-                        let teacher = Teacher.init(data: dic)
-                        self.teachers.append(teacher)
-                    }
-                    
-                    self.homeTableView.reloadData()
-                }
-        }
         
+        loadLiveClasses()
+        loadLobbies()
         // open Socket
         SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
@@ -85,14 +56,9 @@ class HomeViewController: SuperViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-//        SocketManager.sharedManager.delegate = self
-//        SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
-        
         super.viewWillAppear(animated)
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
-        
-        
     }
     
     override var shouldAutorotate: Bool {
@@ -102,6 +68,76 @@ class HomeViewController: SuperViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loadLiveClasses() {
+        // API
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        KRProgressHUD.show()
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + KEY_API_LOAD_LIVE_CLASSES
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                KRProgressHUD.dismiss()
+                switch response.result
+                {
+                case .failure( _):
+                    self.view.makeToast(MSG_HOME_FAILED_LOAD_CLASSES)
+                    break
+                case .success( _):
+                    
+                    let dic = response.result.value as! NSDictionary
+                    
+                    let list =  dic["data"] as! NSArray
+                    print(list)
+                    
+                    for item in list {
+                        let dic = item as! NSDictionary
+                        let live_class = LiveClass.init(data: dic)
+                        self.aryLiveClasses.append(live_class)
+                    }
+                    
+                    self.homeTableView.reloadData()
+                }
+        }
+    }
+    
+    func loadLobbies() {
+        // API
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        KRProgressHUD.show()
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + KEY_API_LOAD_LOBBIES
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON
+            { response in
+                KRProgressHUD.dismiss()
+                switch response.result
+                {
+                    case .failure( _): break
+                    
+                    case .success( _):
+                        
+                        let dic = response.result.value as! NSDictionary
+                        
+                        self.lobbyList =  dic["data"] as! [NSDictionary] //TODO
+                        
+//                    for item in list {
+//                        let dic = item as! NSDictionary
+//                        let lobby = Lobby.init(data: dic)
+//                        self.tmpLobbies.append(lobby)
+//                    }
+                
+                    
+                    self.homeTableView.reloadData()
+            }
+        }
     }
     
     func resizeTopView() {
@@ -164,9 +200,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = homeTableView.dequeueReusableCell(withIdentifier: "TeacherCell", for: indexPath) as! TeacherCell
-            cell.teachers = teachers
+            let cell = homeTableView.dequeueReusableCell(withIdentifier: "ClassLobbyCell", for: indexPath) as! ClassLobbyCell
+            cell.liveClasses = aryLiveClasses
             cell.selectionStyle = .none
+            
             cell.collectionView.reloadData()
             cell.delegate = self
             return cell
@@ -209,6 +246,22 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeViewController: SocketConnectionManagerDelegate {
+    func onNewParticipant(member: ClassMember) {
+        
+    }
+    
+    func onStartWorkout() {
+        
+    }
+    
+    func onFinishWorkout() {
+        
+    }
+    
+    func onLeaderboardUpdated(members: [ClassMember]) {
+        
+    }
+    
     func SocketDidPushOnCannel(message: String) {
         
     }
@@ -218,7 +271,7 @@ extension HomeViewController: SocketConnectionManagerDelegate {
         vc.distance = 4 //self.teachers[indexPath.row].distance
         vc.time = 9 //self.teachers[indexPath.row].time
         vc.speed = 200 //self.teachers[indexPath.row].speed
-        
+        vc.lobbyState = self.selectedLobbyState
         vc.classMembers = members
         MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
     }
@@ -232,12 +285,25 @@ extension HomeViewController: SocketConnectionManagerDelegate {
     }
 }
 
-extension HomeViewController: TeacherCellDelegate {
-    func clickedEditBtn(_ sender_id: Int) {
-        for teacher in teachers {
-            if teacher.id == sender_id {
-                let name = "lobby"
-                let topic = "\(name):\(teacher.id)"
+extension HomeViewController: ClassLobbyCellDelegate {
+    func onJoinClass(_ sender_id: Int, _ isExistLobby: Bool) {
+        if !isExistLobby {
+            self.view.makeToast("Can't join this class")
+            return
+        }
+        
+        
+        for liveClass in aryLiveClasses {
+            if liveClass.id == sender_id {
+                var lobby_state: String = ""
+                for lobby in self.lobbyList {
+                    let lobby_id = lobby["id"] as! Int
+                    if lobby_id == liveClass.lobby_id {
+                        lobby_state = lobby["status"] as! String
+                    }
+                }
+                selectedLobbyState = lobby_state
+                let topic = "lobby:\(liveClass.lobby_id)"
                 SocketManager.sharedManager.delegate = self
                 SocketManager.sharedManager.connectChannel(topic: topic)
             }
@@ -248,9 +314,9 @@ extension HomeViewController: TeacherCellDelegate {
 extension HomeViewController: SelectLobbyDelegate {
     func onSelectLobby(_index: Int) {
         //TODO
-        let name = "lobby"
-        let topic = "\(name):\(teachers[0].id)"
-        SocketManager.sharedManager.delegate = self
-        SocketManager.sharedManager.connectChannel(topic: topic)
+//        let name = "lobby"
+//        let topic = "\(name):\(teachers[0].id)"
+//        SocketManager.sharedManager.delegate = self
+//        SocketManager.sharedManager.connectChannel(topic: topic)
     }
 }

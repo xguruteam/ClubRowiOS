@@ -16,28 +16,29 @@ protocol SocketConnectionManagerDelegate {
     func SocketDidClose(msg: String)
     func SocketDidJoin(members: [ClassMember])
     func SocketDidPushOnCannel(message: String)
+    //
+    func onNewParticipant(member: ClassMember)
+    func onStartWorkout()
+    func onFinishWorkout()
+    func onLeaderboardUpdated(members: [ClassMember])
 //    func C2ConnectionManagerFailConnect()
 //    func C2ConnectionManagerDidReceiveData(_ parameter: CBCharacteristic)
 }
 
+
 class SocketManager {
-    
-    // These are the properties you can store in your singleton
-    private var myName: String = "bob"
-    // Here is how you would get to it without there being a global collision of variables.
-    // , or in other words, it is a globally accessable parameter that is specific to the
-    // class.
     
     var delegate: SocketConnectionManagerDelegate?
     
     // Socket
-    var topic: String = "lobby:lobbyID"
     var lobbyChannel: Channel!
     
-    var socket = Socket(url: "ws://159.89.117.106:4000/socket/websocket", params:  ["username": "test"])
+    var socket: Socket!
     
     
     func socketConnect(url: String, params: Payload) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        socket = Socket(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": appDelegate.g_token])
         socket.onOpen {
 //            print("Socket has opened")
             self.delegate?.SocketDidOpen(msg: "Socket has opended")
@@ -52,6 +53,7 @@ class SocketManager {
         socket.logger = { msg in
             print(msg)
         }
+        
         socket.connect()
     }
     
@@ -89,19 +91,22 @@ class SocketManager {
             }.receive("error") { (payload) in
                 print("Failed to join channel: ", payload)
         }
-        
         // 1. new_participant
         channel.on("new_participant") { (message) in
+            let dic = message.payload as NSDictionary
+            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0m"))
             print("new_participant================")
         }
         
         // 2. workout_started
         channel.on("workout_started") { (message) in
+            self.delegate!.onStartWorkout()
             print("workout_started==========")
         }
         
         // 3. workout_finished
         channel.on("workout_finished") { (message) in
+            self.delegate!.onFinishWorkout()
             print("workout_finished===================")
         }
         
@@ -123,10 +128,15 @@ class SocketManager {
                 members.append(member)
             }
             
-            self.delegate?.SocketDidJoin(members: members)
+            self.delegate?.onLeaderboardUpdated(members: members)
         }
         lobbyChannel = channel
-
+    }
+    
+    func leaveChannel() {
+        if lobbyChannel != nil {
+            lobbyChannel.leave()
+        }
     }
     
     func pushOnChannel(distance: String, wattage: String, speed: String, calories: String, strokes_per_minute: String) {

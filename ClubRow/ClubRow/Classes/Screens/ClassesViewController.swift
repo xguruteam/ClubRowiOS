@@ -116,7 +116,8 @@ class ClassesViewController: SuperViewController, UISearchBarDelegate, UITableVi
         case "iPhoneX":
             top.constant = 44
         case "iPhoneXS":
-            top.constant = 44        case "iPhoneXS_Max":
+            top.constant = 44
+        case "iPhoneXS_Max":
             top.constant = 44
         case "iPhoneXR":
             top.constant = 44

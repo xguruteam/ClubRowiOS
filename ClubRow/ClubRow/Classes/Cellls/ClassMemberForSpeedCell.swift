@@ -1,5 +1,5 @@
 //
-//  ClassMemberCell.swift
+//  ClassMemberForDistanceCell.swift
 //  ClubRow
 //
 //  Created by Lucass Beck on 11/8/18.
@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ClassMemberCell: UITableViewCell {
+class ClassMemberForSpeedCell: UITableViewCell {
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var viewForBackPlayerList: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

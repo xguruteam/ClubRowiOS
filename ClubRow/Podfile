@@ -26,6 +26,7 @@ target 'ClubRow' do
   pod 'ProgressHUD', '~> 2.60'
   pod 'KRProgressHUD', '~> 3.4'
   
+  pod 'XLPagerTabStrip', '~> 8.1'
 
  # Alert
   pod 'SimpleAlert', '~> 3.1'

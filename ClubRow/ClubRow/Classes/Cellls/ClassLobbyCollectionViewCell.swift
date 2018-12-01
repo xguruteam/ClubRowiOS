@@ -8,18 +8,19 @@
 
 import UIKit
 
-protocol NonSelectedTeacherCollectionCellDelegate : class {
-    func clickedEditBtn(_ sender_id: Int)
+protocol ClassLobbyCollectionCellDelegate : class {
+    func onJoinClassFromCollection(_ sender_id: Int, _ isExistLobby: Bool)
 }
 
-class TeacherCollectionViewCell: UICollectionViewCell {
+class ClassLobbyCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var classNameLabel: UILabel!
     @IBOutlet weak var teacherNameLabel: UILabel!
     
+    @IBOutlet weak var btnJoinClass: UIButton!
     @IBOutlet weak var teacherView: UIView!
     
-    weak var delegate:NonSelectedTeacherCollectionCellDelegate?
+    weak var delegate:ClassLobbyCollectionCellDelegate?
     
     var id: Int = 0
     
@@ -30,8 +31,9 @@ class TeacherCollectionViewCell: UICollectionViewCell {
         cornerRadiusOn(view: self.teacherView)
     }
     
-    @IBAction func onJoinClass(_ sender: Any) {
-        delegate?.clickedEditBtn(self.id)
+    @IBAction func onJoinClass(_ sender: UIButton) {
+        
+        delegate?.onJoinClassFromCollection(self.id, sender.tag != -1)
     }
     
     func shadowOn(view: UIView) {

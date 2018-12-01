@@ -15,6 +15,7 @@ let SERVER_URL = "http://159.89.117.106:4000/api/"
 let KEY_API_SIGNUP = "users"
 let KEY_API_SIGNIN = "sessions"
 let KEY_API_LOAD_LOBBIES = "lobbies"
+let KEY_API_LOAD_LIVE_CLASSES = "classes/live"
 
 // FIELD KEYS
 let KEY_USER = "user"
@@ -24,6 +25,14 @@ let KEY_TOKEN = "token"
 let KEY_FIRST_NAME = "first_name"
 let KEY_LAST_NAME = "last_name"
 let KEY_PASSWORD_CONFIRMATION = "password_confirmation"
+
+
+
+//Lobby
+let KEY_LOBBY_STATE_ACCEPTING = "accepting_participants"
+let KEY_LOBBY_STATE_PROGRESS = "workout_in_progress"
+let KEY_LOBBY_STATE_FINISHED = "workout_finished"
+
 
 //messages
 
@@ -42,3 +51,11 @@ let MSG_SIGNUP_FAILED_NETWORK = "Signup was failed due to network connection.\nP
 //login
 let MSG_SIGNIN_FAILED_UNKNOWN = "Login was failed."
 let MSG_SIGNIN_FAILED_NETWORK = "Login was failed due to network connection.\nPlease check your network."
+
+//Home
+let MSG_HOME_FAILED_LOAD_CLASSES = "Failed to load live classes"
+
+//lobby
+let MSG_LOBBY_WAITING_FOR_PLAYER = "Waiting for workout to start..."
+let MSG_LOBBY_FINISHED = "Lobby has been finished."
+

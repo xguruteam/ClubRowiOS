@@ -12,7 +12,9 @@ import KRProgressHUD
 
 class ClassVideoViewController: SuperViewController {
     
-    @IBOutlet weak var leaderboardTableView: UITableView!
+    @IBOutlet weak var distanceTableView: UITableView!
+    @IBOutlet weak var timeTableView: UITableView!
+    @IBOutlet weak var speedTableView: UITableView!
     
     var time: Int = 0
     var distance: Int = 0
@@ -20,35 +22,24 @@ class ClassVideoViewController: SuperViewController {
     var wattage: String = ""
     var calories: String = ""
     var strokes_per_minute: String = ""
-    
+    var isShowingPanels: Bool = true
+    var lobbyState: String = ""
     var classMembers = [ClassMember]()
 
+    @IBOutlet weak var playerListPanel: UIView!
+    @IBOutlet weak var topBarPanel: UIView!
+    @IBOutlet weak var startingTimePanel: UIView!
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var distanceView: UIView!
     @IBOutlet weak var speedView: UIView!
     
+    @IBOutlet weak var lblLobbyState: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
-
     @IBOutlet weak var labelTotalDistance: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        timeView.backgroundColor = #colorLiteral(red: 0.1215686275, green: 0.1254901961, blue: 0.1764705882, alpha: 0.86)
-        distanceView.backgroundColor = #colorLiteral(red: 0.1215686275, green: 0.1254901961, blue: 0.1764705882, alpha: 0.86)
-        speedView.backgroundColor = #colorLiteral(red: 0.1215686275, green: 0.1254901961, blue: 0.1764705882, alpha: 0.86)
-        
-        timeView.layer.cornerRadius = 20
-        distanceView.layer.cornerRadius = 20
-        speedView.layer.cornerRadius = 20
-
-        
-        timeLabel.textColor = UIColor.white
-        distanceLabel.textColor = UIColor.white
-        speedLabel.textColor = UIColor.white
-        
-        
         
         //
         timeLabel.text = "\(time)s"
@@ -56,10 +47,10 @@ class ClassVideoViewController: SuperViewController {
         speedLabel.text = "\(speed)m/s"
         
         
-        self.leaderboardTableView.delegate = self
-        self.leaderboardTableView.dataSource = self
+        self.distanceTableView.delegate = self
+        self.distanceTableView.dataSource = self
 
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         // Do any additional setup after loading the view.
         
@@ -68,10 +59,19 @@ class ClassVideoViewController: SuperViewController {
         C2ScanningManager.shared.addDelegate(self)
         
         SocketManager.sharedManager.delegate = self
+        
+        if lobbyState == KEY_LOBBY_STATE_ACCEPTING || lobbyState == KEY_LOBBY_STATE_FINISHED {
+            self.startingTimePanel.isHidden = false
+            if lobbyState == KEY_LOBBY_STATE_FINISHED {
+                self.lblLobbyState.text = MSG_LOBBY_FINISHED
+            }
+        } else {
+            self.startingTimePanel.isHidden = true
+        }
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,19 +87,51 @@ class ClassVideoViewController: SuperViewController {
     @IBAction func onClose(_ sender: Any) {
         
 //        SocketManager.sharedManager.socket.disconnect()
+        SocketManager.sharedManager.leaveChannel()
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func onTapBackground(_ sender: Any) {
+        if isShowingPanels {
+            return
+        } else {
+            hidePanels(isHide: false)
+            isShowingPanels = true
+        }
     }
-//    */
-
+    
+    @IBAction func onHidePanels(_ sender: Any) {
+        hidePanels(isHide: true)
+        isShowingPanels = false
+    }
+    func hidePanels(isHide: Bool) {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            if isHide {
+                self.topBarPanel.alpha = 0.0
+                self.timeView.alpha = 0.0
+                self.distanceView.alpha = 0.0
+                self.speedView.alpha = 0.0
+                self.playerListPanel.alpha = 0.0
+                if self.lobbyState == KEY_LOBBY_STATE_ACCEPTING || self.lobbyState == KEY_LOBBY_STATE_FINISHED{
+                    self.startingTimePanel.alpha = 0.0
+                }
+                
+            } else {
+                self.topBarPanel.alpha = 1.0
+                self.timeView.alpha = 1.0
+                self.distanceView.alpha = 1.0
+                self.speedView.alpha = 1.0
+                self.playerListPanel.alpha = 1.0
+                if self.lobbyState == KEY_LOBBY_STATE_ACCEPTING || self.lobbyState == KEY_LOBBY_STATE_FINISHED{
+                    self.startingTimePanel.alpha = 1.0
+                }
+            }
+            
+        }) { (isCompleted) in
+            
+        }
+    }
 }
 
 extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
@@ -109,36 +141,71 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "cellName")
-        //        let bgImage = cell?.viewWithTag(100) as! UIImageView
-        //        let lblName = cell?.viewWithTag(200) as! UILabel
-        //
-        //        if (indexPath.row == 0){
-        //            bgImage.image = UIImage.init(imageLiteralResourceName: "bg_white.png")
-        //            lblName.textColor = UIColor.black
-        //        } else {
-        //            bgImage.image = nil
-        //            lblName.textColor = UIColor.white
-        //        }
+        let cell: UITableViewCell
+        var valueToSet: String = ""
+        if tableView == self.distanceTableView {
+            
+            let tmpCell: ClassMemberForDistanceCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForDistanceCell") as! ClassMemberForDistanceCell
+            valueToSet = "\(classMembers[indexPath.row].distance)m"
+            
+            tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
+            tmpCell.nameLabel.text = "\(classMembers[indexPath.row].name)"
+            tmpCell.valueLabel.text = valueToSet
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if classMembers[indexPath.row].name == appDelegate.g_token {
+                tmpCell.viewForBackPlayerList.isHidden = false
+                tmpCell.numberLabel.textColor = UIColor.black
+                tmpCell.nameLabel.textColor = UIColor.black
+                tmpCell.valueLabel.textColor = UIColor.black
+            } else {
+                tmpCell.viewForBackPlayerList.isHidden = true
+                tmpCell.numberLabel.textColor = UIColor.white
+                tmpCell.nameLabel.textColor = UIColor.white
+                tmpCell.valueLabel.textColor = UIColor.white
+            }
+            cell = tmpCell
+        } else if tableView == self.timeTableView {
+            let tmpCell: ClassMemberForTimeCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForTimeCell") as! ClassMemberForTimeCell
+            valueToSet = "\(classMembers[indexPath.row].distance)cal"
+            tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
+            tmpCell.nameLabel.text = "\(classMembers[indexPath.row].name)"
+            tmpCell.valueLabel.text = valueToSet
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if classMembers[indexPath.row].name == appDelegate.g_token {
+                tmpCell.viewForBackPlayerList.isHidden = false
+                tmpCell.numberLabel.textColor = UIColor.black
+                tmpCell.nameLabel.textColor = UIColor.black
+                tmpCell.valueLabel.textColor = UIColor.black
+            } else {
+                tmpCell.viewForBackPlayerList.isHidden = true
+                tmpCell.numberLabel.textColor = UIColor.white
+                tmpCell.nameLabel.textColor = UIColor.white
+                tmpCell.valueLabel.textColor = UIColor.white
+            }
+            cell = tmpCell
+        } else {
+            let tmpCell: ClassMemberForSpeedCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForSpeedCell") as! ClassMemberForSpeedCell
+            valueToSet = "\(classMembers[indexPath.row].distance)m/s"
+            tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
+            tmpCell.nameLabel.text = "\(classMembers[indexPath.row].name)"
+            tmpCell.valueLabel.text = valueToSet
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if classMembers[indexPath.row].name == appDelegate.g_token {
+                tmpCell.viewForBackPlayerList.isHidden = false
+                tmpCell.numberLabel.textColor = UIColor.black
+                tmpCell.nameLabel.textColor = UIColor.black
+                tmpCell.valueLabel.textColor = UIColor.black
+            } else {
+                tmpCell.viewForBackPlayerList.isHidden = true
+                tmpCell.numberLabel.textColor = UIColor.white
+                tmpCell.nameLabel.textColor = UIColor.white
+                tmpCell.valueLabel.textColor = UIColor.white
+            }
+            cell = tmpCell
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberCell") as! ClassMemberCell
-        
-        cell.numberLabel.text = "\(indexPath.row + 1)st"
-        cell.nameLabel.text = "\(classMembers[indexPath.row].name)"
-        cell.distanceLabel.text = "\(classMembers[indexPath.row].distance)m"
-        
-       
         return cell
-        
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        let cell = tableView.cellForRow(at: indexPath)
-        //        let bgImage = cell?.viewWithTag(100) as! UIImageView
-        //        let lblName = cell?.viewWithTag(200) as! UILabel
-        
-    }
-
 }
 
 extension ClassVideoViewController: C2ConnectionManagerDelegate {
@@ -199,6 +266,7 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
 }
 
 extension ClassVideoViewController: SocketConnectionManagerDelegate {
+    
     func SocketDidOpen(msg: String) {
         
     }
@@ -210,11 +278,42 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     func SocketDidJoin(members: [ClassMember]) {
         
         classMembers = members
-        self.leaderboardTableView.reloadData()
+        self.distanceTableView.reloadData()
+        self.timeTableView.reloadData()
+        self.speedTableView.reloadData()
     }
     
     func SocketDidPushOnCannel(message: String) {
         
+    }
+    
+    func onNewParticipant(member: ClassMember) {
+        classMembers.append(member)
+        self.distanceTableView.reloadData()
+        self.timeTableView.reloadData()
+        self.speedTableView.reloadData()
+        
+        self.view.makeToast("\(member.name) has joined to this workout")
+    }
+    
+    func onStartWorkout() {
+        self.view.makeToast("Workout has been started")
+        self.startingTimePanel.isHidden = true
+        self.lobbyState = KEY_LOBBY_STATE_PROGRESS
+    }
+    
+    func onFinishWorkout() {
+        self.view.makeToast("Workout has been finished")
+        self.lobbyState = KEY_LOBBY_STATE_FINISHED
+        self.lblLobbyState.text = MSG_LOBBY_FINISHED
+        self.startingTimePanel.isHidden = false
+    }
+    
+    func onLeaderboardUpdated(members: [ClassMember]) {
+        classMembers = members
+        self.distanceTableView.reloadData()
+        self.timeTableView.reloadData()
+        self.speedTableView.reloadData()
     }
     
 }

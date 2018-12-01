@@ -66,7 +66,9 @@ class LoginViewController: SuperViewController {
                             let token_dic = response.value(forKey: "data") as! NSDictionary
                             let token = token_dic.value(forKey: KEY_TOKEN) as! String
                             UserDefaults.standard.set(token, forKey: KEY_TOKEN)
-                            
+                            UserDefaults.standard.synchronize()
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.g_token = token
                             let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
                             self.navigationController?.pushViewController(vc, animated: true)
                         } else {
