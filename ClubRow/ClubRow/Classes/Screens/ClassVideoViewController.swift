@@ -261,7 +261,7 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
             SocketManager.sharedManager.pushOnChannel(distance: "\(distance)", wattage: "\(wattage)", speed: "\(speed)", calories: "\(calories)", strokes_per_minute: "\(strokes_per_minute)")
         }
         
-        labelTotalDistance.text = "\(time) s : \(distance) m : \(speed) m/s"
+//        labelTotalDistance.text = "\(time) s : \(distance) m : \(speed) m/s"
     }
 }
 

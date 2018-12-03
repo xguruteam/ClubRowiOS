@@ -24,16 +24,12 @@ class HomeViewController: SuperViewController {
     var teachers = [Teacher]()
     var members = [ClassMember]()
     var lobbies = [Lobby]()
-    var tmpLobbies = [Lobby]() //TODO
-    var lobbyList = [NSDictionary]()//TODO
     var selectedLobbyState: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.homeTableView.delegate = self
-        self.homeTableView.dataSource = self
         
         // shadow
         titleBarView.layer.shadowColor = UIColor.black.cgColor
@@ -47,11 +43,8 @@ class HomeViewController: SuperViewController {
         SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
         
-        // for test
-        for _ in 1...5 {
-            let lob = Lobby(name_: "Nates Hip Hop Class", startedAt_: "00:60", cur_member_: "1", entire_member_: "100")
-            lobbies.append(lob)
-        }
+        self.homeTableView.refreshControl = UIRefreshControl()
+        homeTableView.refreshControl?.addTarget(self, action: #selector(refreshDashboard(_:)), for: .valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,12 +58,19 @@ class HomeViewController: SuperViewController {
         return true
     }
     
+    @objc private func refreshDashboard(_ sender: Any) {
+        self.homeTableView.refreshControl?.endRefreshing()
+        loadLiveClasses()
+        loadLobbies()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func loadLiveClasses() {
+        self.aryLiveClasses.removeAll(keepingCapacity: false)
         // API
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         KRProgressHUD.show()
@@ -78,7 +78,7 @@ class HomeViewController: SuperViewController {
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + KEY_API_LOAD_LIVE_CLASSES
+        let url = SERVER_URL + KEY_API_LOAD_FEATURED_CLASSES
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 KRProgressHUD.dismiss()
@@ -106,6 +106,7 @@ class HomeViewController: SuperViewController {
     }
     
     func loadLobbies() {
+        self.lobbies.removeAll(keepingCapacity: false)
         // API
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         KRProgressHUD.show()
@@ -120,22 +121,24 @@ class HomeViewController: SuperViewController {
                 KRProgressHUD.dismiss()
                 switch response.result
                 {
-                    case .failure( _): break
+                    case .failure( _):
+                        self.view.makeToast(MSG_HOME_FAILED_LOAD_CLASSES)
+                        break
                     
                     case .success( _):
                         
                         let dic = response.result.value as! NSDictionary
                         
-                        self.lobbyList =  dic["data"] as! [NSDictionary] //TODO
-                        
-//                    for item in list {
-//                        let dic = item as! NSDictionary
-//                        let lobby = Lobby.init(data: dic)
-//                        self.tmpLobbies.append(lobby)
-//                    }
-                
-                    
-                    self.homeTableView.reloadData()
+                        let list =  dic["data"] as! NSArray
+                        print(list)
+                        for item in list {
+                            let dic = item as! NSDictionary
+                            let lobby = Lobby.init(data: dic)
+                            if (lobby.status == KEY_LOBBY_STATE_ACCEPTING) {
+                                self.lobbies.append(lobby)
+                            }
+                        }
+                        self.homeTableView.reloadData()
             }
         }
     }
@@ -212,17 +215,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         case 2:
-            let curLobby = lobbies[indexPath.row]
             let cell = homeTableView.dequeueReusableCell(withIdentifier: "LobbyCell", for: indexPath) as! LobbyTableViewCell
-            cell.lblName.text = curLobby.name
-            cell.lblStartedAt.text = String.init(format: "Starting in %@", curLobby.startedAt)
-            cell.lblMembers.text = String.init(format: "%@/%@", curLobby.cur_member, curLobby.entire_member)
-            cell.btnSelectLobby.tag = indexPath.row
-            cell.delegate = self
+            if lobbies.count > 0 {
+                let curLobby = lobbies[indexPath.row]
+                cell.lblName.text = curLobby.name
+                cell.lblStartedAt.text = String.init(format: "Starting in %@", curLobby.startedAt)
+                cell.lblMembers.text = "\(curLobby.cur_member)/\(curLobby.entire_member)"
+                cell.btnSelectLobby.tag = indexPath.row
+                cell.delegate = self
+            }
             cell.selectionStyle = .none
             return cell
+            
         default:
-            let cell = homeTableView.dequeueReusableCell(withIdentifier: "LobbyCell", for: indexPath) as! SelectedTeacherCell
+            let cell = homeTableView.dequeueReusableCell(withIdentifier: "LobbyCell", for: indexPath) as! LobbyTableViewCell
             cell.selectionStyle = .none
             return cell        }
     }
@@ -240,7 +246,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
       
     }
 }
@@ -268,9 +274,9 @@ extension HomeViewController: SocketConnectionManagerDelegate {
     
     func SocketDidJoin(members: [ClassMember]) {
         let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
-        vc.distance = 4 //self.teachers[indexPath.row].distance
-        vc.time = 9 //self.teachers[indexPath.row].time
-        vc.speed = 200 //self.teachers[indexPath.row].speed
+        vc.distance = 0 //self.teachers[indexPath.row].distance
+        vc.time = 0 //self.teachers[indexPath.row].time
+        vc.speed = 0 //self.teachers[indexPath.row].speed
         vc.lobbyState = self.selectedLobbyState
         vc.classMembers = members
         MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
@@ -291,15 +297,13 @@ extension HomeViewController: ClassLobbyCellDelegate {
             self.view.makeToast("Can't join this class")
             return
         }
-        
-        
         for liveClass in aryLiveClasses {
             if liveClass.id == sender_id {
                 var lobby_state: String = ""
-                for lobby in self.lobbyList {
-                    let lobby_id = lobby["id"] as! Int
+                for lobby in self.lobbies {
+                    let lobby_id = lobby.id
                     if lobby_id == liveClass.lobby_id {
-                        lobby_state = lobby["status"] as! String
+                        lobby_state = lobby.status
                     }
                 }
                 selectedLobbyState = lobby_state
@@ -313,10 +317,10 @@ extension HomeViewController: ClassLobbyCellDelegate {
 
 extension HomeViewController: SelectLobbyDelegate {
     func onSelectLobby(_index: Int) {
-        //TODO
-//        let name = "lobby"
-//        let topic = "\(name):\(teachers[0].id)"
-//        SocketManager.sharedManager.delegate = self
-//        SocketManager.sharedManager.connectChannel(topic: topic)
+        
+        selectedLobbyState = lobbies[_index].status
+        let topic = "lobby:\(lobbies[_index].id)"
+        SocketManager.sharedManager.delegate = self
+        SocketManager.sharedManager.connectChannel(topic: topic)
     }
 }

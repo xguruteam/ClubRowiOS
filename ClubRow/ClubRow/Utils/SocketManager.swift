@@ -67,11 +67,6 @@ class SocketManager {
             .join()
             .receive("ok") { (payload) in
                 KRProgressHUD.dismiss()
-                //                    print("========================================")
-                //                    print("Joined Channel: ", payload)
-                //                    print("hhhhhh",  payload.payload["response"]!)
-        
-                //
                 let dic = payload.payload["response"] as! NSDictionary
                 let keys = dic.allKeys
                 var members = [ClassMember]()
@@ -85,7 +80,6 @@ class SocketManager {
                     let member = ClassMember.init(name_: key as! String, distance_: String.init(format: "%ld", dist))
                     members.append(member)
                 }
-                
                 self.delegate?.SocketDidJoin(members: members)
         
             }.receive("error") { (payload) in
@@ -94,7 +88,7 @@ class SocketManager {
         // 1. new_participant
         channel.on("new_participant") { (message) in
             let dic = message.payload as NSDictionary
-            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0m"))
+            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0"))
             print("new_participant================")
         }
         

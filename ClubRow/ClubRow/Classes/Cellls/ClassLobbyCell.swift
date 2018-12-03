@@ -60,8 +60,11 @@ extension ClassLobbyCell: UICollectionViewDataSource, UICollectionViewDelegate, 
         let targetDate: String! = targetDateFormatter.string(from: date!)
         cell.timeLabel.text = targetDate
         cell.delegate = self
-        if liveClasses[indexPath.row].lobby_id == -1 {
+        let tmp: LiveClass! = liveClasses[indexPath.row]
+        if tmp.lobby_id == -1 {
             cell.btnJoinClass.tag = -1
+        } else {
+            cell.btnJoinClass.tag = tmp.lobby_id
         }
         return cell
     }

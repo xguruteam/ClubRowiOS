@@ -16,6 +16,7 @@ let KEY_API_SIGNUP = "users"
 let KEY_API_SIGNIN = "sessions"
 let KEY_API_LOAD_LOBBIES = "lobbies"
 let KEY_API_LOAD_LIVE_CLASSES = "classes/live"
+let KEY_API_LOAD_FEATURED_CLASSES = "classes/featured"
 
 // FIELD KEYS
 let KEY_USER = "user"

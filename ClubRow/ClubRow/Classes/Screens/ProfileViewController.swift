@@ -11,87 +11,12 @@ import SwiftChart
 import CoreBluetooth
 import Device
 
-class ProfileViewController: SuperViewController, C2ConnectionManagerDelegate {
-    @IBOutlet weak var labelDistance: UILabel!
-    @IBOutlet weak var labelCalories: UILabel!
-    @IBOutlet weak var labelSpeed: UILabel!
-    @IBOutlet weak var labelStrokes: UILabel!
-    @IBOutlet weak var labelWattage: UILabel!
+class ProfileViewController: SuperViewController {
     @IBOutlet weak var top: NSLayoutConstraint!
     
     @IBOutlet weak var profileTableView: UITableView!
     @IBOutlet weak var titleView: UIView!
     
-    func C2ConnectionManagerDidConnect() {
-    }
-    
-    func C2ConnectionManagerFailConnect() {
-    }
-    
-    func C2ConnectionManagerDidReceiveData(_ parameter: CBCharacteristic) {
-        if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR31_UUID {
-            if let value = parameter.value {
-                let data = [UInt8](value).map { (i) -> Int in
-                    Int(i)
-                }
-                Log.e("0x31 \(data)")
-//                label1.text = "Elapsed Time : \((data[0] + (data[1] << 8) + (data[2] << 16)) * 10) ms"
-                labelDistance.text = String(format: "%.2f", Float(data[3] + (data[4] << 8) + (data[5] << 16)) / 10.0)
-            }
-        }
-        
-        if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR32_UUID {
-            if let value = parameter.value {
-                let data = [UInt8](value).map { (i) -> Int in
-                    Int(i)
-                }
-                Log.e("0x32 \(data)")
-                labelSpeed.text = String(format: "%.2f", Float(data[3] + (data[4] << 8)) / 1000.0)
-                labelStrokes.text = "\(data[5])"
-            }
-        }
-        
-        if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR33_UUID {
-            if let value = parameter.value {
-                let data = [UInt8](value).map { (i) -> Int in
-                    Int(i)
-                }
-                Log.e("0x33 \(data)")
-                labelWattage.text = "\(data[10] + (data[11] << 8))"
-                labelCalories.text = "\(data[12] + (data[13] << 8))"
-            }
-        }
-        
-//        if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR3A_UUID {
-//            if let value = parameter.value {
-//                let data = [UInt8](value).map { (i) -> Int in
-//                    Int(i)
-//                }
-//                Log.e("0x3A \(data)")
-//                labelCalories.text = "\(data[8] + (data[9] << 8))"
-//            }
-//        }
-//
-//        if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR39_UUID {
-//            if let value = parameter.value {
-//                let data = [UInt8](value).map { (i) -> Int in
-//                    Int(i)
-//                }
-//                Log.e("0x39 \(data)")
-//                labelStrokes.text = "\(data[10])"
-//            }
-//        }
-//
-//        if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR3A_UUID {
-//            if let value = parameter.value {
-//                let data = [UInt8](value).map { (i) -> Int in
-//                    Int(i)
-//                }
-//                Log.e("0x3A \(data)")
-//                labelWattage.text = "\(data[10] + (data[11] << 8))"
-//            }
-//        }
-    }
     
     
     @IBOutlet var viewChart: Chart!
@@ -123,7 +48,6 @@ class ProfileViewController: SuperViewController, C2ConnectionManagerDelegate {
         
 //        viewChart.add([series1, series2, series3, series4, series5])
         
-        C2ScanningManager.shared.addDelegate(self)
         
         profileTableView.delegate = self
         profileTableView.dataSource = self
