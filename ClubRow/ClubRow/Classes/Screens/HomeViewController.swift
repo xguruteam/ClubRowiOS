@@ -25,6 +25,7 @@ class HomeViewController: SuperViewController {
     var members = [ClassMember]()
     var lobbies = [Lobby]()
     var selectedLobbyState: String = ""
+    var indicator: UIActivityIndicatorView! = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class HomeViewController: SuperViewController {
         // Do any additional setup after loading the view.
         
         // shadow
+        
         titleBarView.layer.shadowColor = UIColor.black.cgColor
         titleBarView.layer.shadowOffset = CGSize(width: 0, height: 3)
         titleBarView.layer.shadowOpacity = 0.07
@@ -54,6 +56,8 @@ class HomeViewController: SuperViewController {
         UIDevice.current.setValue(value, forKey: "orientation")
     }
     
+    func canRotate() -> Void {}
+    
     override var shouldAutorotate: Bool {
         return true
     }
@@ -61,7 +65,7 @@ class HomeViewController: SuperViewController {
     @objc private func refreshDashboard(_ sender: Any) {
         self.homeTableView.refreshControl?.endRefreshing()
         loadLiveClasses()
-        loadLobbies()
+//        loadLobbies()
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,6 +78,8 @@ class HomeViewController: SuperViewController {
         // API
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         KRProgressHUD.show()
+//        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
@@ -81,8 +87,11 @@ class HomeViewController: SuperViewController {
         let url = SERVER_URL + KEY_API_LOAD_FEATURED_CLASSES
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
-                KRProgressHUD.dismiss()
+//                KRProgressHUD.dismiss()
+//                self.view.activityStopAnimating()
+                self.loadLobbies()
                 switch response.result
+                    
                 {
                 case .failure( _):
                     self.view.makeToast(MSG_HOME_FAILED_LOAD_CLASSES)
@@ -106,10 +115,13 @@ class HomeViewController: SuperViewController {
     }
     
     func loadLobbies() {
+
         self.lobbies.removeAll(keepingCapacity: false)
         // API
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        KRProgressHUD.show()
+//        KRProgressHUD.show()
+//        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
@@ -119,6 +131,7 @@ class HomeViewController: SuperViewController {
             .responseJSON
             { response in
                 KRProgressHUD.dismiss()
+//                self.view.activityStopAnimating()
                 switch response.result
                 {
                     case .failure( _):
@@ -251,7 +264,42 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension UIView {
+    
+    func activityStartAnimating(activityColor: UIColor, backgroundColor: UIColor) {
+        let backgroundView = UIView()
+        backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        backgroundView.backgroundColor = backgroundColor
+        backgroundView.tag = 475647
+        
+        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
+        activityIndicator.center = self.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        activityIndicator.color = activityColor
+        activityIndicator.startAnimating()
+        self.isUserInteractionEnabled = false
+        
+        backgroundView.addSubview(activityIndicator)
+        
+        self.addSubview(backgroundView)
+    }
+    
+    func activityStopAnimating() {
+        if let background = viewWithTag(475647){
+            background.removeFromSuperview()
+        }
+        self.isUserInteractionEnabled = true
+    }
+}
+
 extension HomeViewController: SocketConnectionManagerDelegate {
+    
+    func onErrorGetData() {
+        self.view.makeToast("Can't join to the workout due to the network connection")
+    }
+    
     func onNewParticipant(member: ClassMember) {
         
     }
@@ -279,7 +327,9 @@ extension HomeViewController: SocketConnectionManagerDelegate {
         vc.speed = 0 //self.teachers[indexPath.row].speed
         vc.lobbyState = self.selectedLobbyState
         vc.classMembers = members
-        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
+//        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true, completion: nil)
+    
     }
     
     func SocketDidOpen(msg: String) {

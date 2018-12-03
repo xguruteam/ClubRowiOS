@@ -50,8 +50,7 @@ class ClassVideoViewController: SuperViewController {
         self.distanceTableView.delegate = self
         self.distanceTableView.dataSource = self
 
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+        
         // Do any additional setup after loading the view.
         
         let _ = C2ScanningManager.shared
@@ -71,7 +70,18 @@ class ClassVideoViewController: SuperViewController {
     }
     
     override var shouldAutorotate: Bool {
-        return false
+        return true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -88,7 +98,8 @@ class ClassVideoViewController: SuperViewController {
         
 //        SocketManager.sharedManager.socket.disconnect()
         SocketManager.sharedManager.leaveChannel()
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onTapBackground(_ sender: Any) {
@@ -266,6 +277,10 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
 }
 
 extension ClassVideoViewController: SocketConnectionManagerDelegate {
+    
+    func onErrorGetData() {
+    
+    }
     
     func SocketDidOpen(msg: String) {
         

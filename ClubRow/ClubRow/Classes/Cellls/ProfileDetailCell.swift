@@ -45,6 +45,7 @@ class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
                 Log.e("0x31 \(data)")
                 //                label1.text = "Elapsed Time : \((data[0] + (data[1] << 8) + (data[2] << 16)) * 10) ms"
                 labelDistance.text = String(format: "%.2f", Float(data[3] + (data[4] << 8) + (data[5] << 16)) / 10.0)
+                
             }
         }
         

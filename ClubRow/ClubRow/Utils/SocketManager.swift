@@ -21,6 +21,7 @@ protocol SocketConnectionManagerDelegate {
     func onStartWorkout()
     func onFinishWorkout()
     func onLeaderboardUpdated(members: [ClassMember])
+    func onErrorGetData()
 //    func C2ConnectionManagerFailConnect()
 //    func C2ConnectionManagerDidReceiveData(_ parameter: CBCharacteristic)
 }
@@ -83,6 +84,8 @@ class SocketManager {
                 self.delegate?.SocketDidJoin(members: members)
         
             }.receive("error") { (payload) in
+                KRProgressHUD.dismiss()
+                self.delegate!.onErrorGetData()
                 print("Failed to join channel: ", payload)
         }
         // 1. new_participant
