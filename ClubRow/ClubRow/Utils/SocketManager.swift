@@ -41,11 +41,11 @@ class SocketManager {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         socket = Socket(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": appDelegate.g_token])
         socket.onOpen {
-//            print("Socket has opened")
+            print("Socket has opened")
             self.delegate?.SocketDidOpen(msg: "Socket has opended")
         }
         socket.onClose {
-//            print("Socket has closed")
+            print("Socket has closed")
             self.delegate?.SocketDidClose(msg: "Socket has closed")
         }
         socket.onError { error in
@@ -71,15 +71,15 @@ class SocketManager {
                 let dic = payload.payload["response"] as! NSDictionary
                 let keys = dic.allKeys
                 var members = [ClassMember]()
-                
+                var index: Int = 0
                 for key in keys {
                     //                        print("key =========", key)
                     let dic = dic[key as! String] as! NSDictionary
                     let dist = dic["distance"] as! Int
                     //                        print("dist=========", dist!)
-        
-                    let member = ClassMember.init(name_: key as! String, distance_: String.init(format: "%ld", dist))
+                    let member = ClassMember.init(name_: key as! String, distance_: "\(dist)", cal_: "\(index)", speed_: "\(index + 2)", strokes_: "\(index+4)", wattage_: "\(index + 10)") //TODO
                     members.append(member)
+                    index += 1
                 }
                 self.delegate?.SocketDidJoin(members: members)
         
@@ -91,7 +91,7 @@ class SocketManager {
         // 1. new_participant
         channel.on("new_participant") { (message) in
             let dic = message.payload as NSDictionary
-            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0"))
+            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0", cal_: "0", speed_: "0", strokes_: "0", wattage_: "0"))
             print("new_participant================")
         }
         
@@ -114,15 +114,15 @@ class SocketManager {
             let dic = message.payload as NSDictionary
             let keys = dic.allKeys
             var members = [ClassMember]()
-            
+            var index: Int = 0
             for key in keys {
                 //                        print("key =========", key)
                 let dic = dic[key as! String] as! NSDictionary
                 let dist = dic["distance"] as! Int
                 //                        print("dist=========", dist!)
-                
-                let member = ClassMember.init(name_: key as! String, distance_: String.init(format: "%ld", dist))
+                let member = ClassMember.init(name_: key as! String, distance_: "\(dist)", cal_: "\(index)", speed_: "\(index + 2)", strokes_: "\(index+4)", wattage_: "\(index + 10)") //TODO
                 members.append(member)
+                index += 1
             }
             
             self.delegate?.onLeaderboardUpdated(members: members)

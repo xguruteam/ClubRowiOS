@@ -13,8 +13,10 @@ import KRProgressHUD
 class ClassVideoViewController: SuperViewController {
     
     @IBOutlet weak var distanceTableView: UITableView!
-    @IBOutlet weak var timeTableView: UITableView!
+    @IBOutlet weak var calTableView: UITableView!
     @IBOutlet weak var speedTableView: UITableView!
+    @IBOutlet weak var strokesTableView: UITableView!
+    @IBOutlet weak var wattageTableView: UITableView!
     
     var time: Int = 0
     var distance: Int = 0
@@ -25,7 +27,12 @@ class ClassVideoViewController: SuperViewController {
     var isShowingPanels: Bool = true
     var lobbyState: String = ""
     var classMembers = [ClassMember]()
-
+    var membersForDistance = [ClassMember]()
+    var membersForCal = [ClassMember]()
+    var membersForSpeed = [ClassMember]()
+    var membersForStrokes = [ClassMember]()
+    var membersForWattage = [ClassMember]()
+    
     @IBOutlet weak var playerListPanel: UIView!
     @IBOutlet weak var topBarPanel: UIView!
     @IBOutlet weak var startingTimePanel: UIView!
@@ -67,6 +74,18 @@ class ClassVideoViewController: SuperViewController {
         } else {
             self.startingTimePanel.isHidden = true
         }
+        sortMembers()
+    }
+    
+    func sortMembers() {
+        if classMembers.count == 0 {
+            return
+        }
+        membersForDistance = classMembers.sorted(by: {Int32($0.distance)! > Int32($1.distance)!})
+        membersForCal = classMembers.sorted(by: {Int32($0.cal)! > Int32($1.cal)!})
+        membersForSpeed = classMembers.sorted(by: {Int32($0.speed)! > Int32($1.speed)!})
+        membersForStrokes = classMembers.sorted(by: {Int32($0.strokes)! > Int32($1.strokes)!})
+        membersForWattage = classMembers.sorted(by: {Int32($0.wattage)! > Int32($1.wattage)!})
     }
     
     override var shouldAutorotate: Bool {
@@ -81,7 +100,7 @@ class ClassVideoViewController: SuperViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -157,13 +176,13 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == self.distanceTableView {
             
             let tmpCell: ClassMemberForDistanceCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForDistanceCell") as! ClassMemberForDistanceCell
-            valueToSet = "\(classMembers[indexPath.row].distance)m"
+            valueToSet = "\(membersForDistance[indexPath.row].distance)m"
             
             tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
-            tmpCell.nameLabel.text = "\(classMembers[indexPath.row].name)"
+            tmpCell.nameLabel.text = "\(membersForDistance[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if classMembers[indexPath.row].name == appDelegate.g_token {
+            if membersForDistance[indexPath.row].name == appDelegate.g_token {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -175,14 +194,52 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
                 tmpCell.valueLabel.textColor = UIColor.white
             }
             cell = tmpCell
-        } else if tableView == self.timeTableView {
-            let tmpCell: ClassMemberForTimeCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForTimeCell") as! ClassMemberForTimeCell
-            valueToSet = "\(classMembers[indexPath.row].distance)cal"
+        } else if tableView == self.calTableView {
+            let tmpCell: ClassMemberForCalCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForCalCell") as! ClassMemberForCalCell
+            valueToSet = "\(membersForCal[indexPath.row].cal)cal"
             tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
-            tmpCell.nameLabel.text = "\(classMembers[indexPath.row].name)"
+            tmpCell.nameLabel.text = "\(membersForCal[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if classMembers[indexPath.row].name == appDelegate.g_token {
+            if membersForCal[indexPath.row].name == appDelegate.g_token {
+                tmpCell.viewForBackPlayerList.isHidden = false
+                tmpCell.numberLabel.textColor = UIColor.black
+                tmpCell.nameLabel.textColor = UIColor.black
+                tmpCell.valueLabel.textColor = UIColor.black
+            } else {
+                tmpCell.viewForBackPlayerList.isHidden = true
+                tmpCell.numberLabel.textColor = UIColor.white
+                tmpCell.nameLabel.textColor = UIColor.white
+                tmpCell.valueLabel.textColor = UIColor.white
+            }
+            cell = tmpCell
+        } else if tableView == self.speedTableView {
+            let tmpCell: ClassMemberForSpeedCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForSpeedCell") as! ClassMemberForSpeedCell
+            valueToSet = "\(membersForSpeed[indexPath.row].speed)m/s"
+            tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
+            tmpCell.nameLabel.text = "\(membersForSpeed[indexPath.row].name)"
+            tmpCell.valueLabel.text = valueToSet
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if membersForSpeed[indexPath.row].name == appDelegate.g_token {
+                tmpCell.viewForBackPlayerList.isHidden = false
+                tmpCell.numberLabel.textColor = UIColor.black
+                tmpCell.nameLabel.textColor = UIColor.black
+                tmpCell.valueLabel.textColor = UIColor.black
+            } else {
+                tmpCell.viewForBackPlayerList.isHidden = true
+                tmpCell.numberLabel.textColor = UIColor.white
+                tmpCell.nameLabel.textColor = UIColor.white
+                tmpCell.valueLabel.textColor = UIColor.white
+            }
+            cell = tmpCell
+        } else if tableView == self.strokesTableView {
+            let tmpCell: ClassMemberForStrokesCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForStrokesCell") as! ClassMemberForStrokesCell
+            valueToSet = "\(membersForStrokes[indexPath.row].strokes)st"
+            tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
+            tmpCell.nameLabel.text = "\(membersForStrokes[indexPath.row].name)"
+            tmpCell.valueLabel.text = valueToSet
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if membersForStrokes[indexPath.row].name == appDelegate.g_token {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -195,13 +252,13 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell = tmpCell
         } else {
-            let tmpCell: ClassMemberForSpeedCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForSpeedCell") as! ClassMemberForSpeedCell
-            valueToSet = "\(classMembers[indexPath.row].distance)m/s"
+            let tmpCell: ClassMemberForWattageCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForWattageCell") as! ClassMemberForWattageCell
+            valueToSet = "\(membersForWattage[indexPath.row].wattage)wa"
             tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
-            tmpCell.nameLabel.text = "\(classMembers[indexPath.row].name)"
+            tmpCell.nameLabel.text = "\(membersForWattage[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if classMembers[indexPath.row].name == appDelegate.g_token {
+            if membersForWattage[indexPath.row].name == appDelegate.g_token {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -293,9 +350,12 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     func SocketDidJoin(members: [ClassMember]) {
         
         classMembers = members
+        sortMembers()
         self.distanceTableView.reloadData()
-        self.timeTableView.reloadData()
+        self.calTableView.reloadData()
         self.speedTableView.reloadData()
+        self.strokesTableView.reloadData()
+        self.wattageTableView.reloadData()
     }
     
     func SocketDidPushOnCannel(message: String) {
@@ -304,9 +364,12 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     
     func onNewParticipant(member: ClassMember) {
         classMembers.append(member)
+        sortMembers()
         self.distanceTableView.reloadData()
-        self.timeTableView.reloadData()
+        self.calTableView.reloadData()
         self.speedTableView.reloadData()
+        self.strokesTableView.reloadData()
+        self.wattageTableView.reloadData()
         
         self.view.makeToast("\(member.name) has joined to this workout")
     }
@@ -326,9 +389,12 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     
     func onLeaderboardUpdated(members: [ClassMember]) {
         classMembers = members
+        sortMembers()
         self.distanceTableView.reloadData()
-        self.timeTableView.reloadData()
+        self.calTableView.reloadData()
         self.speedTableView.reloadData()
+        self.strokesTableView.reloadData()
+        self.wattageTableView.reloadData()
     }
     
 }

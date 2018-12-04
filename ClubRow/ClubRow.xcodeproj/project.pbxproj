@@ -75,6 +75,8 @@
 		A420819A219252EF00169232 /* SelectedTeacherCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4208199219252EF00169232 /* SelectedTeacherCollectionCell.swift */; };
 		A431BABA219322D8002BB3EF /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A431BAB9219322D8002BB3EF /* SocketManager.swift */; };
 		A43D96EF21A839A2007ACD56 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43D96EE21A839A1007ACD56 /* SignUpViewController.swift */; };
+		A4467B6221B67755002F3A8C /* ClassMemberForStrokesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4467B6021B67754002F3A8C /* ClassMemberForStrokesCell.swift */; };
+		A4467B6321B67755002F3A8C /* ClassMemberForWattageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4467B6121B67754002F3A8C /* ClassMemberForWattageCell.swift */; };
 		A463F1FA219276C30091B7ED /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463F1F9219276C30091B7ED /* Teacher.swift */; };
 		A463F1FE21928A2B0091B7ED /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463F1FD21928A2B0091B7ED /* HttpRequest.swift */; };
 		A4780E1D21B1F87500F047F6 /* ClassMemberForDistanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4780E1A21B1F87500F047F6 /* ClassMemberForDistanceCell.swift */; };
@@ -233,6 +235,8 @@
 		A4208199219252EF00169232 /* SelectedTeacherCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTeacherCollectionCell.swift; sourceTree = "<group>"; };
 		A431BAB9219322D8002BB3EF /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		A43D96EE21A839A1007ACD56 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		A4467B6021B67754002F3A8C /* ClassMemberForStrokesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassMemberForStrokesCell.swift; sourceTree = "<group>"; };
+		A4467B6121B67754002F3A8C /* ClassMemberForWattageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassMemberForWattageCell.swift; sourceTree = "<group>"; };
 		A463F1F9219276C30091B7ED /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		A463F1FD21928A2B0091B7ED /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		A4780E1A21B1F87500F047F6 /* ClassMemberForDistanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassMemberForDistanceCell.swift; sourceTree = "<group>"; };
@@ -549,6 +553,8 @@
 		A403D00F2191E64E007833C1 /* Cellls */ = {
 			isa = PBXGroup;
 			children = (
+				A4467B6021B67754002F3A8C /* ClassMemberForStrokesCell.swift */,
+				A4467B6121B67754002F3A8C /* ClassMemberForWattageCell.swift */,
 				A4780E1A21B1F87500F047F6 /* ClassMemberForDistanceCell.swift */,
 				A4780E1B21B1F87500F047F6 /* ClassMemberForSpeedCell.swift */,
 				A4780E1C21B1F87500F047F6 /* ClassMemberForTimeCell.swift */,
@@ -851,6 +857,7 @@
 				A40297BD2194834200F69E60 /* ClassMember.swift in Sources */,
 				A4DD2178219820ED00D7DC2E /* UIDevice.swift in Sources */,
 				A4780E1D21B1F87500F047F6 /* ClassMemberForDistanceCell.swift in Sources */,
+				A4467B6321B67755002F3A8C /* ClassMemberForWattageCell.swift in Sources */,
 				A4780E1F21B1F87500F047F6 /* ClassMemberForTimeCell.swift in Sources */,
 				A4973DAD21AF1C9900A29EBD /* ClassLobbyCollectionViewCell.swift in Sources */,
 				A463F1FE21928A2B0091B7ED /* HttpRequest.swift in Sources */,
@@ -900,6 +907,7 @@
 				3E3DA457216359EB00B5055C /* HomeViewController.swift in Sources */,
 				3EFFA68B21760CE4002B5678 /* ClassTableViewController.swift in Sources */,
 				3EDED412216B5A3F00167FEF /* ClassVideoViewController.swift in Sources */,
+				A4467B6221B67755002F3A8C /* ClassMemberForStrokesCell.swift in Sources */,
 				A4809BFE21AC753A005C041B /* Util.swift in Sources */,
 				A40951B2217C7C3A001EE7A5 /* C2ScanningManager.swift in Sources */,
 				3E565591216F327B00EF8964 /* SummaryViewController.swift in Sources */,

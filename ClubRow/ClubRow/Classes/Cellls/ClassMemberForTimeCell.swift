@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ClassMemberForTimeCell: UITableViewCell {
+class ClassMemberForCalCell: UITableViewCell {
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!

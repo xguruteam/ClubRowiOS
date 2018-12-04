@@ -321,15 +321,14 @@ extension HomeViewController: SocketConnectionManagerDelegate {
     }
     
     func SocketDidJoin(members: [ClassMember]) {
+        
         let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
-        vc.distance = 0 //self.teachers[indexPath.row].distance
-        vc.time = 0 //self.teachers[indexPath.row].time
-        vc.speed = 0 //self.teachers[indexPath.row].speed
+        vc.distance = 0
+        vc.time = 0
+        vc.speed = 0
         vc.lobbyState = self.selectedLobbyState
         vc.classMembers = members
-//        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
         self.present(vc, animated: true, completion: nil)
-    
     }
     
     func SocketDidOpen(msg: String) {
