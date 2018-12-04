@@ -2885,7 +2885,7 @@
                                             </tableView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5iX-jz-eO5" userLabel="Wattage Table View">
                                                 <rect key="frame" x="473.5" y="10" width="118" height="836"/>
-                                                <color key="backgroundColor" red="0.70337257919999996" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ClassMemberForWattageCell" rowHeight="48" id="abt-Ou-A1T" customClass="ClassMemberForWattageCell" customModule="ClubRow" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="118" height="48"/>

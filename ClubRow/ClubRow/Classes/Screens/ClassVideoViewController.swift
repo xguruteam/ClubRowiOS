@@ -21,9 +21,9 @@ class ClassVideoViewController: SuperViewController {
     var time: Int = 0
     var distance: Int = 0
     var speed: Int = 0
-    var wattage: String = ""
-    var calories: String = ""
-    var strokes_per_minute: String = ""
+    var wattage: String = "0"
+    var calories: String = "0"
+    var strokes_per_minute: String = "0"
     var isShowingPanels: Bool = true
     var lobbyState: String = ""
     var classMembers = [ClassMember]()
