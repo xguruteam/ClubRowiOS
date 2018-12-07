@@ -123,7 +123,8 @@ class ClassVideoViewController: SuperViewController {
     
     @IBAction func onTapBackground(_ sender: Any) {
         if isShowingPanels {
-            return
+            hidePanels(isHide: true)
+            isShowingPanels = false
         } else {
             hidePanels(isHide: false)
             isShowingPanels = true
@@ -134,6 +135,7 @@ class ClassVideoViewController: SuperViewController {
         hidePanels(isHide: true)
         isShowingPanels = false
     }
+    
     func hidePanels(isHide: Bool) {
         
         UIView.animate(withDuration: 0.3, animations: {

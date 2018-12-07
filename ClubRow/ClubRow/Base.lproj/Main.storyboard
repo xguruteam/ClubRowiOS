@@ -2352,10 +2352,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" translatesAutoresizingMaskIntoConstraints="NO" id="jrb-x0-Su1">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="MZ5-V5-dTM" appends="YES" id="hEi-WV-1yY"/>
-                                </connections>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRX-kp-yUN">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="MZ5-V5-dTM" appends="YES" id="QQj-e9-HHH"/>
+                                </connections>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnY-8p-tdC">
                                 <rect key="frame" x="40" y="772" width="85" height="85"/>
                                 <subviews>
@@ -3058,6 +3062,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="yRX-kp-yUN" firstAttribute="trailing" secondItem="83r-M5-Uw6" secondAttribute="trailing" id="1rr-Dw-eJj"/>
+                            <constraint firstItem="yRX-kp-yUN" firstAttribute="top" secondItem="83r-M5-Uw6" secondAttribute="top" id="2Lj-dz-E6L"/>
+                            <constraint firstItem="yRX-kp-yUN" firstAttribute="leading" secondItem="83r-M5-Uw6" secondAttribute="leading" id="2qo-1I-rwK"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="height" secondItem="PvF-Ou-nik" secondAttribute="height" id="47x-Qf-6qj"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="leading" secondItem="PvF-Ou-nik" secondAttribute="trailing" constant="40" id="DM3-b4-p4K"/>
                             <constraint firstItem="HnY-8p-tdC" firstAttribute="leading" secondItem="83r-M5-Uw6" secondAttribute="leading" constant="40" id="FKD-gA-cCe"/>
@@ -3065,6 +3072,7 @@
                             <constraint firstItem="FuJ-ZB-g0u" firstAttribute="leading" secondItem="ZCj-FK-pDQ" secondAttribute="trailing" id="I8L-Bj-KDx"/>
                             <constraint firstItem="jrb-x0-Su1" firstAttribute="top" secondItem="kFz-YG-Aqw" secondAttribute="top" id="IQS-Wf-OcD"/>
                             <constraint firstItem="PvF-Ou-nik" firstAttribute="centerY" secondItem="HnY-8p-tdC" secondAttribute="centerY" id="IV4-Qa-9p8"/>
+                            <constraint firstItem="83r-M5-Uw6" firstAttribute="bottom" secondItem="yRX-kp-yUN" secondAttribute="bottom" id="JyY-PD-RJd"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="centerY" secondItem="PvF-Ou-nik" secondAttribute="centerY" id="Kp4-hh-mrK"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="width" secondItem="PvF-Ou-nik" secondAttribute="width" id="L74-0N-Tsx"/>
                             <constraint firstItem="jrb-x0-Su1" firstAttribute="leading" secondItem="kFz-YG-Aqw" secondAttribute="leading" id="Lin-py-7UW"/>
@@ -3085,9 +3093,6 @@
                             <constraint firstItem="83r-M5-Uw6" firstAttribute="bottom" secondItem="HnY-8p-tdC" secondAttribute="bottom" constant="5" id="yOX-sU-0Z5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="83r-M5-Uw6"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="MZ5-V5-dTM" appends="YES" id="Rxa-79-o4i"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="calTableView" destination="Q5m-Xm-dMf" id="1YZ-mX-pl0"/>
@@ -3115,7 +3120,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4691.5178571428569" y="785.50724637681162"/>
+            <point key="canvasLocation" x="4691.304347826087" y="785.49107142857144"/>
         </scene>
         <!--Summary One View Controller-->
         <scene sceneID="X57-aG-uzY">
