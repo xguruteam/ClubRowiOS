@@ -1,13 +1,5 @@
 PODS:
   - Alamofire (4.8.0)
-  - AppCenter (1.11.0):
-    - AppCenter/Analytics (= 1.11.0)
-    - AppCenter/Crashes (= 1.11.0)
-  - AppCenter/Analytics (1.11.0):
-    - AppCenter/Core
-  - AppCenter/Core (1.11.0)
-  - AppCenter/Crashes (1.11.0):
-    - AppCenter/Core
   - Device (3.1.2)
   - EChart (0.1.1)
   - FSCalendar (2.8.0)
@@ -33,7 +25,6 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
-  - AppCenter
   - Device (~> 3.1.2)
   - EChart
   - FSCalendar
@@ -54,7 +45,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - AppCenter
     - Device
     - EChart
     - FSCalendar
@@ -77,7 +67,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  AppCenter: 3bccf8d733e337d0db574dd4cb0e33ab9637b7f2
   Device: 62242076214c30fb5760174b3601cefafa70a481
   EChart: 2c23edc06e72c396d283732c2338711c33d7644d
   FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
@@ -98,6 +87,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
   XLSlidingContainer: cbafcc24034cc7ad495e66c01130b9932e2ebf10
 
-PODFILE CHECKSUM: 4b57dc1e8dccb28c7bfe6eba6d027617f575d831
+PODFILE CHECKSUM: 64a8ffbe7d32bd4730e0fa3df11d64d4cf5bb8b0
 
 COCOAPODS: 1.5.3

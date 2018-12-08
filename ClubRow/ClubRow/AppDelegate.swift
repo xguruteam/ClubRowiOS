@@ -8,9 +8,6 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-import AppCenter
-import AppCenterAnalytics
-import AppCenterCrashes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let savedValue = userdefaults.string(forKey: KEY_TOKEN){
             g_token = savedValue
         }
-        MSAppCenter.start("42e35d6b-69dd-4aea-a477-7b0a76a07a3b", withServices:[ MSAnalytics.self, MSCrashes.self ])
         return true
     }
 
