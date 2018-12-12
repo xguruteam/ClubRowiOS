@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITableViewDataSource {
+class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITableViewDataSource, ClassDetailCellDelegate {
     
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var detailView: UIView!
@@ -20,30 +20,82 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
     }
     
+    func classDetailCell(didSelect indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            print("Join Live Class")
+        case 2:
+            print("Set notify")
+        case 3:
+            print("Goto Lobbies screen")
+            let vc = self.getStoryboardWithIdentifier(identifier: "LobbiesViewController") as! LobbiesViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            return
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10;
+        var numberOfRows = 0
+        switch section {
+        case 0:
+            numberOfRows = 1
+        case 1:
+            numberOfRows = 1
+        case 2:
+            numberOfRows = 2
+        case 3:
+            numberOfRows = 3
+        default:
+            numberOfRows = 0
+        }
+        return numberOfRows;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
            let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell") as! DescriptionCell
            cell.textView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
            cell.selectionStyle = .none
             return cell
         case 1:
-             let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
-            cell.headerLabel.isHidden = false
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
+            cell.headerLabel.text = "Nate's Hip Hop Class II"
+            cell.lblClassTime.isHidden = true
+            cell.joinClassBtn.setTitle("Join Live Class", for: .normal)
+            cell.viewDot.backgroundColor = UIColor(red: 0x15, green: 0xEC, blue: 0xC1)
+            cell.indexPath = indexPath
+            cell.delegate = self
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
+            cell.headerLabel.text = "Nate's Hip Hop Class III"
+            cell.lblClassTime.text = "Nov 12th 2018\n12:00PM EST"
+            cell.lblClassTime.isHidden = false
+            cell.joinClassBtn.setTitle("Notify", for: .normal)
+            cell.viewDot.backgroundColor = UIColor(red: 0xED, green: 0xED, blue: 0xED)
+            cell.indexPath = indexPath
+            cell.delegate = self
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
-            cell.headerLabel.isHidden = true
+            cell.headerLabel.text = "Nate's Hip Hop Class"
+            cell.lblClassTime.isHidden = true
+            cell.joinClassBtn.setTitle("10 Lobbies", for: .normal)
+            cell.viewDot.backgroundColor = UIColor(red: 0xF8, green: 0xC7, blue: 0xCD)
+            cell.indexPath = indexPath
+            cell.delegate = self
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell") as! DescriptionCell
             
@@ -59,9 +111,13 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
             cell.textView.frame = newFrame
             
-            return cell.textView.frame.height
+            return cell.textView.frame.height + 80
+        case 1:
+            return 170
+        case 2:
+            return 250
         default:
-            return 178
+            return 170
         }
     }
     
