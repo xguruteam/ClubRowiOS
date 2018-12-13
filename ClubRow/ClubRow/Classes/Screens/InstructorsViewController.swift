@@ -53,4 +53,10 @@ extension InstructorsViewController: UICollectionViewDelegateFlowLayout, UIColle
         return CGSize(width: itemSize, height: 130)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("\(indexPath.row) item clicked")
+        let vc = self.getStoryboardWithIdentifier(identifier: "ClassDetailsViewController") as! ClassDetailsViewController
+        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

@@ -58,7 +58,6 @@ extension LobbiesViewController: UITableViewDelegate, UITableViewDataSource {
         else {
             cell.lblName.text = "Nate's Hip Hop Class"
             cell.lblStatus.text = "Lobby Started"
-
         }
         cell.btnSelectLobby.tag = indexPath.row
         cell.delegate = self

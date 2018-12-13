@@ -19,7 +19,7 @@ class MainViewController: SuperViewController {
     @IBOutlet weak var tabBarView: UIView!
     @IBOutlet weak var shadowView: UIView!
     
-    var currentIndex = 0
+    var currentIndex = 2
     
     var tabbarController = TabbarViewController()
     
@@ -37,7 +37,7 @@ class MainViewController: SuperViewController {
         
 
         // Do any additional setup after loading the view.
-        tabbarController.selectedIndex = 0
+        tabbarController.selectedIndex = currentIndex
         self.selectTabButton(tag: (currentIndex + 1))
         
         MainViewController.sharedViewController = self
