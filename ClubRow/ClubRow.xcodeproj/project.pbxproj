@@ -159,6 +159,7 @@
 		CA1F42D221A3E87B00901ADB /* ic_bell_unselected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CC21A3E87500901ADB /* ic_bell_unselected@3x.png */; };
 		CA1F42D321A3E87B00901ADB /* ic_bell_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */; };
 		CA1F42D421A3E87B00901ADB /* ic_bell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */; };
+		CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA87661C21C16C2700B31B7E /* UIView+Box.swift */; };
 		CAC4368B21C106D600B0BDCA /* ic_avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC4368A21C106CE00B0BDCA /* ic_avatar_default.png */; };
 		CAC4368D21C1078C00B0BDCA /* LobbiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */; };
 		CAC4369421C112F100B0BDCA /* ic_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC4368E21C112C900B0BDCA /* ic_group.png */; };
@@ -343,6 +344,7 @@
 		CA1F42CC21A3E87500901ADB /* ic_bell_unselected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bell_unselected@3x.png"; sourceTree = "<group>"; };
 		CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_unselected.png; sourceTree = "<group>"; };
 		CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_selected.png; sourceTree = "<group>"; };
+		CA87661C21C16C2700B31B7E /* UIView+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Box.swift"; sourceTree = "<group>"; };
 		CAC4368A21C106CE00B0BDCA /* ic_avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_avatar_default.png; sourceTree = "<group>"; };
 		CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbiesViewController.swift; sourceTree = "<group>"; };
 		CAC4368E21C112C900B0BDCA /* ic_group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_group.png; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 				A40297BA2194170200F69E60 /* ProgressManager.swift */,
 				A4DD2177219820EC00D7DC2E /* UIDevice.swift */,
 				A492E44E219A7427001A6766 /* Shadow.swift */,
+				CA87661C21C16C2700B31B7E /* UIView+Box.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -935,6 +938,7 @@
 				3E3DA45921635A1800B5055C /* SchedulesViewController.swift in Sources */,
 				3EFFA6832175E6A8002B5678 /* ScrollViewController.swift in Sources */,
 				A416C29F219C71560038D67E /* ClassDetailCell.swift in Sources */,
+				CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */,
 				A40AABC421AB176D00D7E371 /* LobbyTableViewCell.swift in Sources */,
 				A492E44F219A7427001A6766 /* Shadow.swift in Sources */,
 				A493DD76219F0E380057C3A9 /* TSCDesignableView.swift in Sources */,

@@ -20,6 +20,8 @@ class LobbyTableViewCell: UITableViewCell {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblStartedAt: UILabel!
     @IBOutlet weak var btnSelectLobby: UIButton!
+    @IBOutlet weak var lblStatus: UILabel!
+    @IBOutlet weak var outerView: UIView!
     
     
     override func awakeFromNib() {
