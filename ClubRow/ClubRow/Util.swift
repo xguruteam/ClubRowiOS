@@ -16,4 +16,14 @@ class Util: NSObject {
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: emailStr)
     }
+    
+    static func convertTimeStamp(_ input: String, format: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+        let date = dateFormatter.date(from: input)
+        
+        let targetDateFormatter = DateFormatter()
+        targetDateFormatter.dateFormat = format
+        return targetDateFormatter.string(from: date!)
+    }
 }

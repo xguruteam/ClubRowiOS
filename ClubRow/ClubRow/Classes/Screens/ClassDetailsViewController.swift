@@ -21,6 +21,9 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
     @IBOutlet weak var lblTitle: UILabel!
     
     var instructor: [String: Any]!
+    var pastClasses: [[String: Any]]! = []
+    var liveClasses: [[String: Any]]! = []
+    var nextClasses: [[String: Any]]! = []
     
     @IBAction func onJoinClass(_ sender: Any) {
         let vc = self.getStoryboardWithIdentifier(identifier: "ClassVideoViewController") as! ClassVideoViewController
@@ -31,11 +34,21 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         switch indexPath.section {
         case 1:
             print("Join Live Class")
+            let classItem = self.liveClasses[indexPath.row]
+            let topic = "lobby:\(classItem["lobby_id"] as! Int)"
+            SocketManager.sharedManager.delegate = self
+            SocketManager.sharedManager.connectChannel(topic: topic)
         case 2:
             print("Set notify")
+            let classItem = self.nextClasses[indexPath.row]
+            let alert = UIAlertController(title: "Setup Notification", message: "ClubRow will notify at \(Util.convertTimeStamp(classItem["starts_at"] as! String, format: "E, MMM d yyyy\nh:mm a 'EST'")!)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         case 3:
             print("Goto Lobbies screen")
+            let classItem = self.pastClasses[indexPath.row]
             let vc = self.getStoryboardWithIdentifier(identifier: "LobbiesViewController") as! LobbiesViewController
+            vc.classData = classItem
             self.navigationController?.pushViewController(vc, animated: true)
         default:
             return
@@ -52,11 +65,11 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         case 0:
             numberOfRows = 1
         case 1:
-            numberOfRows = 1
+            numberOfRows = self.liveClasses.count
         case 2:
-            numberOfRows = 2
+            numberOfRows = self.nextClasses.count
         case 3:
-            numberOfRows = 3
+            numberOfRows = self.pastClasses.count
         default:
             numberOfRows = 0
         }
@@ -72,7 +85,8 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
-            cell.headerLabel.text = "Nate's Hip Hop Class II"
+            let classItem = self.liveClasses[indexPath.row]
+            cell.headerLabel.text = classItem["name"] as? String
             cell.lblClassTime.isHidden = true
             cell.joinClassBtn.setTitle("Join Live Class", for: .normal)
             cell.viewDot.backgroundColor = UIColor(red: 0x15, green: 0xEC, blue: 0xC1)
@@ -81,8 +95,9 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
-            cell.headerLabel.text = "Nate's Hip Hop Class III"
-            cell.lblClassTime.text = "Nov 12th 2018\n12:00PM EST"
+            let classItem = self.nextClasses[indexPath.row]
+            cell.headerLabel.text = classItem["name"] as? String
+            cell.lblClassTime.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "E, MMM d yyyy\nh:mm a 'EST'")
             cell.lblClassTime.isHidden = false
             cell.joinClassBtn.setTitle("Notify", for: .normal)
             cell.viewDot.backgroundColor = UIColor(red: 0xED, green: 0xED, blue: 0xED)
@@ -91,9 +106,10 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
-            cell.headerLabel.text = "Nate's Hip Hop Class"
+            let classItem = self.pastClasses[indexPath.row]
+            cell.headerLabel.text = classItem["name"] as? String
             cell.lblClassTime.isHidden = true
-            cell.joinClassBtn.setTitle("10 Lobbies", for: .normal)
+            cell.joinClassBtn.setTitle("\(classItem["lobbies_count"] as! Int) Lobbies", for: .normal)
             cell.viewDot.backgroundColor = UIColor(red: 0xF8, green: 0xC7, blue: 0xCD)
             cell.indexPath = indexPath
             cell.delegate = self
@@ -161,6 +177,10 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             guard let teacherId = self?.instructor["id"] as? Int else {
                 self?.view.makeToast(MSG_INSTRUCTOR_INVAILD_ID)
                 // empty tableview
+                self?.pastClasses = []
+                self?.liveClasses = []
+                self?.nextClasses = []
+                self?.classDetailTableView.reloadData()
                 return
             }
             // API
@@ -192,12 +212,33 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
                             break
                         }
 
-                        print(data)
-                        
+                        self?.pastClasses = []
+                        self?.liveClasses = []
+                        self?.nextClasses = []
+                        for classItem in data {
+                            guard let classType = classItem["type"] as? String else {
+                                continue
+                            }
+                            switch classType {
+                            case "archived":
+                                self?.pastClasses.append(classItem)
+                            case "live":
+                                self?.liveClasses.append(classItem)
+                            case "next":
+                                self?.nextClasses.append(classItem)
+                            default:
+                                continue
+                            }
+                        }
                     }
                     if error == true {
                         
+                        self?.pastClasses = []
+                        self?.liveClasses = []
+                        self?.nextClasses = []
+                        
                         DispatchQueue.main.async(execute: {
+                            self?.classDetailTableView.reloadData()
                             self?.classDetailTableView.cr.endHeaderRefresh()
                             MKProgress.hide()
                             self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
@@ -205,6 +246,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
                     }
                     else {
                         DispatchQueue.main.async(execute: {
+                            self?.classDetailTableView.reloadData()
                             self?.classDetailTableView.cr.endHeaderRefresh()
                             MKProgress.hide()
                         })
@@ -250,6 +292,4 @@ extension ClassDetailsViewController: DescriptionCellDelegate {
     func didChangeDescription(_ sender: DescriptionCell) {
         print("=======changed")
     }
-    
-    
 }

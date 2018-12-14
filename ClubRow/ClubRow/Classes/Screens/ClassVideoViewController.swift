@@ -33,6 +33,8 @@ class ClassVideoViewController: SuperViewController {
     var membersForStrokes = [ClassMember]()
     var membersForWattage = [ClassMember]()
     
+    var lobbyId: Int = 0
+    
     @IBOutlet weak var playerListPanel: UIView!
     @IBOutlet weak var topBarPanel: UIView!
     @IBOutlet weak var startingTimePanel: UIView!
@@ -45,6 +47,7 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var labelTotalDistance: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +68,7 @@ class ClassVideoViewController: SuperViewController {
         C2ScanningManager.shared.addDelegate(self)
         
         SocketManager.sharedManager.delegate = self
+        SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
         
         if lobbyState == KEY_LOBBY_STATE_ACCEPTING || lobbyState == KEY_LOBBY_STATE_FINISHED {
             self.startingTimePanel.isHidden = false
@@ -342,11 +346,20 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     }
     
     func SocketDidOpen(msg: String) {
-        
+        let topic = "lobby:\(self.lobbyId)"
+        SocketManager.sharedManager.connectChannel(topic: topic)
     }
     
     func SocketDidClose(msg: String) {
         
+    }
+    
+    func SocketDidError(msg: String) {
+        let alert = UIAlertController(title: "Socket Error", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { [weak self] (_) in
+            self?.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func SocketDidJoin(members: [ClassMember]) {

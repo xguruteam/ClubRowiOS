@@ -19,6 +19,8 @@ let KEY_API_LOAD_LIVE_CLASSES = "classes/live"
 let KEY_API_LOAD_FEATURED_CLASSES = "classes/featured"
 let KEY_API_LOAD_ALL_INSTRUCTORS = "users/instructors"
 let KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR = "teachers"
+let KEY_API_LOAD_LOBBIES_FOR_CLASS = "classes"
+let KEY_API_CREATE_LOBBY_FOR_CLASS = "classes"
 
 // FIELD KEYS
 let KEY_USER = "user"
@@ -61,6 +63,7 @@ let MSG_HOME_FAILED_LOAD_CLASSES = "Failed to load live classes"
 // Instructors
 let MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS = "Failed to load all instructors"
 let MSG_INSTRUCTOR_INVAILD_ID = "Instructor information is invalid"
+let MSG_LOBBIES_FAILED_CREATE = "Failed to create a Lobby"
 
 //lobby
 let MSG_LOBBY_WAITING_FOR_PLAYER = "Waiting for workout to start..."

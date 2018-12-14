@@ -9,11 +9,12 @@
 import Foundation
 import SwiftPhoenixClient
 import SwiftyJSON
-import KRProgressHUD
+import MKProgress
 
 protocol SocketConnectionManagerDelegate {
     func SocketDidOpen(msg: String)
     func SocketDidClose(msg: String)
+    func SocketDidError(msg: String)
     func SocketDidJoin(members: [ClassMember])
     func SocketDidPushOnCannel(message: String)
     //
@@ -39,7 +40,7 @@ class SocketManager {
     
     func socketConnect(url: String, params: Payload) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        socket = Socket(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": appDelegate.g_token])
+        socket = Socket(url: "ws://159.89.117.106:4000/socket/websocket", params: ["token": appDelegate.g_token])
         socket.onOpen {
             print("Socket has opened")
             self.delegate?.SocketDidOpen(msg: "Socket has opended")
@@ -50,6 +51,7 @@ class SocketManager {
         }
         socket.onError { error in
             print("Socket has errored: ", error.localizedDescription)
+            self.delegate?.SocketDidError(msg: "Failed to connect Server")
         }
         socket.logger = { msg in
             print(msg)
@@ -63,11 +65,9 @@ class SocketManager {
         let channel = socket.channel(topic)
         
         // join
-        KRProgressHUD.show()
         channel
             .join()
             .receive("ok") { (payload) in
-                KRProgressHUD.dismiss()
                 let dic = payload.payload["response"] as! NSDictionary
                 let keys = dic.allKeys
                 var members = [ClassMember]()
@@ -84,7 +84,6 @@ class SocketManager {
                 self.delegate?.SocketDidJoin(members: members)
         
             }.receive("error") { (payload) in
-                KRProgressHUD.dismiss()
                 self.delegate!.onErrorGetData()
                 print("Failed to join channel: ", payload)
         }
