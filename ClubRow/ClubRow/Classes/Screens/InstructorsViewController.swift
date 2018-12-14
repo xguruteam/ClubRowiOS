@@ -7,20 +7,84 @@
 //
 
 import UIKit
+import CRRefresh
+import MKProgress
+import Alamofire
+import SwiftyJSON
+
 
 class InstructorsViewController: SuperViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var instructors: [[String: Any]]! = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         collectionView?.backgroundColor = .clear
         collectionView?.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
+        
+        self.collectionView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            MKProgress.show()
+            
+            // API
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "Authorization": "Token token=\(appDelegate.g_token)"
+            ]
+            let url = SERVER_URL + KEY_API_LOAD_ALL_INSTRUCTORS
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { response in
+                    var error = false
+                    switch response.result
+                    {
+                    case .failure( _):
+                        error = true
+                        
+                    case .success( _):
+
+                        guard let raw = response.result.value as? [String: Any] else {
+                            error = true
+                            break
+                        }
+                        
+                        guard let data = raw["data"] as? [[String: Any]] else {
+                            error = true
+                            break
+                        }
+                        
+                        
+                        self?.instructors = data
+
+                    }
+                    if error == true {
+                        self?.instructors = []
+                        
+                        DispatchQueue.main.async(execute: {
+                            self?.collectionView.reloadData()
+                            self?.collectionView.cr.endHeaderRefresh()
+                            MKProgress.hide()
+                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
+                        })
+                    }
+                    else {
+                        DispatchQueue.main.async(execute: {
+                            self?.collectionView.reloadData()
+                            self?.collectionView.cr.endHeaderRefresh()
+                            MKProgress.hide()
+                        })
+                    }
+            }
+        }
+        
+        self.collectionView.cr.beginHeaderRefresh()
 
     }
     
-
     /*
     // MARK: - Navigation
 
@@ -36,14 +100,22 @@ class InstructorsViewController: SuperViewController {
 extension InstructorsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 31
+        return self.instructors.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InstrcutorCollectionViewCell", for: indexPath as IndexPath) as! InstrcutorCollectionViewCell
         
-        cell.lblNumOfClasses.text = "10 Classes "
-        cell.lblInstructorName.text = "Nate Morris"
+        let instructor = self.instructors[indexPath.row]
+        
+        cell.lblNumOfClasses.text = "No Classes"
+        
+        if let name = instructor["name"] as? String {
+            cell.lblInstructorName.text = name
+        }
+        else {
+            cell.lblInstructorName.text = "Unknown"
+        }
         
         return cell
     }
@@ -54,9 +126,11 @@ extension InstructorsViewController: UICollectionViewDelegateFlowLayout, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(indexPath.row) item clicked")
+        let instructor = self.instructors[indexPath.row]
+        print("\(instructor) item clicked")
         let vc = self.getStoryboardWithIdentifier(identifier: "ClassDetailsViewController") as! ClassDetailsViewController
-        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
+        vc.instructor = instructor
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

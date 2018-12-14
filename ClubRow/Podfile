@@ -25,6 +25,10 @@ target 'ClubRow' do
  # progress 
   pod 'ProgressHUD', '~> 2.60'
   pod 'KRProgressHUD', '~> 3.4'
+  pod 'MKProgress', '~> 1.0.9'
+  
+ # pull to refress
+  pod 'CRRefresh'
   
   pod 'XLPagerTabStrip', '~> 8.1'
 

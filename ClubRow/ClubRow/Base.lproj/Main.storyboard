@@ -1357,7 +1357,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="802"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gWv-tE-fyB">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gWv-tE-fyB">
                                 <rect key="frame" x="0.0" y="110" width="414" height="609"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="10" id="J5w-Zh-pIE">
@@ -2479,6 +2479,8 @@
                     <connections>
                         <outlet property="classDetailTableView" destination="Kfx-xB-9gf" id="JSz-rw-Jme"/>
                         <outlet property="detailView" destination="r6p-Hs-qnM" id="WDz-XZ-90c"/>
+                        <outlet property="lblInstructorName" destination="afH-OE-spU" id="YXg-sr-018"/>
+                        <outlet property="lblTitle" destination="FkO-Fe-ZTy" id="6j2-mn-EMK"/>
                         <outlet property="titleView" destination="Xvz-yy-MRN" id="BJD-g7-kwH"/>
                     </connections>
                 </viewController>

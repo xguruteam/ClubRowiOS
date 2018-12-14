@@ -7,13 +7,20 @@
 //
 
 import UIKit
+import CRRefresh
+import MKProgress
+import Alamofire
+import SwiftyJSON
 
 class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITableViewDataSource, ClassDetailCellDelegate {
     
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var classDetailTableView: UITableView!
+    @IBOutlet weak var lblInstructorName: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
     
+    var instructor: [String: Any]!
     
     @IBAction func onJoinClass(_ sender: Any) {
         let vc = self.getStoryboardWithIdentifier(identifier: "ClassVideoViewController") as! ClassVideoViewController
@@ -138,6 +145,75 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         titleView.layer.shadowRadius = 3
         
 //        viewBottom.constant = 300
+        
+        if let name = self.instructor["name"] as? String {
+            self.lblInstructorName.text = name
+            self.lblTitle.text = name
+        }
+        else {
+            self.lblInstructorName.text = "Unknown"
+            self.lblTitle.text = "Unknown"
+        }
+        
+        self.classDetailTableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            MKProgress.show()
+
+            guard let teacherId = self?.instructor["id"] as? Int else {
+                self?.view.makeToast(MSG_INSTRUCTOR_INVAILD_ID)
+                // empty tableview
+                return
+            }
+            // API
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "Authorization": "Token token=\(appDelegate.g_token)"
+            ]
+            
+            let url = SERVER_URL + KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR + "/\(teacherId)/classes"
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { response in
+                    var error = false
+                    switch response.result
+                    {
+                    case .failure( _):
+                        error = true
+                        
+                    case .success( _):
+                        
+                        guard let raw = response.result.value as? [String: Any] else {
+                            error = true
+                            break
+                        }
+                        
+                        guard let data = raw["data"] as? [[String: Any]] else {
+                            error = true
+                            break
+                        }
+
+                        print(data)
+                        
+                    }
+                    if error == true {
+                        
+                        DispatchQueue.main.async(execute: {
+                            self?.classDetailTableView.cr.endHeaderRefresh()
+                            MKProgress.hide()
+                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
+                        })
+                    }
+                    else {
+                        DispatchQueue.main.async(execute: {
+                            self?.classDetailTableView.cr.endHeaderRefresh()
+                            MKProgress.hide()
+                        })
+                    }
+            }
+        }
+        
+        self.classDetailTableView.cr.beginHeaderRefresh()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
