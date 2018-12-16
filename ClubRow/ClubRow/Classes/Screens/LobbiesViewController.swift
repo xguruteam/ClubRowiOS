@@ -79,6 +79,9 @@ class LobbiesViewController: SuperViewController {
                         MKProgress.hide(false)
                         // enter leaderboard
                         print("enter lobby \(newLobbyId)")
+                        let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
+                        vc.lobbyId = newLobbyId
+                        self.present(vc, animated: true, completion: nil)
                     })
                 }
         }
@@ -159,9 +162,16 @@ class LobbiesViewController: SuperViewController {
         }
         
         self.tableView.cr.beginHeaderRefresh()
-}
+    }
     
 
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -183,8 +193,8 @@ extension LobbiesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LobbyTableViewCell", for: indexPath) as! LobbyTableViewCell
         
         let lobby = self.lobbies[indexPath.row]
-        cell.lblMembers.text = "0"
-        cell.lblName.text = "\(lobby["user_id"] as! Int)'s Lobby"
+        cell.lblMembers.text = "\(lobby["participants_count"] as! Int)"
+        cell.lblName.text = "\(lobby["user_name"] as! String)'s Lobby"
         cell.lblStatus.text = lobby["status"] as? String
         cell.btnSelectLobby.tag = indexPath.row
         cell.delegate = self
@@ -194,6 +204,10 @@ extension LobbiesViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension LobbiesViewController: SelectLobbyDelegate {
     func onSelectLobby(_index: Int) {
-        print("\(_index) lobby selected")
+        let lobby = self.lobbies[_index]
+        print("\(lobby["id"] as! Int) lobby selected")
+        let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
+        vc.lobbyId = lobby["id"] as! Int
+        self.present(vc, animated: true, completion: nil)
     }
 }

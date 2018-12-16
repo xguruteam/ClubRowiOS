@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KRProgressHUD
+import MKProgress
 import Toast_Swift
 import Alamofire
 
@@ -45,13 +45,14 @@ class LoginViewController: SuperViewController {
                 ]
             ]
             
-            KRProgressHUD.show()
+            MKProgress.show()
             let loginRequest: String = SERVER_URL + KEY_API_SIGNIN
             Alamofire.request(loginRequest, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
-                KRProgressHUD.dismiss()
+                
                 switch response.result
                 {
                 case .failure( _):
+                    MKProgress.hide()
                     if response.data != nil {
                         
                         let alert = UIAlertController(title: APP_NAME, message: MSG_SIGNIN_FAILED_NETWORK, preferredStyle: UIAlertController.Style.alert)
@@ -69,10 +70,9 @@ class LoginViewController: SuperViewController {
                             UserDefaults.standard.synchronize()
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             appDelegate.g_token = token
-                            let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
-                            self.navigationController?.pushViewController(vc, animated: true)
+                            self.getProfile()
                         } else {
-                            
+                            MKProgress.hide()
                             let alert = UIAlertController(title: APP_NAME, message: MSG_SIGNIN_FAILED_UNKNOWN, preferredStyle: UIAlertController.Style.alert)
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
@@ -83,6 +83,48 @@ class LoginViewController: SuperViewController {
         }
         
         
+    }
+    
+    func getProfile() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let loginRequest: String = SERVER_URL + KEY_API_PROFILE
+        Alamofire.request(loginRequest, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+            MKProgress.hide()
+            switch response.result
+            {
+            case .failure( _):
+                if response.data != nil {
+                    
+                    let alert = UIAlertController(title: APP_NAME, message: MSG_SIGNIN_FAILED_NETWORK, preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .success(let value):
+                if let httpsStatusCode = response.response?.statusCode {
+                    
+                    if httpsStatusCode == 200 || httpsStatusCode == 201 {
+                        let response  = value as! NSDictionary
+                        let token_dic = response.value(forKey: "data") as! NSDictionary
+                        let token = token_dic.value(forKey: KEY_ID) as! Int
+                        UserDefaults.standard.set(token, forKey: KEY_ID)
+                        UserDefaults.standard.synchronize()
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.g_userID = token
+                        let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    } else {
+                        
+                        let alert = UIAlertController(title: APP_NAME, message: MSG_SIGNIN_FAILED_UNKNOWN, preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     func validateFields() -> Bool {

@@ -15,13 +15,14 @@ protocol SocketConnectionManagerDelegate {
     func SocketDidOpen(msg: String)
     func SocketDidClose(msg: String)
     func SocketDidError(msg: String)
-    func SocketDidJoin(members: [ClassMember])
+    func SocketDidJoin(response: [String: Any])
     func SocketDidPushOnCannel(message: String)
     //
-    func onNewParticipant(member: ClassMember)
+    func onNewParticipant(response: [String: Any])
+    func onLeaveParticipant(response: [String: Any])
     func onStartWorkout()
     func onFinishWorkout()
-    func onLeaderboardUpdated(members: [ClassMember])
+    func onLeaderboardUpdated(response: [String: Any])
     func onErrorGetData()
 //    func C2ConnectionManagerFailConnect()
 //    func C2ConnectionManagerDidReceiveData(_ parameter: CBCharacteristic)
@@ -68,20 +69,21 @@ class SocketManager {
         channel
             .join()
             .receive("ok") { (payload) in
-                let dic = payload.payload["response"] as! NSDictionary
-                let keys = dic.allKeys
-                var members = [ClassMember]()
-                var index: Int = 0
-                for key in keys {
-                    //                        print("key =========", key)
-                    let dic = dic[key as! String] as! NSDictionary
-                    let dist = dic["distance"] as! Int
-                    //                        print("dist=========", dist!)
-                    let member = ClassMember.init(name_: key as! String, distance_: "\(dist)", cal_: "\(index)", speed_: "\(index + 2)", strokes_: "\(index+4)", wattage_: "\(index + 10)") //TODO
-                    members.append(member)
-                    index += 1
-                }
-                self.delegate?.SocketDidJoin(members: members)
+//                print(payload)
+//                let dic = payload.payload["response"] as! NSDictionary
+//                let keys = dic.allKeys
+//                var members = [ClassMember]()
+//                var index: Int = 0
+//                for key in keys {
+//                    //                        print("key =========", key)
+//                    let dic = dic[key as! String] as! NSDictionary
+//                    let dist = dic["distance"] as! Int
+//                    //                        print("dist=========", dist!)
+//                    let member = ClassMember.init(name_: key as! String, distance_: "\(dist)", cal_: "\(index)", speed_: "\(index + 2)", strokes_: "\(index+4)", wattage_: "\(index + 10)") //TODO
+//                    members.append(member)
+//                    index += 1
+//                }
+                self.delegate?.SocketDidJoin(response: payload.payload["response"] as! [String: Any])
         
             }.receive("error") { (payload) in
                 self.delegate!.onErrorGetData()
@@ -89,9 +91,15 @@ class SocketManager {
         }
         // 1. new_participant
         channel.on("new_participant") { (message) in
-            let dic = message.payload as NSDictionary
-            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0", cal_: "0", speed_: "0", strokes_: "0", wattage_: "0"))
+//            let dic = message.payload as NSDictionary
+//            self.delegate!.onNewParticipant(member: ClassMember.init(name_: dic.object(forKey: "username") as! String, distance_: "0", cal_: "0", speed_: "0", strokes_: "0", wattage_: "0"))
+            self.delegate!.onNewParticipant(response: message.payload )
             print("new_participant================")
+        }
+        
+        channel.on("leave_participant") { (message) in
+            self.delegate!.onLeaveParticipant(response: message.payload )
+            print("leave_participant================")
         }
         
         // 2. workout_started
@@ -110,22 +118,25 @@ class SocketManager {
         channel.on("leaderboard_updated") { (message) in
             print("leaderboard_updated==============")
             
-            let dic = message.payload as NSDictionary
-            let keys = dic.allKeys
-            var members = [ClassMember]()
-            var index: Int = 0
-            for key in keys {
-                //                        print("key =========", key)
-                let dic = dic[key as! String] as! NSDictionary
-                let dist = dic["distance"] as! Int
-                //                        print("dist=========", dist!)
-                let member = ClassMember.init(name_: key as! String, distance_: "\(dist)", cal_: "\(index)", speed_: "\(index + 2)", strokes_: "\(index+4)", wattage_: "\(index + 10)") //TODO
-                members.append(member)
-                index += 1
-            }
-            
-            self.delegate?.onLeaderboardUpdated(members: members)
+//            let dic = message.payload as NSDictionary
+//            let keys = dic.allKeys
+//            var members = [ClassMember]()
+//            var index: Int = 0
+//            for key in keys {
+//                //                        print("key =========", key)
+//                let dic = dic[key as! String] as! NSDictionary
+//                let dist = dic["distance"] as! Int
+//                //                        print("dist=========", dist!)
+//                let member = ClassMember.init(name_: key as! String, distance_: "\(dist)", cal_: "\(index)", speed_: "\(index + 2)", strokes_: "\(index+4)", wattage_: "\(index + 10)") //TODO
+//                members.append(member)
+//                index += 1
+//            }
+//
+            self.delegate?.onLeaderboardUpdated(response: message.payload)
         }
+        
+        
+        
         lobbyChannel = channel
     }
     
@@ -135,9 +146,31 @@ class SocketManager {
         }
     }
     
-    func pushOnChannel(distance: String, wattage: String, speed: String, calories: String, strokes_per_minute: String) {
+    func pushOnChannel(distance: Int, wattage: Int, speed: Int, calories: Int, strokes_per_minute: Int) {
         lobbyChannel
             .push("workout_update", payload: ["distance": distance, "wattage": wattage, "speed": speed, "calories": calories, "strokes_per_minute": strokes_per_minute])
+            .receive("ok") { (message) in
+                print("success", message)
+            }
+            .receive("error") { (errorMessage) in
+                print("error: ", errorMessage)
+        }
+    }
+    
+    func startWorkOut() {
+        lobbyChannel
+            .push("start_workout", payload: ["token":""])
+            .receive("ok") { (message) in
+                print("success", message)
+            }
+            .receive("error") { (errorMessage) in
+                print("error: ", errorMessage)
+        }
+    }
+    
+    func finishWorkOut() {
+        lobbyChannel
+            .push("finish_workout", payload: ["token":""])
             .receive("ok") { (message) in
                 print("success", message)
             }

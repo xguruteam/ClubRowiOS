@@ -16,6 +16,7 @@ class ClassMember {
     var speed: String
     var strokes: String
     var wattage: String
+    var userID: Int = 0
     
 //    init(data: NSDictionary) {
 //        name = data.allKeys[0] as! String

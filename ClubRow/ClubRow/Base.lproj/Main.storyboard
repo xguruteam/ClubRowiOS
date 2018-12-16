@@ -2215,10 +2215,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2a7-Xh-HNK">
-                                <rect key="frame" x="0.0" y="100" width="414" height="796"/>
+                                <rect key="frame" x="0.0" y="110" width="414" height="786"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="202" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kfx-xB-9gf">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="796"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="786"/>
                                         <color key="backgroundColor" red="0.98431372549019602" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="sectionIndexBackgroundColor" red="0.98431372549019602" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <view key="tableHeaderView" contentMode="scaleToFill" id="r6p-Hs-qnM">
@@ -2468,7 +2468,7 @@
                             <constraint firstItem="2a7-Xh-HNK" firstAttribute="trailing" secondItem="6dD-Iy-Qca" secondAttribute="trailing" id="UCq-9G-1jr"/>
                             <constraint firstItem="Xvz-yy-MRN" firstAttribute="top" secondItem="3a2-g2-Xpt" secondAttribute="top" id="Xwi-YD-JNR"/>
                             <constraint firstItem="6dD-Iy-Qca" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="bottom" constant="-66" id="bMb-Pe-IWq"/>
-                            <constraint firstItem="2a7-Xh-HNK" firstAttribute="top" secondItem="3a2-g2-Xpt" secondAttribute="top" constant="100" id="gb1-fP-Mqk"/>
+                            <constraint firstItem="2a7-Xh-HNK" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="bottom" id="gb1-fP-Mqk"/>
                             <constraint firstItem="2a7-Xh-HNK" firstAttribute="leading" secondItem="6dD-Iy-Qca" secondAttribute="leading" id="iiS-ym-7el"/>
                             <constraint firstItem="Xvz-yy-MRN" firstAttribute="leading" secondItem="6dD-Iy-Qca" secondAttribute="leading" id="jCN-Rq-h5w"/>
                             <constraint firstItem="6dD-Iy-Qca" firstAttribute="trailing" secondItem="Xvz-yy-MRN" secondAttribute="trailing" id="x8J-gJ-NEO"/>
@@ -2889,11 +2889,23 @@
                                         <color key="textColor" red="0.57647058823529407" green="1" blue="0.9137254901960784" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRU-gu-VDV">
+                                        <rect key="frame" x="215.5" y="9" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="iSN-Aj-B2r"/>
+                                            <constraint firstAttribute="width" constant="30" id="vTh-RJ-kAn"/>
+                                        </constraints>
+                                        <state key="normal" image="btn_close_white.png"/>
+                                        <connections>
+                                            <action selector="onFinishWorkout:" destination="KeW-qG-aZ0" eventType="touchUpInside" id="IXP-Is-oYN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.12156862745098039" green="0.12549019607843137" blue="0.1764705882352941" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="FfM-CK-Gck" firstAttribute="centerY" secondItem="ZCj-FK-pDQ" secondAttribute="centerY" id="0x9-cU-iUo"/>
                                     <constraint firstItem="7Gd-bK-6To" firstAttribute="centerY" secondItem="ZCj-FK-pDQ" secondAttribute="centerY" id="2Ns-T1-ibL"/>
+                                    <constraint firstItem="VRU-gu-VDV" firstAttribute="centerY" secondItem="ZCj-FK-pDQ" secondAttribute="centerY" id="6FX-b8-DN4"/>
                                     <constraint firstItem="XrZ-t9-t1g" firstAttribute="centerY" secondItem="ZCj-FK-pDQ" secondAttribute="centerY" id="B0e-Oh-sg7"/>
                                     <constraint firstItem="FfM-CK-Gck" firstAttribute="leading" secondItem="ZCj-FK-pDQ" secondAttribute="leading" constant="50" id="Pf2-BE-u5P"/>
                                     <constraint firstItem="7Gd-bK-6To" firstAttribute="leading" secondItem="XrZ-t9-t1g" secondAttribute="trailing" constant="8" symbolic="YES" id="TgZ-Wx-9oA"/>
@@ -2901,6 +2913,7 @@
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Gd-bK-6To" secondAttribute="trailing" constant="11" id="g2Y-V9-wt4"/>
                                     <constraint firstAttribute="height" constant="48" id="h4c-Eq-1eu"/>
                                     <constraint firstItem="f8y-FQ-mWi" firstAttribute="centerY" secondItem="FfM-CK-Gck" secondAttribute="centerY" id="kd8-UT-0vf"/>
+                                    <constraint firstAttribute="trailing" secondItem="VRU-gu-VDV" secondAttribute="trailing" constant="50" id="ljC-da-TS9"/>
                                     <constraint firstItem="f8y-FQ-mWi" firstAttribute="leading" secondItem="FfM-CK-Gck" secondAttribute="trailing" constant="25" id="oP3-RW-6rm"/>
                                 </constraints>
                             </view>
@@ -3428,8 +3441,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SIC-qi-1ej" userLabel="MainPanel">
                                 <rect key="frame" x="35" y="78" width="230.5" height="674"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for workout to start..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvf-xs-oIR">
-                                        <rect key="frame" x="-9.5" y="325" width="249.5" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for Lobby to begin..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvf-xs-oIR">
+                                        <rect key="frame" x="-6.5" y="305" width="243.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -3440,13 +3453,34 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jc1-vP-Qyr">
+                                        <rect key="frame" x="100" y="342" width="30.5" height="50"/>
+                                        <color key="backgroundColor" red="1" green="0.52941176470588236" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="yFa-el-8iE"/>
+                                        </constraints>
+                                        <state key="normal" title="Start">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onStartWorkout:" destination="KeW-qG-aZ0" eventType="touchUpInside" id="HaP-kB-m8V"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1215686275" green="0.12549019610000001" blue="0.1764705882" alpha="0.85999999999999999" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Uby-Ge-bdo" firstAttribute="centerX" secondItem="SIC-qi-1ej" secondAttribute="centerX" id="71k-RP-P6l"/>
+                                    <constraint firstItem="Jc1-vP-Qyr" firstAttribute="centerY" secondItem="SIC-qi-1ej" secondAttribute="centerY" constant="30" id="HfK-CM-3zs"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jc1-vP-Qyr" secondAttribute="trailing" constant="100" id="Rbk-HA-qoe"/>
                                     <constraint firstItem="Nvf-xs-oIR" firstAttribute="centerX" secondItem="SIC-qi-1ej" secondAttribute="centerX" id="cw2-6K-GOL"/>
+                                    <constraint firstItem="Jc1-vP-Qyr" firstAttribute="leading" secondItem="SIC-qi-1ej" secondAttribute="leading" constant="100" id="grt-00-Oy2"/>
                                     <constraint firstItem="Uby-Ge-bdo" firstAttribute="centerY" secondItem="SIC-qi-1ej" secondAttribute="centerY" constant="15" id="pn4-cI-a0N"/>
-                                    <constraint firstItem="Nvf-xs-oIR" firstAttribute="centerY" secondItem="SIC-qi-1ej" secondAttribute="centerY" id="uMZ-fg-3he"/>
+                                    <constraint firstItem="Nvf-xs-oIR" firstAttribute="centerY" secondItem="SIC-qi-1ej" secondAttribute="centerY" constant="-20" id="uMZ-fg-3he"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -3491,6 +3525,8 @@
                         <viewLayoutGuide key="safeArea" id="83r-M5-Uw6"/>
                     </view>
                     <connections>
+                        <outlet property="btnLeave" destination="VRU-gu-VDV" id="cdY-kz-bx0"/>
+                        <outlet property="btnStart" destination="Jc1-vP-Qyr" id="FZE-vO-20Z"/>
                         <outlet property="calTableView" destination="Q5m-Xm-dMf" id="1YZ-mX-pl0"/>
                         <outlet property="distanceLabel" destination="OfR-Ww-K5s" id="gXr-nx-fEg"/>
                         <outlet property="distanceTableView" destination="4En-gK-Qnm" id="Ycf-bR-0eD"/>

@@ -42,7 +42,7 @@ class HomeViewController: SuperViewController {
         loadLiveClasses()
         loadLobbies()
         // open Socket
-        SocketManager.sharedManager.delegate = self
+//        SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
         
         self.homeTableView.refreshControl = UIRefreshControl()
@@ -293,52 +293,64 @@ extension UIView {
         self.isUserInteractionEnabled = true
     }
 }
-
-extension HomeViewController: SocketConnectionManagerDelegate {
-    
-    func onErrorGetData() {
-        self.view.makeToast("Can't join to the workout due to the network connection")
-    }
-    
-    func onNewParticipant(member: ClassMember) {
-        
-    }
-    
-    func onStartWorkout() {
-        
-    }
-    
-    func onFinishWorkout() {
-        
-    }
-    
-    func onLeaderboardUpdated(members: [ClassMember]) {
-        
-    }
-    
-    func SocketDidPushOnCannel(message: String) {
-        
-    }
-    
-    func SocketDidJoin(members: [ClassMember]) {
-        
-        let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
-        vc.distance = 0
-        vc.time = 0
-        vc.speed = 0
-        vc.lobbyState = self.selectedLobbyState
-        vc.classMembers = members
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    func SocketDidOpen(msg: String) {
-        print(msg)
-    }
-    
-    func SocketDidClose(msg: String) {
-        print(msg)
-    }
-}
+//
+//extension HomeViewController: SocketConnectionManagerDelegate {
+//    func onNewParticipant(response: [String : Any]) {
+//
+//    }
+//
+//    func onLeaveParticipant(response: [String : Any]) {
+//
+//    }
+//
+//    func SocketDidError(msg: String) {
+//
+//    }
+//
+//
+//    func onErrorGetData() {
+//        self.view.makeToast("Can't join to the workout due to the network connection")
+//    }
+//
+//    func onNewParticipant(member: ClassMember) {
+//
+//    }
+//
+//    func onStartWorkout() {
+//
+//    }
+//
+//    func onFinishWorkout() {
+//
+//    }
+//
+//    func onLeaderboardUpdated(members: [ClassMember]) {
+//
+//    }
+//
+//    func SocketDidPushOnCannel(message: String) {
+//
+//    }
+//
+//    func SocketDidJoin(response: [String : Any]) {
+//
+//        let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
+//        vc.distance = 0
+//        vc.time = 0
+//        vc.speed = 0
+//        vc.lobbyState = self.selectedLobbyState
+//        vc.classMembers = members
+//        self.present(vc, animated: true, completion: nil)
+//    }
+//
+//    func SocketDidOpen(msg: String) {
+//        print(msg)
+//    }
+//
+//    func SocketDidClose(msg: String) {
+//        print(msg)
+//    }
+//}
 
 extension HomeViewController: ClassLobbyCellDelegate {
     func onJoinClass(_ sender_id: Int, _ isExistLobby: Bool) {
@@ -357,7 +369,7 @@ extension HomeViewController: ClassLobbyCellDelegate {
                 }
                 selectedLobbyState = lobby_state
                 let topic = "lobby:\(liveClass.lobby_id)"
-                SocketManager.sharedManager.delegate = self
+//                SocketManager.sharedManager.delegate = self
                 SocketManager.sharedManager.connectChannel(topic: topic)
             }
         }
@@ -369,7 +381,7 @@ extension HomeViewController: SelectLobbyDelegate {
         
         selectedLobbyState = lobbies[_index].status
         let topic = "lobby:\(lobbies[_index].id)"
-        SocketManager.sharedManager.delegate = self
+//        SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.connectChannel(topic: topic)
     }
 }

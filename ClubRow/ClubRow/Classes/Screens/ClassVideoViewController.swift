@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreBluetooth
-import KRProgressHUD
+import MKProgress
 
 class ClassVideoViewController: SuperViewController {
     
@@ -21,9 +21,9 @@ class ClassVideoViewController: SuperViewController {
     var time: Int = 0
     var distance: Int = 0
     var speed: Int = 0
-    var wattage: String = "0"
-    var calories: String = "0"
-    var strokes_per_minute: String = "0"
+    var wattage: Int = 0
+    var calories: Int = 0
+    var strokes_per_minute: Int = 0
     var isShowingPanels: Bool = true
     var lobbyState: String = ""
     var classMembers = [ClassMember]()
@@ -47,6 +47,8 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var labelTotalDistance: UILabel!
+    @IBOutlet weak var btnStart: UIButton!
+    @IBOutlet weak var btnLeave: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,15 +72,7 @@ class ClassVideoViewController: SuperViewController {
         SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
         
-        if lobbyState == KEY_LOBBY_STATE_ACCEPTING || lobbyState == KEY_LOBBY_STATE_FINISHED {
-            self.startingTimePanel.isHidden = false
-            if lobbyState == KEY_LOBBY_STATE_FINISHED {
-                self.lblLobbyState.text = MSG_LOBBY_FINISHED
-            }
-        } else {
-            self.startingTimePanel.isHidden = true
-        }
-        sortMembers()
+        MKProgress.show()
     }
     
     func sortMembers() {
@@ -115,12 +109,11 @@ class ClassVideoViewController: SuperViewController {
         C2ScanningManager.shared.removeDelegate(self)
     }
     
-    func canRotate() -> Void {}
-
     @IBAction func onClose(_ sender: Any) {
         
-//        SocketManager.sharedManager.socket.disconnect()
+        SocketManager.sharedManager.delegate = nil
         SocketManager.sharedManager.leaveChannel()
+        SocketManager.sharedManager.socket.disconnect()
 //        self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
@@ -138,6 +131,14 @@ class ClassVideoViewController: SuperViewController {
     @IBAction func onHidePanels(_ sender: Any) {
         hidePanels(isHide: true)
         isShowingPanels = false
+    }
+    
+    @IBAction func onStartWorkout(_ sender: Any) {
+        SocketManager.sharedManager.startWorkOut()
+    }
+    
+    @IBAction func onFinishWorkout(_ sender: Any) {
+        SocketManager.sharedManager.finishWorkOut()
     }
     
     func hidePanels(isHide: Bool) {
@@ -188,7 +189,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             tmpCell.nameLabel.text = "\(membersForDistance[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if membersForDistance[indexPath.row].name == appDelegate.g_token {
+            if membersForDistance[indexPath.row].userID == appDelegate.g_userID {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -207,7 +208,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             tmpCell.nameLabel.text = "\(membersForCal[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if membersForCal[indexPath.row].name == appDelegate.g_token {
+            if membersForCal[indexPath.row].userID == appDelegate.g_userID {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -226,7 +227,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             tmpCell.nameLabel.text = "\(membersForSpeed[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if membersForSpeed[indexPath.row].name == appDelegate.g_token {
+            if membersForSpeed[indexPath.row].userID == appDelegate.g_userID {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -245,7 +246,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             tmpCell.nameLabel.text = "\(membersForStrokes[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if membersForStrokes[indexPath.row].name == appDelegate.g_token {
+            if membersForStrokes[indexPath.row].userID == appDelegate.g_userID {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -264,7 +265,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             tmpCell.nameLabel.text = "\(membersForWattage[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if membersForWattage[indexPath.row].name == appDelegate.g_token {
+            if membersForWattage[indexPath.row].userID == appDelegate.g_userID {
                 tmpCell.viewForBackPlayerList.isHidden = false
                 tmpCell.numberLabel.textColor = UIColor.black
                 tmpCell.nameLabel.textColor = UIColor.black
@@ -303,7 +304,7 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
                 self.timeLabel.text = "\(time)s"
                 self.distanceLabel.text = "\(distance)m"
                 
-                SocketManager.sharedManager.pushOnChannel(distance: "\(distance)", wattage: "\(wattage)", speed: "\(speed)", calories: "\(calories)", strokes_per_minute: "\(strokes_per_minute)")
+                SocketManager.sharedManager.pushOnChannel(distance: distance, wattage: wattage, speed: speed, calories: calories, strokes_per_minute: strokes_per_minute)
             }
         }
         
@@ -314,12 +315,12 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
                 }
                 Log.e("0x32=================== \(data)")
                 speed = Int(Float(data[3] + (data[4] << 8)) / 1000.0)
-                strokes_per_minute = "\(data[5])"
+                strokes_per_minute = data[5]
             }
             
             self.speedLabel.text = "\(speed)m/s"
             
-            SocketManager.sharedManager.pushOnChannel(distance: "\(distance)", wattage: "\(wattage)", speed: "\(speed)", calories: "\(calories)", strokes_per_minute: "\(strokes_per_minute)")
+            SocketManager.sharedManager.pushOnChannel(distance: distance, wattage: wattage, speed: speed, calories: calories, strokes_per_minute: strokes_per_minute)
         }
         
         if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR33_UUID {
@@ -328,11 +329,11 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
                     Int(i)
                 }
                 Log.e("0x33================ \(data)")
-                wattage = "\(data[10] + (data[11] << 8))"
-                calories = "\(data[12] + (data[13] << 8))"
+                wattage = data[10] + (data[11] << 8)
+                calories = data[12] + (data[13] << 8)
             }
             
-            SocketManager.sharedManager.pushOnChannel(distance: "\(distance)", wattage: "\(wattage)", speed: "\(speed)", calories: "\(calories)", strokes_per_minute: "\(strokes_per_minute)")
+            SocketManager.sharedManager.pushOnChannel(distance: distance, wattage: wattage, speed: speed, calories: calories, strokes_per_minute: strokes_per_minute)
         }
         
 //        labelTotalDistance.text = "\(time) s : \(distance) m : \(speed) m/s"
@@ -342,7 +343,13 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
 extension ClassVideoViewController: SocketConnectionManagerDelegate {
     
     func onErrorGetData() {
-    
+        SocketManager.sharedManager.disconnectOnSocket()
+        MKProgress.hide(false)
+        let alert = UIAlertController(title: "Lobby Error", message: "Failed to Get Data", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { [weak self] (_) in
+            self?.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func SocketDidOpen(msg: String) {
@@ -355,15 +362,51 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     }
     
     func SocketDidError(msg: String) {
+        MKProgress.hide(false)
         let alert = UIAlertController(title: "Socket Error", message: msg, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { [weak self] (_) in
+        alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { [weak self] (_) in
             self?.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
-    func SocketDidJoin(members: [ClassMember]) {
+    func SocketDidJoin(response: [String: Any]) {
         
+        self.lobbyState = response["lobby_status"] as! String
+        
+        if lobbyState == KEY_LOBBY_STATE_ACCEPTING || lobbyState == KEY_LOBBY_STATE_FINISHED {
+            self.startingTimePanel.isHidden = false
+            if lobbyState == KEY_LOBBY_STATE_FINISHED {
+                self.lblLobbyState.text = MSG_LOBBY_FINISHED
+            }
+        } else {
+            self.startingTimePanel.isHidden = true
+        }
+        
+        let owned = response["owned"] as! Bool
+        if owned == true && lobbyState == KEY_LOBBY_STATE_ACCEPTING {
+            self.btnStart.isHidden = false
+        }
+        else {
+            self.btnStart.isHidden = true
+        }
+        
+        if owned == true && lobbyState != KEY_LOBBY_STATE_FINISHED {
+            self.btnLeave.isHidden = false
+        }
+        else {
+            self.btnLeave.isHidden = true
+        }
+
+        
+        var members = [ClassMember]()
+        let memberData = response["members"] as! [[String: Any]]
+        for member in memberData {
+            let memberItem = ClassMember.init(name_: member["username"] as! String, distance_: "\(member["distance"] as! Int)", cal_: "\(member["calories"] as! Int)", speed_: "\(member["speed"] as! Int)", strokes_: "\(member["strokes_per_minute"] as! Int)", wattage_: "\(member["wattage"] as! Int)")
+            memberItem.userID = member["user_id"] as! Int
+            members.append(memberItem)
+        }
+
         classMembers = members
         sortMembers()
         self.distanceTableView.reloadData()
@@ -371,13 +414,19 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         self.speedTableView.reloadData()
         self.strokesTableView.reloadData()
         self.wattageTableView.reloadData()
+        
+        MKProgress.hide()
+
     }
     
     func SocketDidPushOnCannel(message: String) {
         
     }
     
-    func onNewParticipant(member: ClassMember) {
+    func onNewParticipant(response: [String: Any]) {
+        
+        let member = ClassMember.init(name_: response["username"] as! String, distance_: "0", cal_: "0", speed_: "0", strokes_: "0", wattage_: "0")
+        member.userID = response["user_id"] as! Int
         classMembers.append(member)
         sortMembers()
         self.distanceTableView.reloadData()
@@ -387,6 +436,12 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         self.wattageTableView.reloadData()
         
         self.view.makeToast("\(member.name) has joined to this workout")
+    }
+    
+    func onLeaveParticipant(response: [String : Any]) {
+        let member = ClassMember.init(name_: response["username"] as! String, distance_: "0", cal_: "0", speed_: "0", strokes_: "0", wattage_: "0")
+        member.userID = response["user_id"] as! Int
+        self.view.makeToast("\(member.name) has left")
     }
     
     func onStartWorkout() {
@@ -400,9 +455,17 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         self.lobbyState = KEY_LOBBY_STATE_FINISHED
         self.lblLobbyState.text = MSG_LOBBY_FINISHED
         self.startingTimePanel.isHidden = false
+        self.btnStart.isHidden = true
+        self.btnLeave.isHidden = true
     }
     
-    func onLeaderboardUpdated(members: [ClassMember]) {
+    func onLeaderboardUpdated(response: [String : Any]) {
+        let members = response.map { (key, value) -> ClassMember in
+            let data = value as! [String: Any]
+            let classMember = ClassMember.init(name_: key, distance_: "\(data["distance"] as! Int)", cal_: "\(data["calories"] as! Int)", speed_: "\(data["speed"] as! Int)", strokes_: "\(data["strokes_per_minute"] as! Int)", wattage_: "\(data["wattage"] as! Int)")
+            classMember.userID = data["user_id"] as! Int
+            return classMember
+        }
         classMembers = members
         sortMembers()
         self.distanceTableView.reloadData()

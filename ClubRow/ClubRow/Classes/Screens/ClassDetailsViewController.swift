@@ -35,9 +35,12 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         case 1:
             print("Join Live Class")
             let classItem = self.liveClasses[indexPath.row]
-            let topic = "lobby:\(classItem["lobby_id"] as! Int)"
-            SocketManager.sharedManager.delegate = self
-            SocketManager.sharedManager.connectChannel(topic: topic)
+//            let topic = "lobby:\(classItem["lobby_id"] as! Int)"
+//            SocketManager.sharedManager.delegate = self
+//            SocketManager.sharedManager.connectChannel(topic: topic)
+            let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
+            vc.lobbyId = classItem["lobby_id"] as! Int
+            self.present(vc, animated: true, completion: nil)
         case 2:
             print("Set notify")
             let classItem = self.nextClasses[indexPath.row]
@@ -125,7 +128,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             
             cell.textView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
             
-            let fixedWidth = cell.textView.frame.size.width
+            let fixedWidth = tableView.frame.size.width - 28 * 2
             
             cell.textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
             let newSize = cell.textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
@@ -134,7 +137,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
             cell.textView.frame = newFrame
             
-            return cell.textView.frame.height + 80
+            return cell.textView.frame.height + 50
         case 1:
             return 170
         case 2:
