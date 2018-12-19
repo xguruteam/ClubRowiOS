@@ -108,7 +108,7 @@ extension InstructorsViewController: UICollectionViewDelegateFlowLayout, UIColle
         
         let instructor = self.instructors[indexPath.row]
         
-        cell.lblNumOfClasses.text = "No Classes"
+        cell.lblNumOfClasses.text = Util.generateNumberOfClassesText(instructor["classes_count"] as! Int)
         
         if let name = instructor["name"] as? String {
             cell.lblInstructorName.text = name

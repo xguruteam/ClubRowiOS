@@ -112,7 +112,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             let classItem = self.pastClasses[indexPath.row]
             cell.headerLabel.text = classItem["name"] as? String
             cell.lblClassTime.isHidden = true
-            cell.joinClassBtn.setTitle("\(classItem["lobbies_count"] as! Int) Lobbies", for: .normal)
+            cell.joinClassBtn.setTitle(Util.generateNumberOfLobbiesText(classItem["lobbies_count"] as! Int), for: .normal)
             cell.viewDot.backgroundColor = UIColor(red: 0xF8, green: 0xC7, blue: 0xCD)
             cell.indexPath = indexPath
             cell.delegate = self

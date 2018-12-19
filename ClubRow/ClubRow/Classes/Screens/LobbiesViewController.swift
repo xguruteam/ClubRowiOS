@@ -138,7 +138,22 @@ class LobbiesViewController: SuperViewController {
                             break
                         }
                         
-                        self?.lobbies = data
+                        self?.lobbies = data.filter({ (lobby) -> Bool in
+                            if let status = lobby["status"] as? String {
+                                switch status {
+                                case "accepting_participants":
+                                    return true
+//                                case "workout_finished":
+//                                case "workout_in_progress":
+                                default:
+                                    return false
+                                }
+                            }
+                            else {
+                                return false
+                            }
+
+                        })
                     }
                     if error == true {
                         
@@ -195,7 +210,22 @@ extension LobbiesViewController: UITableViewDelegate, UITableViewDataSource {
         let lobby = self.lobbies[indexPath.row]
         cell.lblMembers.text = "\(lobby["participants_count"] as! Int)"
         cell.lblName.text = "\(lobby["user_name"] as! String)'s Lobby"
-        cell.lblStatus.text = lobby["status"] as? String
+        
+        if let status = lobby["status"] as? String {
+            switch status {
+            case "accepting_participants":
+                cell.lblStatus.text = "Accepting Participants"
+            case "workout_finished":
+                cell.lblStatus.text = "Workout Finished"
+            case "workout_in_progress":
+                cell.lblStatus.text = "Workout in Progress"
+            default:
+                cell.lblStatus.text = "Unknown"
+            }
+        }
+        else {
+            cell.lblStatus.text = "Unknown"
+        }
         cell.btnSelectLobby.tag = indexPath.row
         cell.delegate = self
         return cell

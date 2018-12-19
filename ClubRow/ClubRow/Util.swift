@@ -26,4 +26,26 @@ class Util: NSObject {
         targetDateFormatter.dateFormat = format
         return targetDateFormatter.string(from: date!)
     }
+    
+    static func generateNumberOfClassesText(_ number: Int) -> String {
+        switch number {
+        case 0:
+            return "No Class"
+        case 1:
+            return "1 Class"
+        default:
+            return "\(number) Classes"
+        }
+    }
+    
+    static func generateNumberOfLobbiesText(_ number: Int) -> String {
+        switch number {
+        case 0:
+            return "No Lobby"
+        case 1:
+            return "1 Lobby"
+        default:
+            return "\(number) Lobbies"
+        }
+    }
 }
