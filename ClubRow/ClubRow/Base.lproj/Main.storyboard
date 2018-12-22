@@ -5543,19 +5543,19 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nate's hip Hop Class II" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="EZn-8d-U7F">
-                                                                    <rect key="frame" x="20" y="16.5" width="274" height="17"/>
+                                                                    <rect key="frame" x="20" y="21.5" width="274" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nate Morris" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXL-Kh-85A">
-                                                                    <rect key="frame" x="25" y="43.5" width="274" height="16"/>
+                                                                    <rect key="frame" x="20" y="53.5" width="279" height="16"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM EST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prt-N9-oqc">
-                                                                    <rect key="frame" x="220" y="44.5" width="74" height="14"/>
+                                                                    <rect key="frame" x="220" y="54.5" width="74" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -5565,10 +5565,10 @@
                                                             <constraints>
                                                                 <constraint firstItem="zyo-Xl-UhN" firstAttribute="centerY" secondItem="ANC-Hf-5Aj" secondAttribute="centerY" id="1nK-cM-uMx"/>
                                                                 <constraint firstItem="zyo-Xl-UhN" firstAttribute="width" secondItem="ANC-Hf-5Aj" secondAttribute="width" id="20x-P9-yR3"/>
-                                                                <constraint firstItem="EZn-8d-U7F" firstAttribute="centerY" secondItem="ANC-Hf-5Aj" secondAttribute="centerY" constant="5" id="52H-bC-0X5"/>
-                                                                <constraint firstItem="YXL-Kh-85A" firstAttribute="leading" secondItem="gHc-dD-ni8" secondAttribute="leading" constant="25" id="DeI-8O-88K"/>
+                                                                <constraint firstItem="EZn-8d-U7F" firstAttribute="centerY" secondItem="ANC-Hf-5Aj" secondAttribute="centerY" constant="10" id="52H-bC-0X5"/>
+                                                                <constraint firstItem="YXL-Kh-85A" firstAttribute="leading" secondItem="gHc-dD-ni8" secondAttribute="leading" constant="20" id="DeI-8O-88K"/>
                                                                 <constraint firstAttribute="trailing" secondItem="YXL-Kh-85A" secondAttribute="trailing" constant="5" id="Hnx-oY-Yd4"/>
-                                                                <constraint firstItem="YXL-Kh-85A" firstAttribute="top" secondItem="EZn-8d-U7F" secondAttribute="bottom" constant="10" id="JK5-5a-kLz"/>
+                                                                <constraint firstItem="YXL-Kh-85A" firstAttribute="top" secondItem="EZn-8d-U7F" secondAttribute="bottom" constant="15" id="JK5-5a-kLz"/>
                                                                 <constraint firstItem="EZn-8d-U7F" firstAttribute="leading" secondItem="gHc-dD-ni8" secondAttribute="leading" constant="20" id="Kt7-dz-99e"/>
                                                                 <constraint firstItem="ANC-Hf-5Aj" firstAttribute="top" secondItem="gHc-dD-ni8" secondAttribute="top" constant="10" id="N4h-OB-XJG"/>
                                                                 <constraint firstAttribute="trailing" secondItem="ANC-Hf-5Aj" secondAttribute="trailing" constant="10" id="PFx-gD-sHj"/>
@@ -5605,6 +5605,12 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cardView" destination="gHc-dD-ni8" id="Wzu-fS-QTz"/>
+                                            <outlet property="lblDate" destination="5TY-6u-41w" id="S0E-MI-AiJ"/>
+                                            <outlet property="lblDay" destination="iMU-T6-8NZ" id="jFn-4a-Url"/>
+                                            <outlet property="lblInstructorName" destination="YXL-Kh-85A" id="Eo8-Nh-ubH"/>
+                                            <outlet property="lblMonth" destination="4e1-rQ-wdv" id="ILM-Eh-Hlv"/>
+                                            <outlet property="lblNameOfClass" destination="EZn-8d-U7F" id="QdI-2P-bhE"/>
+                                            <outlet property="lblTime" destination="prt-N9-oqc" id="qkQ-Vq-g8c"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -22,6 +22,7 @@ let KEY_API_LOAD_ALL_INSTRUCTORS = "users/instructors"
 let KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR = "teachers"
 let KEY_API_LOAD_LOBBIES_FOR_CLASS = "classes"
 let KEY_API_CREATE_LOBBY_FOR_CLASS = "classes"
+let KEY_API_LOAD_NEXT_CLASSES = "classes/next"
 
 // FIELD KEYS
 let KEY_USER = "user"

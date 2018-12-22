@@ -18,6 +18,12 @@ class ClassCell: UITableViewCell {
     
     var delegate:ClassCellDelegate?
     @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var lblNameOfClass: UILabel!
+    @IBOutlet weak var lblInstructorName: UILabel!
+    @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var lblMonth: UILabel!
+    @IBOutlet weak var lblDay: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

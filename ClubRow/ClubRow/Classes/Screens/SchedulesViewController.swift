@@ -10,6 +10,10 @@ import UIKit
 import FSCalendar
 import SwiftEntryKit
 import Presentr
+import CRRefresh
+import MKProgress
+import Alamofire
+import SwiftyJSON
 
 class SchedulesViewController: SuperViewController, UITableViewDelegate, UITableViewDataSource, ClassCellDelegate {
     
@@ -27,6 +31,8 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
     var isShowedCalendar:Bool!
     
     var calendar:FSCalendar!
+    
+    var classes: [[String: Any]]! = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +62,65 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
         
         // Do any additional setup after loading the view.
         self.setRoundView(radius: 10.0, view: viewCalendar)
+        
+        self.tableview.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            MKProgress.show()
+            
+            // API
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "Authorization": "Token token=\(appDelegate.g_token)"
+            ]
+            
+            let url = SERVER_URL + KEY_API_LOAD_NEXT_CLASSES
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { response in
+                    var error = false
+                    switch response.result
+                    {
+                    case .failure( _):
+                        error = true
+                        
+                    case .success( _):
+                        
+                        guard let raw = response.result.value as? [String: Any] else {
+                            error = true
+                            break
+                        }
+                        
+                        guard let data = raw["data"] as? [[String: Any]] else {
+                            error = true
+                            break
+                        }
+                        
+//                        print(data)
+                        self?.classes = data
+                        
+                    }
+                    if error == true {
+                        
+                        self?.classes = []
+                        DispatchQueue.main.async(execute: {
+                            self?.tableview.reloadData()
+                            self?.tableview.cr.endHeaderRefresh()
+                            MKProgress.hide()
+                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
+                        })
+                    }
+                    else {
+                        DispatchQueue.main.async(execute: {
+                            self?.tableview.reloadData()
+                            self?.tableview.cr.endHeaderRefresh()
+                            MKProgress.hide()
+                        })
+                    }
+            }
+        }
+        
+        self.tableview.cr.beginHeaderRefresh()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,7 +140,6 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
 //        let calendar = FSCalendar(frame: CGRect(x: 30, y: titleHeight - height, width: width, height: height))
         //calendar.dataSource = self
         //calendar.delegate = self
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +209,14 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellClass") as! ClassCell
+        let classItem = self.classes[indexPath.row]
+        let instructor = classItem["teacher"] as! [String: Any]
+        cell.lblMonth.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "MMMM")
+        cell.lblDate.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "d")
+        cell.lblDay.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "E")
+        cell.lblNameOfClass.text = classItem["name"] as! String
+        cell.lblInstructorName.text = instructor["name"] as! String
+        cell.lblTime.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "h:mm a 'EST'")
         cell.delegate = self
         return cell
     }
@@ -173,11 +245,14 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.classes.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = self.getStoryboardWithIdentifier(identifier: "ClassDetailsViewController") as! ClassDetailsViewController
+        let classItem = self.classes[indexPath.row] as! [String: Any]
+        let instructor = classItem["teacher"] as! [String: Any]
+        vc.instructor = instructor
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
