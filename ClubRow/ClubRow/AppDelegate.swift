@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var g_token: String = ""
     var g_userID: Int = 0
+    var g_name: String = "Sir"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -29,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let savedValue = userdefaults.string(forKey: KEY_TOKEN){
             g_token = savedValue
             g_userID = userdefaults.integer(forKey: KEY_ID)
+            g_name = userdefaults.string(forKey: KEY_NAME)!
         }
         
         return true

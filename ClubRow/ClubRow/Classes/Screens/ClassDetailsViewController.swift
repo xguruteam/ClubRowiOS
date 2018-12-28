@@ -175,9 +175,9 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         }
         
         self.classDetailTableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
-            MKProgress.show()
+            
 
-            guard let teacherId = self?.instructor["id"] as? Int else {
+            guard let teacherId = self?.instructor["user_id"] as? Int else {
                 self?.view.makeToast(MSG_INSTRUCTOR_INVAILD_ID)
                 // empty tableview
                 self?.pastClasses = []
@@ -186,6 +186,9 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
                 self?.classDetailTableView.reloadData()
                 return
             }
+            
+            MKProgress.show()
+            
             // API
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             
@@ -244,7 +247,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
                             self?.classDetailTableView.reloadData()
                             self?.classDetailTableView.cr.endHeaderRefresh()
                             MKProgress.hide()
-                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
+                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_CLASSES)
                         })
                     }
                     else {

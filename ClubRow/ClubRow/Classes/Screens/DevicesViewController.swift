@@ -13,6 +13,7 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var rightBarButtonItem: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

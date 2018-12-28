@@ -41,7 +41,7 @@ class SocketManager {
     
     func socketConnect(url: String, params: Payload) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        socket = Socket(url: "ws://159.89.117.106:4000/socket/websocket", params: ["token": appDelegate.g_token])
+        socket = Socket(url: "ws://35.196.177.1:4000/socket/websocket", params: ["token": appDelegate.g_token])
         socket.onOpen {
             print("Socket has opened")
             self.delegate?.SocketDidOpen(msg: "Socket has opended")

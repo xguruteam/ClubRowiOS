@@ -13,6 +13,7 @@ import CoreBluetooth
 
 class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
 
+    @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var viewSummaryBtn: UIButton!
     @IBOutlet weak var viewDetailsBtn: UIButton!
     
@@ -148,6 +149,10 @@ class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
         series5.area = false
         
         viewChart.add([series1, series2, series3, series4, series5])
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.lblName.text = "Hey \(appDelegate.g_name)"
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

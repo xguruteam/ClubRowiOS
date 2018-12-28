@@ -17,8 +17,6 @@ class ProfileViewController: SuperViewController {
     @IBOutlet weak var profileTableView: UITableView!
     @IBOutlet weak var titleView: UIView!
     
-    
-    
     @IBOutlet var viewChart: Chart!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +56,7 @@ class ProfileViewController: SuperViewController {
         titleView.layer.shadowOpacity = 0.07
         titleView.layer.shadowRadius = 3
      
+        
     }
 
     override func didReceiveMemoryWarning() {

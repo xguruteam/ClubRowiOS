@@ -9,7 +9,7 @@
 import Foundation
 
 let APP_NAME = "ClubRow"
-let SERVER_URL = "http://159.89.117.106:4000/api/"
+let SERVER_URL = "http://35.196.177.1:4000/api/"
 
 // API KEYS
 let KEY_API_SIGNUP = "users/participants/sign-up"
@@ -19,7 +19,7 @@ let KEY_API_LOAD_LOBBIES = "lobbies"
 let KEY_API_LOAD_LIVE_CLASSES = "classes/live"
 let KEY_API_LOAD_FEATURED_CLASSES = "classes/featured"
 let KEY_API_LOAD_ALL_INSTRUCTORS = "users/instructors"
-let KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR = "teachers"
+let KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR = "users"
 let KEY_API_LOAD_LOBBIES_FOR_CLASS = "classes"
 let KEY_API_CREATE_LOBBY_FOR_CLASS = "classes"
 let KEY_API_LOAD_NEXT_CLASSES = "classes/next"
@@ -30,6 +30,7 @@ let KEY_EMAIL = "email"
 let KEY_PASSWORD = "password"
 let KEY_TOKEN = "token"
 let KEY_ID = "id"
+let KEY_NAME = "name"
 let KEY_FIRST_NAME = "first_name"
 let KEY_LAST_NAME = "last_name"
 let KEY_PASSWORD_CONFIRMATION = "password_confirmation"
@@ -65,6 +66,7 @@ let MSG_HOME_FAILED_LOAD_CLASSES = "Failed to load live classes"
 
 // Instructors
 let MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS = "Failed to load all instructors"
+let MSG_INSTRUCTORS_FAILED_LOAD_CLASSES = "Failed to load classes"
 let MSG_INSTRUCTOR_INVAILD_ID = "Instructor information is invalid"
 let MSG_LOBBIES_FAILED_CREATE = "Failed to create a Lobby"
 
