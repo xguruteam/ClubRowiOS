@@ -158,7 +158,6 @@
 		CA1F42D221A3E87B00901ADB /* ic_bell_unselected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CC21A3E87500901ADB /* ic_bell_unselected@3x.png */; };
 		CA1F42D321A3E87B00901ADB /* ic_bell_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */; };
 		CA1F42D421A3E87B00901ADB /* ic_bell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */; };
-		CA391EAF21D8F1BB00C4C883 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA391EAE21D8F1BB00C4C883 /* RootViewController.swift */; };
 		CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA87661C21C16C2700B31B7E /* UIView+Box.swift */; };
 		CAC4368B21C106D600B0BDCA /* ic_avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC4368A21C106CE00B0BDCA /* ic_avatar_default.png */; };
 		CAC4368D21C1078C00B0BDCA /* LobbiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */; };
@@ -182,6 +181,7 @@
 		CACDCAD921C0AF0900E7A85D /* btn_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CACDCACD21C0AF0900E7A85D /* btn_close@3x.png */; };
 		CACDCADB21C0AFB800E7A85D /* InstructorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCADA21C0AFB800E7A85D /* InstructorsViewController.swift */; };
 		CACDCADD21C0BBC900E7A85D /* InstrcutorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCADC21C0BBC900E7A85D /* InstrcutorCollectionViewCell.swift */; };
+		CACF145021D97D2B006817E2 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACF144F21D97D2B006817E2 /* RootViewController.swift */; };
 		F580CC481327293742D752A2 /* Pods_ClubRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D769B2ED5F887EC1438CC1 /* Pods_ClubRow.framework */; };
 /* End PBXBuildFile section */
 
@@ -343,7 +343,6 @@
 		CA1F42CC21A3E87500901ADB /* ic_bell_unselected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bell_unselected@3x.png"; sourceTree = "<group>"; };
 		CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_unselected.png; sourceTree = "<group>"; };
 		CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_selected.png; sourceTree = "<group>"; };
-		CA391EAE21D8F1BB00C4C883 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		CA87661C21C16C2700B31B7E /* UIView+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Box.swift"; sourceTree = "<group>"; };
 		CAC4368A21C106CE00B0BDCA /* ic_avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_avatar_default.png; sourceTree = "<group>"; };
 		CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbiesViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +366,7 @@
 		CACDCACD21C0AF0900E7A85D /* btn_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_close@3x.png"; sourceTree = "<group>"; };
 		CACDCADA21C0AFB800E7A85D /* InstructorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorsViewController.swift; sourceTree = "<group>"; };
 		CACDCADC21C0BBC900E7A85D /* InstrcutorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrcutorCollectionViewCell.swift; sourceTree = "<group>"; };
+		CACF144F21D97D2B006817E2 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,7 +550,7 @@
 		3E3DA44C21634A2400B5055C /* Super */ = {
 			isa = PBXGroup;
 			children = (
-				CA391EAE21D8F1BB00C4C883 /* RootViewController.swift */,
+				CACF144F21D97D2B006817E2 /* RootViewController.swift */,
 				3E3DA44A21634A1700B5055C /* SuperViewController.swift */,
 				3E3DA4542163552A00B5055C /* TabbarViewController.swift */,
 			);
@@ -994,7 +994,7 @@
 				3E0D70D5216A35F900F6BC95 /* ClassDetailsViewController.swift in Sources */,
 				3EFFA67D2175DA22002B5678 /* ContainerViewController.swift in Sources */,
 				A416C2A9219D08DA0038D67E /* ProfileHistoryCell.swift in Sources */,
-				CA391EAF21D8F1BB00C4C883 /* RootViewController.swift in Sources */,
+				CACF145021D97D2B006817E2 /* RootViewController.swift in Sources */,
 				3E0D70D8216A432A00F6BC95 /* ClassCell.swift in Sources */,
 				A4973DB021AF23D000A29EBD /* LiveClass.swift in Sources */,
 				3E565587216DEEDC00EF8964 /* SummaryTwoViewController.swift in Sources */,
@@ -1153,14 +1153,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CQ6T4PP523;
+				DEVELOPMENT_TEAM = W8C7268ZCN;
 				INFOPLIST_FILE = ClubRow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -1175,14 +1175,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CQ6T4PP523;
+				DEVELOPMENT_TEAM = W8C7268ZCN;
 				INFOPLIST_FILE = ClubRow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
