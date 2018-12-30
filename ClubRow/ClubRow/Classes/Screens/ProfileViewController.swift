@@ -75,8 +75,22 @@ class ProfileViewController: SuperViewController {
     }
     
     @IBAction func onSetting(_ sender: Any) {
-        let vc = self.getStoryboardWithIdentifier(identifier: "DevicesViewController") as! DevicesViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let alert = UIAlertController(title: "Settings", message: "Where would you like to go?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Scan", style: .default, handler: { (_) in
+            let vc = self.getStoryboardWithIdentifier(identifier: "DevicesViewController") as! DevicesViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (_) in
+            UserDefaults.standard.set(nil, forKey: KEY_TOKEN)
+            UserDefaults.standard.synchronize()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.g_token = ""
+            RootViewController.instance.dismiss(animated: true, completion: nil)
+        }))
+
+        self.present(alert, animated: true, completion: nil)
     }
     
     

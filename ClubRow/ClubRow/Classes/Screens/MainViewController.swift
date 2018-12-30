@@ -41,6 +41,10 @@ class MainViewController: SuperViewController {
         self.selectTabButton(tag: (currentIndex + 1))
         
         MainViewController.sharedViewController = self
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.mainViewController = self
+
     }
 
     override func didReceiveMemoryWarning() {

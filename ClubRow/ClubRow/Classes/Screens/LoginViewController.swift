@@ -19,7 +19,17 @@ class LoginViewController: SuperViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if (appDelegate.g_token == "") {
+        } else {
+            MKProgress.show()
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
+                MKProgress.hide()
+                let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
+                RootViewController.instance.present(vc, animated: true, completion: nil)
+            }
+        }
+
     }
 		
     override func didReceiveMemoryWarning() {
@@ -118,7 +128,9 @@ class LoginViewController: SuperViewController {
                         appDelegate.g_userID = token
                         appDelegate.g_name = name
                         let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        appDelegate.mainViewController = vc
+//                        self.navigationController?.pushViewController(vc, animated: true)
+                        RootViewController.instance.present(vc, animated: true, completion: nil)
                     } else {
                         
                         let alert = UIAlertController(title: APP_NAME, message: MSG_SIGNIN_FAILED_UNKNOWN, preferredStyle: UIAlertController.Style.alert)
