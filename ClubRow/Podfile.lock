@@ -24,6 +24,7 @@ PODS:
   - Toast-Swift (4.0.1)
   - XLPagerTabStrip (8.1.1)
   - XLSlidingContainer (2.0.0)
+  - YouTubePlayer (0.4.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - Toast-Swift (~> 4.0.0)
   - XLPagerTabStrip (~> 8.1)
   - XLSlidingContainer (~> 2.0)
+  - YouTubePlayer
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -70,6 +72,7 @@ SPEC REPOS:
     - Toast-Swift
     - XLPagerTabStrip
     - XLSlidingContainer
+    - YouTubePlayer
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -94,7 +97,8 @@ SPEC CHECKSUMS:
   Toast-Swift: e42a638589a2f95036b4bb7626cfbdde7daf0393
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
   XLSlidingContainer: cbafcc24034cc7ad495e66c01130b9932e2ebf10
+  YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 7bb9847bbc70bb2cd5df1d0dc401c46708d9961e
+PODFILE CHECKSUM: 8c44c53d2523acb5945bad75b65417a4069448d1
 
 COCOAPODS: 1.5.3

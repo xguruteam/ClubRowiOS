@@ -2736,8 +2736,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <gestureRecognizers/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-lY-eJZ" customClass="YouTubePlayerView" customModule="YouTubePlayer">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRX-kp-yUN">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="MZ5-V5-dTM" appends="YES" id="QQj-e9-HHH"/>
@@ -3189,7 +3193,7 @@
                                                     <outlet property="delegate" destination="KeW-qG-aZ0" id="noP-E0-CwC"/>
                                                 </connections>
                                             </tableView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dn6-w9-Jll" customClass="ClassMember">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dn6-w9-Jll">
                                                 <rect key="frame" x="355" y="10" width="118.5" height="836"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
@@ -3480,7 +3484,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="yRX-kp-yUN" firstAttribute="trailing" secondItem="83r-M5-Uw6" secondAttribute="trailing" id="1rr-Dw-eJj"/>
-                            <constraint firstItem="yRX-kp-yUN" firstAttribute="top" secondItem="83r-M5-Uw6" secondAttribute="top" id="2Lj-dz-E6L"/>
+                            <constraint firstItem="yRX-kp-yUN" firstAttribute="top" secondItem="kFz-YG-Aqw" secondAttribute="top" id="2Lj-dz-E6L"/>
                             <constraint firstItem="yRX-kp-yUN" firstAttribute="leading" secondItem="83r-M5-Uw6" secondAttribute="leading" id="2qo-1I-rwK"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="height" secondItem="PvF-Ou-nik" secondAttribute="height" id="47x-Qf-6qj"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="leading" secondItem="PvF-Ou-nik" secondAttribute="trailing" constant="40" id="DM3-b4-p4K"/>
@@ -3489,7 +3493,7 @@
                             <constraint firstItem="FuJ-ZB-g0u" firstAttribute="leading" secondItem="ZCj-FK-pDQ" secondAttribute="trailing" id="I8L-Bj-KDx"/>
                             <constraint firstItem="jrb-x0-Su1" firstAttribute="top" secondItem="kFz-YG-Aqw" secondAttribute="top" id="IQS-Wf-OcD"/>
                             <constraint firstItem="PvF-Ou-nik" firstAttribute="centerY" secondItem="HnY-8p-tdC" secondAttribute="centerY" id="IV4-Qa-9p8"/>
-                            <constraint firstItem="83r-M5-Uw6" firstAttribute="bottom" secondItem="yRX-kp-yUN" secondAttribute="bottom" id="JyY-PD-RJd"/>
+                            <constraint firstAttribute="bottom" secondItem="yRX-kp-yUN" secondAttribute="bottom" id="JyY-PD-RJd"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="centerY" secondItem="PvF-Ou-nik" secondAttribute="centerY" id="Kp4-hh-mrK"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="width" secondItem="PvF-Ou-nik" secondAttribute="width" id="L74-0N-Tsx"/>
                             <constraint firstItem="jrb-x0-Su1" firstAttribute="leading" secondItem="kFz-YG-Aqw" secondAttribute="leading" id="Lin-py-7UW"/>
@@ -3497,6 +3501,7 @@
                             <constraint firstItem="PvF-Ou-nik" firstAttribute="leading" secondItem="HnY-8p-tdC" secondAttribute="trailing" constant="40" id="UWA-MH-MpX"/>
                             <constraint firstItem="FuJ-ZB-g0u" firstAttribute="centerY" secondItem="kFz-YG-Aqw" secondAttribute="centerY" id="WZh-Ez-Uve"/>
                             <constraint firstItem="PvF-Ou-nik" firstAttribute="width" secondItem="HnY-8p-tdC" secondAttribute="width" id="Wmh-F7-nhc"/>
+                            <constraint firstAttribute="bottom" secondItem="sJa-lY-eJZ" secondAttribute="bottom" id="Y1c-Fu-gVz"/>
                             <constraint firstItem="SIC-qi-1ej" firstAttribute="leading" secondItem="83r-M5-Uw6" secondAttribute="leading" constant="35" id="YFP-Wx-R09"/>
                             <constraint firstItem="FuJ-ZB-g0u" firstAttribute="height" secondItem="kFz-YG-Aqw" secondAttribute="height" id="ceG-fA-4K4"/>
                             <constraint firstItem="PvF-Ou-nik" firstAttribute="height" secondItem="HnY-8p-tdC" secondAttribute="height" id="dlh-Qj-rGi"/>
@@ -3505,8 +3510,11 @@
                             <constraint firstItem="ZCj-FK-pDQ" firstAttribute="leading" secondItem="kFz-YG-Aqw" secondAttribute="leading" id="h3w-7q-szX"/>
                             <constraint firstItem="HnY-8p-tdC" firstAttribute="top" secondItem="SIC-qi-1ej" secondAttribute="bottom" constant="20" id="lga-kB-hId"/>
                             <constraint firstAttribute="trailing" secondItem="FuJ-ZB-g0u" secondAttribute="trailing" id="m9b-cZ-qbV"/>
+                            <constraint firstAttribute="trailing" secondItem="sJa-lY-eJZ" secondAttribute="trailing" id="pE0-sE-Kk9"/>
+                            <constraint firstItem="sJa-lY-eJZ" firstAttribute="leading" secondItem="kFz-YG-Aqw" secondAttribute="leading" id="qyR-tf-ctv"/>
                             <constraint firstAttribute="bottom" secondItem="jrb-x0-Su1" secondAttribute="bottom" id="uMG-GH-9dg"/>
                             <constraint firstItem="ZCj-FK-pDQ" firstAttribute="width" secondItem="kFz-YG-Aqw" secondAttribute="width" multiplier="2:2.8" id="uyE-Up-4Sb"/>
+                            <constraint firstItem="sJa-lY-eJZ" firstAttribute="top" secondItem="kFz-YG-Aqw" secondAttribute="top" id="xPD-sp-46a"/>
                             <constraint firstItem="83r-M5-Uw6" firstAttribute="bottom" secondItem="HnY-8p-tdC" secondAttribute="bottom" constant="5" id="yOX-sU-0Z5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="83r-M5-Uw6"/>
@@ -3521,6 +3529,7 @@
                         <outlet property="labelTotalDistance" destination="XrZ-t9-t1g" id="hOm-b0-jTD"/>
                         <outlet property="lblLobbyState" destination="Nvf-xs-oIR" id="FgH-Mu-UEo"/>
                         <outlet property="playerListPanel" destination="FuJ-ZB-g0u" id="1Vr-th-w8c"/>
+                        <outlet property="playerView" destination="sJa-lY-eJZ" id="dzt-fc-ZYi"/>
                         <outlet property="speedLabel" destination="TZK-YN-mzH" id="ihU-Hk-8yZ"/>
                         <outlet property="speedTableView" destination="yc1-1x-S9v" id="nFe-xD-aS7"/>
                         <outlet property="speedView" destination="JR2-XO-rKp" id="YYY-y4-4b9"/>

@@ -9,6 +9,7 @@
 import UIKit
 import CoreBluetooth
 import MKProgress
+import YouTubePlayer
 
 class ClassVideoViewController: SuperViewController {
     
@@ -17,6 +18,7 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var speedTableView: UITableView!
     @IBOutlet weak var strokesTableView: UITableView!
     @IBOutlet weak var wattageTableView: UITableView!
+    @IBOutlet weak var playerView: YouTubePlayerView!
     
     var time: Int = 0
     var distance: Int = 0
@@ -72,6 +74,22 @@ class ClassVideoViewController: SuperViewController {
         SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
         
+        playerView.delegate = self
+        playerView.playerVars = [
+            "playsinline": "1",
+            "controls": "0",
+            "showinfo": "1",
+            "color": "red",
+            "loop": "1",
+            "autoplay": "1",
+            "fs":"0",
+            "modestbranding": "1",
+            "rel": "0",
+            "cc_load_policy": "0",
+            ] as YouTubePlayerView.YouTubePlayerParameters
+        playerView.loadVideoID("tQvWfRolsaQ")
+//        playerView.loadVideoID("_6u6UrtXUEI")
+        playerView.isHidden = true
         MKProgress.show()
     }
     
@@ -475,4 +493,34 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         self.wattageTableView.reloadData()
     }
     
+}
+
+extension ClassVideoViewController: YouTubePlayerDelegate {
+    func playerReady(_ videoPlayer: YouTubePlayerView) {
+        print(#function)
+        playerView.play()
+    }
+    
+    func playerStateChanged(_ videoPlayer: YouTubePlayerView, playerState: YouTubePlayerState) {
+        switch playerState {
+        case .Buffering:
+            print("\(#function): Buffering")
+        case .Ended:
+            print("\(#function): Ended")
+            playerView.play()
+        case .Paused:
+            print("\(#function): Paused")
+        case .Playing:
+            print("\(#function): Playing")
+            playerView.isHidden = false
+        case .Queued:
+            print("\(#function): Queued")
+        case .Unstarted:
+            print("\(#function): Unstrated")
+        }
+    }
+    
+    func playerQualityChanged(_ videoPlayer: YouTubePlayerView, playbackQuality: YouTubePlaybackQuality) {
+        
+    }
 }

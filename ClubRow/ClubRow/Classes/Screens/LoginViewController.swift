@@ -26,7 +26,7 @@ class LoginViewController: SuperViewController {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
                 MKProgress.hide()
                 let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
-                RootViewController.instance.present(vc, animated: true, completion: nil)
+                self.present(vc, animated: true, completion: nil)
             }
         }
 
