@@ -38,6 +38,7 @@ class ClassVideoViewController: SuperViewController {
     var lobbyId: Int = 0
     
     @IBOutlet weak var playerListPanel: UIView!
+    @IBOutlet weak var pllayerListScrollView: UIScrollView!
     @IBOutlet weak var topBarPanel: UIView!
     @IBOutlet weak var startingTimePanel: UIView!
     @IBOutlet weak var timeView: UIView!
@@ -90,6 +91,8 @@ class ClassVideoViewController: SuperViewController {
         playerView.loadVideoID("tQvWfRolsaQ")
 //        playerView.loadVideoID("_6u6UrtXUEI")
         playerView.isHidden = true
+        
+        pllayerListScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         MKProgress.show()
     }
     
@@ -105,7 +108,7 @@ class ClassVideoViewController: SuperViewController {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override func viewWillAppear(_ animated: Bool) {

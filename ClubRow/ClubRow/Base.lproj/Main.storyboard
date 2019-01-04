@@ -2732,13 +2732,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" translatesAutoresizingMaskIntoConstraints="NO" id="jrb-x0-Su1">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jrb-x0-Su1">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-lY-eJZ" customClass="YouTubePlayerView" customModule="YouTubePlayer">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gQv-LN-fZk">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-lY-eJZ" customClass="YouTubePlayerView" customModule="YouTubePlayer">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRX-kp-yUN">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -3287,7 +3291,7 @@
                                                     <outlet property="delegate" destination="KeW-qG-aZ0" id="g0a-7O-z1T"/>
                                                 </connections>
                                             </tableView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5iX-jz-eO5" userLabel="Wattage Table View">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5iX-jz-eO5" userLabel="Wattage Table View">
                                                 <rect key="frame" x="473.5" y="10" width="118" height="836"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
@@ -3382,6 +3386,7 @@
                                                 </connections>
                                             </tableView>
                                         </subviews>
+                                        <color key="backgroundColor" red="0.1215686275" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="5iX-jz-eO5" secondAttribute="trailing" id="0fH-A3-tNB"/>
                                             <constraint firstItem="5iX-jz-eO5" firstAttribute="width" secondItem="dn6-w9-Jll" secondAttribute="width" id="6b5-Wb-TCu"/>
@@ -3487,6 +3492,7 @@
                             <constraint firstItem="yRX-kp-yUN" firstAttribute="top" secondItem="kFz-YG-Aqw" secondAttribute="top" id="2Lj-dz-E6L"/>
                             <constraint firstItem="yRX-kp-yUN" firstAttribute="leading" secondItem="83r-M5-Uw6" secondAttribute="leading" id="2qo-1I-rwK"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="height" secondItem="PvF-Ou-nik" secondAttribute="height" id="47x-Qf-6qj"/>
+                            <constraint firstItem="gQv-LN-fZk" firstAttribute="centerY" secondItem="kFz-YG-Aqw" secondAttribute="centerY" id="9OA-ns-1OY"/>
                             <constraint firstItem="JR2-XO-rKp" firstAttribute="leading" secondItem="PvF-Ou-nik" secondAttribute="trailing" constant="40" id="DM3-b4-p4K"/>
                             <constraint firstItem="HnY-8p-tdC" firstAttribute="leading" secondItem="83r-M5-Uw6" secondAttribute="leading" constant="40" id="FKD-gA-cCe"/>
                             <constraint firstAttribute="trailing" secondItem="jrb-x0-Su1" secondAttribute="trailing" id="HKo-QN-s5X"/>
@@ -3508,6 +3514,7 @@
                             <constraint firstItem="SIC-qi-1ej" firstAttribute="top" secondItem="ZCj-FK-pDQ" secondAttribute="bottom" constant="30" id="eLL-af-fht"/>
                             <constraint firstItem="FuJ-ZB-g0u" firstAttribute="leading" secondItem="SIC-qi-1ej" secondAttribute="trailing" constant="30" id="fGy-pL-zBf"/>
                             <constraint firstItem="ZCj-FK-pDQ" firstAttribute="leading" secondItem="kFz-YG-Aqw" secondAttribute="leading" id="h3w-7q-szX"/>
+                            <constraint firstItem="gQv-LN-fZk" firstAttribute="centerX" secondItem="kFz-YG-Aqw" secondAttribute="centerX" id="lgP-aF-PqW"/>
                             <constraint firstItem="HnY-8p-tdC" firstAttribute="top" secondItem="SIC-qi-1ej" secondAttribute="bottom" constant="20" id="lga-kB-hId"/>
                             <constraint firstAttribute="trailing" secondItem="FuJ-ZB-g0u" secondAttribute="trailing" id="m9b-cZ-qbV"/>
                             <constraint firstAttribute="trailing" secondItem="sJa-lY-eJZ" secondAttribute="trailing" id="pE0-sE-Kk9"/>
@@ -3530,6 +3537,7 @@
                         <outlet property="lblLobbyState" destination="Nvf-xs-oIR" id="FgH-Mu-UEo"/>
                         <outlet property="playerListPanel" destination="FuJ-ZB-g0u" id="1Vr-th-w8c"/>
                         <outlet property="playerView" destination="sJa-lY-eJZ" id="dzt-fc-ZYi"/>
+                        <outlet property="pllayerListScrollView" destination="dPS-ng-36S" id="lfI-Jw-36N"/>
                         <outlet property="speedLabel" destination="TZK-YN-mzH" id="ihU-Hk-8yZ"/>
                         <outlet property="speedTableView" destination="yc1-1x-S9v" id="nFe-xD-aS7"/>
                         <outlet property="speedView" destination="JR2-XO-rKp" id="YYY-y4-4b9"/>
@@ -6155,7 +6163,6 @@
         <image name="bg_rec.png" width="354" height="241"/>
         <image name="bg_rec_gray.png" width="210" height="210"/>
         <image name="bg_toolbar.png" width="989" height="265"/>
-        <image name="bg_video.png" width="1624" height="750"/>
         <image name="btn_close.png" width="24" height="24"/>
         <image name="btn_close_white.png" width="24" height="24"/>
         <image name="ic_arrow_down.png" width="33" height="32"/>
