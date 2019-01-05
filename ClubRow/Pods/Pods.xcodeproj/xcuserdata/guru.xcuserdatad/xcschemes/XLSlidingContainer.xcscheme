@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AD6FD7941D358B7D240E35F37D5CB687"
+               BlueprintIdentifier = "2C834D52661D72CC2D6597E234D031A8"
                BlueprintName = "XLSlidingContainer"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "XLSlidingContainer.framework">

@@ -144,6 +144,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/BmoViewPager/BmoViewPager.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Device/Device.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EChart/EChart.framework"
@@ -169,6 +170,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/BmoViewPager/BmoViewPager.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Device/Device.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EChart/EChart.framework"

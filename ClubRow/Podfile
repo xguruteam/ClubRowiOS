@@ -30,7 +30,9 @@ target 'ClubRow' do
  # pull to refress
   pod 'CRRefresh'
   
+  # ViewPager & Tab
   pod 'XLPagerTabStrip', '~> 8.1'
+  pod 'BmoViewPager'
 
  # Alert
   pod 'SimpleAlert', '~> 3.1'

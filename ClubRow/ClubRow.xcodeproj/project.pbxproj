@@ -159,6 +159,9 @@
 		CA1F42D321A3E87B00901ADB /* ic_bell_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */; };
 		CA1F42D421A3E87B00901ADB /* ic_bell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */; };
 		CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA87661C21C16C2700B31B7E /* UIView+Box.swift */; };
+		CAC1A76421E0467B000CB386 /* AverageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76321E0467B000CB386 /* AverageViewController.swift */; };
+		CAC1A76621E04DA0000CB386 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76521E04D9F000CB386 /* SegmentedView.swift */; };
+		CAC1A76821E05591000CB386 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76721E05591000CB386 /* ParameterView.swift */; };
 		CAC4368B21C106D600B0BDCA /* ic_avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC4368A21C106CE00B0BDCA /* ic_avatar_default.png */; };
 		CAC4368D21C1078C00B0BDCA /* LobbiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */; };
 		CAC4369421C112F100B0BDCA /* ic_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC4368E21C112C900B0BDCA /* ic_group.png */; };
@@ -344,6 +347,9 @@
 		CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_unselected.png; sourceTree = "<group>"; };
 		CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_selected.png; sourceTree = "<group>"; };
 		CA87661C21C16C2700B31B7E /* UIView+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Box.swift"; sourceTree = "<group>"; };
+		CAC1A76321E0467B000CB386 /* AverageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageViewController.swift; sourceTree = "<group>"; };
+		CAC1A76521E04D9F000CB386 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
+		CAC1A76721E05591000CB386 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
 		CAC4368A21C106CE00B0BDCA /* ic_avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_avatar_default.png; sourceTree = "<group>"; };
 		CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbiesViewController.swift; sourceTree = "<group>"; };
 		CAC4368E21C112C900B0BDCA /* ic_group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_group.png; sourceTree = "<group>"; };
@@ -384,10 +390,12 @@
 		3E0D70D6216A430300F6BC95 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CAC1A76521E04D9F000CB386 /* SegmentedView.swift */,
 				3EFFA6842175E6D5002B5678 /* DragView.xib */,
 				3E904FEF216AC9230052CF68 /* NibDateView.xib */,
 				3E0D70D7216A432A00F6BC95 /* ClassCell.swift */,
 				3EE73C1D216AAC2600A20AF4 /* NibDateView.swift */,
+				CAC1A76721E05591000CB386 /* ParameterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -584,6 +592,7 @@
 				A40951B4217C8093001EE7A5 /* DevicesViewController.swift */,
 				CACDCADA21C0AFB800E7A85D /* InstructorsViewController.swift */,
 				CAC4368C21C1078C00B0BDCA /* LobbiesViewController.swift */,
+				CAC1A76321E0467B000CB386 /* AverageViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -859,6 +868,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ClubRow/Pods-ClubRow-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BmoViewPager/BmoViewPager.framework",
 				"${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/Device/Device.framework",
 				"${BUILT_PRODUCTS_DIR}/EChart/EChart.framework",
@@ -885,6 +895,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BmoViewPager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CRRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Device.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EChart.framework",
@@ -972,6 +983,7 @@
 				A431BABA219322D8002BB3EF /* SocketManager.swift in Sources */,
 				3EE73C2A216AAEFB00A20AF4 /* UIScreen+Utils.swift in Sources */,
 				3EE73C26216AAEFB00A20AF4 /* CGRect+Utils.swift in Sources */,
+				CAC1A76821E05591000CB386 /* ParameterView.swift in Sources */,
 				A4780E1E21B1F87500F047F6 /* ClassMemberForSpeedCell.swift in Sources */,
 				CAC4368D21C1078C00B0BDCA /* LobbiesViewController.swift in Sources */,
 				3E3DA45B21635A2900B5055C /* ClassesViewController.swift in Sources */,
@@ -994,10 +1006,12 @@
 				A416C2A7219D08BC0038D67E /* ProfileDetailCell.swift in Sources */,
 				3E3DA44F21634A7300B5055C /* MainViewController.swift in Sources */,
 				3E0D70D5216A35F900F6BC95 /* ClassDetailsViewController.swift in Sources */,
+				CAC1A76421E0467B000CB386 /* AverageViewController.swift in Sources */,
 				3EFFA67D2175DA22002B5678 /* ContainerViewController.swift in Sources */,
 				A416C2A9219D08DA0038D67E /* ProfileHistoryCell.swift in Sources */,
 				CACF145021D97D2B006817E2 /* RootViewController.swift in Sources */,
 				3E0D70D8216A432A00F6BC95 /* ClassCell.swift in Sources */,
+				CAC1A76621E04DA0000CB386 /* SegmentedView.swift in Sources */,
 				A4973DB021AF23D000A29EBD /* LiveClass.swift in Sources */,
 				3E565587216DEEDC00EF8964 /* SummaryTwoViewController.swift in Sources */,
 				3EDED410216B535B00167FEF /* SortFilterViewController.swift in Sources */,
@@ -1154,8 +1168,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W8C7268ZCN;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = D4J7AW2S69;
 				INFOPLIST_FILE = ClubRow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1164,7 +1178,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clubrowfitness.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = All_Dev_160129;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1176,8 +1190,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W8C7268ZCN;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ClubRow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

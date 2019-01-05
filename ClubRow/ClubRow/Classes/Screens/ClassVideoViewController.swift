@@ -79,7 +79,7 @@ class ClassVideoViewController: SuperViewController {
         playerView.playerVars = [
             "playsinline": "1",
             "controls": "0",
-            "showinfo": "1",
+            "showinfo": "0",
             "color": "red",
             "loop": "1",
             "autoplay": "1",
@@ -483,8 +483,8 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
     func onLeaderboardUpdated(response: [String : Any]) {
         let members = response.map { (key, value) -> ClassMember in
             let data = value as! [String: Any]
-            let classMember = ClassMember.init(name_: key, distance_: "\(data["distance"] as! Int)", cal_: "\(data["calories"] as! Int)", speed_: "\(data["speed"] as! Int)", strokes_: "\(data["strokes_per_minute"] as! Int)", wattage_: "\(data["wattage"] as! Int)")
-            classMember.userID = data["user_id"] as! Int
+            let classMember = ClassMember.init(name_: data["username"] as! String, distance_: "\(data["distance"] as! Int)", cal_: "\(data["calories"] as! Int)", speed_: "\(data["speed"] as! Int)", strokes_: "\(data["strokes_per_minute"] as! Int)", wattage_: "\(data["wattage"] as! Int)")
+            classMember.userID = Int(key)!
             return classMember
         }
         classMembers = members

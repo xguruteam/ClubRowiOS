@@ -11,6 +11,12 @@ import SwiftChart
 import CoreBluetooth
 import Device
 
+import CRRefresh
+import MKProgress
+import Alamofire
+import SwiftyJSON
+
+
 class ProfileViewController: SuperViewController {
     @IBOutlet weak var top: NSLayoutConstraint!
     
@@ -18,6 +24,12 @@ class ProfileViewController: SuperViewController {
     @IBOutlet weak var titleView: UIView!
     
     @IBOutlet var viewChart: Chart!
+    
+    var histories: [[String: Any]]! = []
+    var average: [String: Any]! = [:]
+    var statistics: [[String: Any]]! = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +68,156 @@ class ProfileViewController: SuperViewController {
         titleView.layer.shadowOpacity = 0.07
         titleView.layer.shadowRadius = 3
      
+        self.profileTableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            MKProgress.show()
+            
+            self?.loadAverage()
+        }
         
+        self.profileTableView.cr.beginHeaderRefresh()
+
+    }
+    
+    func loadHistory() {
+        // history
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + "statistics/history"
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                var error = false
+                switch response.result
+                {
+                case .failure( _):
+                    error = true
+                    
+                case .success( _):
+                    
+                    guard let raw = response.result.value as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    guard let data = raw["data"] as? [[String: Any]] else {
+                        error = true
+                        break
+                    }
+            
+                    self.histories = data
+                    
+                    self.loadGraph()
+                }
+                if error == true {
+                    self.onLoadError()
+                }
+                
+        }
+    }
+    
+    func loadAverage() {
+        // API
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + "/statistics/average?period=day"
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                var error = false
+                switch response.result
+                {
+                case .failure( _):
+                    error = true
+                    
+                case .success( _):
+                    
+                    guard let raw = response.result.value as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    guard let data = raw["data"] as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    self.average = data
+                    
+                    self.loadHistory()
+
+                }
+                if error == true {
+                    self.onLoadError()
+                }
+                
+        }
+    }
+    
+    func loadGraph() {
+        // history
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + "statistics/session/\(1)"
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                var error = false
+                switch response.result
+                {
+                case .failure( _):
+                    error = true
+                    
+                case .success( _):
+                    
+                    guard let raw = response.result.value as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    guard let data = raw["data"] as? [[String: Any]] else {
+                        error = true
+                        break
+                    }
+                    
+                    self.statistics = data
+                    
+                }
+                if error == true {
+                    self.onLoadError()
+                }
+                else {
+                    self.onLoadFinish()
+                }
+        }
+    }
+    
+    func onLoadError() {
+        histories = []
+        average = [:]
+        DispatchQueue.main.async(execute: {
+            //                            self?.collectionView.reloadData()
+            self.profileTableView.cr.endHeaderRefresh()
+            self.profileTableView.reloadData()
+            MKProgress.hide()
+            //                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
+        })
+    }
+    
+    func onLoadFinish() {
+        DispatchQueue.main.async(execute: {
+            self.profileTableView.cr.endHeaderRefresh()
+            self.profileTableView.reloadData()
+            MKProgress.hide()
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -160,7 +321,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
-            return 1116
+            return 1090
         default:
             return 49
         }

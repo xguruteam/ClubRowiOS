@@ -103,25 +103,6 @@ class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
         //        }
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Initialization code
-        viewSummaryBtn.layer.cornerRadius = 8
-        viewDetailsBtn.layer.cornerRadius = 8
-        
-        gradientOn(view: distanceView)
-        gradientOn(view: caloriesView)
-        gradientOn(view: speedView)
-        gradientOn(view: strokesView)
-        gradientOn(view: wattageView)
-        
-        cornerRadiusOn(view: distanceView)
-        cornerRadiusOn(view: caloriesView)
-        cornerRadiusOn(view: speedView)
-        cornerRadiusOn(view: strokesView)
-        cornerRadiusOn(view: wattageView)
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
