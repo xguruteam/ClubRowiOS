@@ -10,6 +10,8 @@ import UIKit
 
 class ProfileHistoryCell: UITableViewCell {
 
+    @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var lblClassName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

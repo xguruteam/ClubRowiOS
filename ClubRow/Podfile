@@ -42,5 +42,8 @@ target 'ClubRow' do
   
   # Live Video
   pod 'YouTubePlayer'
+  
+  # Chart & Graph
+  pod 'ScrollableGraphView'
 
 end

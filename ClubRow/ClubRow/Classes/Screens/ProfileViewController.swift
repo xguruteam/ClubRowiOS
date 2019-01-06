@@ -23,10 +23,10 @@ class ProfileViewController: SuperViewController {
     @IBOutlet weak var profileTableView: UITableView!
     @IBOutlet weak var titleView: UIView!
     
-    @IBOutlet var viewChart: Chart!
+    @IBOutlet var viewChart: LineChart!
     
     var histories: [[String: Any]]! = []
-    var average: [String: Any]! = [:]
+    var average: [String: Any]! = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
     var statistics: [[String: Any]]! = []
     
     
@@ -78,46 +78,6 @@ class ProfileViewController: SuperViewController {
 
     }
     
-    func loadHistory() {
-        // history
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/json",
-            "Authorization": "Token token=\(appDelegate.g_token)"
-        ]
-        let url = SERVER_URL + "statistics/history"
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
-            .responseJSON { response in
-                var error = false
-                switch response.result
-                {
-                case .failure( _):
-                    error = true
-                    
-                case .success( _):
-                    
-                    guard let raw = response.result.value as? [String: Any] else {
-                        error = true
-                        break
-                    }
-                    
-                    guard let data = raw["data"] as? [[String: Any]] else {
-                        error = true
-                        break
-                    }
-            
-                    self.histories = data
-                    
-                    self.loadGraph()
-                }
-                if error == true {
-                    self.onLoadError()
-                }
-                
-        }
-    }
-    
     func loadAverage() {
         // API
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -159,7 +119,7 @@ class ProfileViewController: SuperViewController {
         }
     }
     
-    func loadGraph() {
+    func loadHistory() {
         // history
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -167,7 +127,55 @@ class ProfileViewController: SuperViewController {
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + "statistics/session/\(1)"
+        let url = SERVER_URL + "statistics/history"
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                var error = false
+                switch response.result
+                {
+                case .failure( _):
+                    error = true
+                    
+                case .success( _):
+                    
+                    guard let raw = response.result.value as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    guard let data = raw["data"] as? [[String: Any]] else {
+                        error = true
+                        break
+                    }
+                    
+                    self.histories = data
+                    
+                    self.loadGraph()
+                }
+                if error == true {
+                    self.onLoadError()
+                }
+                
+        }
+    }
+
+    func loadGraph() {
+        
+        guard let lastHistory = self.histories.last else {
+            self.statistics = []
+            onLoadFinish()
+            return
+        }
+        
+        
+        // history
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + "statistics/session/\(lastHistory["id"] as! Int)"
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 var error = false
@@ -189,7 +197,12 @@ class ProfileViewController: SuperViewController {
                     }
                     
                     self.statistics = data
-                    
+                    self.statistics = [
+                        ["distance": 10, "wattage": 3, "speed": 5, "strokes_per_minute": 8, "calories": 2],
+                        ["distance": 3, "wattage": 10, "speed": 1, "strokes_per_minute": 4, "calories": 3],
+                        ["distance": 20, "wattage": 7, "speed": 7, "strokes_per_minute": 2, "calories": 5],
+                        ["distance": 5, "wattage": 15, "speed": 0, "strokes_per_minute": 8, "calories": 7],
+                    ]
                 }
                 if error == true {
                     self.onLoadError()
@@ -202,7 +215,8 @@ class ProfileViewController: SuperViewController {
     
     func onLoadError() {
         histories = []
-        average = [:]
+        average = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+        statistics = []
         DispatchQueue.main.async(execute: {
             //                            self?.collectionView.reloadData()
             self.profileTableView.cr.endHeaderRefresh()
@@ -226,7 +240,16 @@ class ProfileViewController: SuperViewController {
     }
     
     @IBAction func onViewSummary(_ sender: Any) {
+        
+        guard let lastHistory = self.histories.last else {
+            self.statistics = []
+            onLoadFinish()
+            return
+        }
+        
         let vc = self.getStoryboardWithIdentifier(identifier: "SummaryOneViewController") as! SummaryOneViewController
+        vc.history = lastHistory
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -259,7 +282,6 @@ class ProfileViewController: SuperViewController {
     @IBAction func onDetails(_ sender: Any) {
         let vc = self.getStoryboardWithIdentifier(identifier: "SummaryTwoViewController") as! SummaryTwoViewController
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     /*
@@ -305,15 +327,76 @@ class ProfileViewController: SuperViewController {
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("====", indexPath.row)
         switch indexPath.row {
             
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileDetailCell") as! ProfileDetailCell
             cell.selectionStyle = .none
+            
+            
+            cell.labelDistance.text = "\((average["distance"] as? Int) ?? 0)"
+            cell.labelCalories.text = "\(average["calories"] as? Int ?? 0)"
+            cell.labelSpeed.text = "\(average["speed"] as? Int ?? 0)"
+            cell.labelStrokes.text = "\(average["strokes_per_minute"] as? Int ?? 0)"
+            cell.labelWattage.text = "\(average["wattage"] as? Int ?? 0)"
+            
+            
+            cell.viewChart.animation.enabled = true
+            cell.viewChart.area = false
+            cell.viewChart.x.grid.visible = false
+            cell.viewChart.y.grid.visible = false
+            cell.viewChart.y.labels.visible = false
+            cell.viewChart.x.labels.visible = true
+            cell.viewChart.colors = [
+                UIColor(rgb: 0xF8C7CD),
+                UIColor(rgb: 0x93FFE9),
+                UIColor(rgb: 0xFFC793),
+                UIColor(rgb: 0xB693FF),
+                UIColor(rgb: 0x93DFFF),
+            ]
+            
+            if self.statistics.count == 0 {
+                cell.viewChart.clear()
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+            }
+            else {
+            
+                cell.viewChart.clear()
+                
+                var data: [CGFloat]
+                data = self.statistics.map({ (point) -> CGFloat in
+                    return CGFloat(point["distance"] as? Int ?? 0)
+                })
+                cell.viewChart.addLine(data)
+                data = self.statistics.map({ (point) -> CGFloat in
+                    return CGFloat(point["calories"] as? Int ?? 0)
+                })
+                cell.viewChart.addLine(data)
+                data = self.statistics.map({ (point) -> CGFloat in
+                    return CGFloat(point["speed"] as? Int ?? 0)
+                })
+                cell.viewChart.addLine(data)
+                data = self.statistics.map({ (point) -> CGFloat in
+                    return CGFloat(point["strokes_per_minute"] as? Int ?? 0)
+                })
+                cell.viewChart.addLine(data)
+                data = self.statistics.map({ (point) -> CGFloat in
+                    return CGFloat(point["wattage"] as? Int ?? 0)
+                })
+                cell.viewChart.addLine(data)
+            }
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileHistoryCell") as! ProfileHistoryCell
+            cell.selectionStyle = .none
+            
+            let history = histories[indexPath.row - 1]
+            cell.lblDate.text = Util.convertTimeStamp("\(history["inserted_at"] as! String)Z", format: "MM/dd/yyyy")
+            cell.lblClassName.text = history["class_name"] as? String
             return cell
         }
     }
@@ -328,11 +411,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.histories.count + 1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            return
+        }
         let vc = self.getStoryboardWithIdentifier(identifier: "SummaryOneViewController") as! SummaryOneViewController
+        vc.history = histories[indexPath.row - 1]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -8,36 +8,179 @@
 
 import UIKit
 import SwiftChart
+import CRRefresh
+import MKProgress
+import Alamofire
+import SwiftyJSON
 
-class SummaryOneViewController: SuperViewController {
 
-    @IBOutlet weak var viewChart: Chart!
+class SummaryOneViewController: SuperViewController, LineChartDelegate {
+
+    @IBOutlet weak var lblClassName: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var viewChart: LineChart!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var lblDistance: UILabel!
+    
+    @IBOutlet weak var lblCalories: UILabel!
+    
+    @IBOutlet weak var lblSpeed: UILabel!
+    
+    @IBOutlet weak var lblStrokes: UILabel!
+    
+    @IBOutlet weak var lblWattage: UILabel!
+    
+    var history: [String: Any]!
+    var statistics: [[String: Any]]! = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        let series1 = ChartSeries([0, 6, 2, 8, 4, 7, 3, 10, 8])
-        series1.color = ChartColors.yellowColor()
-        series1.area = false
+        lblDate.text = Util.convertTimeStamp("\(history["inserted_at"] as! String)Z", format: "MM/dd/yyyy")
+        lblClassName.text = history["class_name"] as? String
         
-        let series2 = ChartSeries([1, 0, 0.5, 0.2, 0, 1, 0.8, 0.3, 1])
-        series2.color = ChartColors.redColor()
-        series2.area = false
+        viewChart.animation.enabled = true
+        viewChart.area = false
+        viewChart.x.grid.visible = false
+        viewChart.y.grid.visible = false
+        viewChart.y.labels.visible = false
+        viewChart.x.labels.visible = true
+        viewChart.delegate = self
+        viewChart.colors = [
+            UIColor(rgb: 0xF8C7CD),
+            UIColor(rgb: 0x93FFE9),
+            UIColor(rgb: 0xFFC793),
+            UIColor(rgb: 0xB693FF),
+            UIColor(rgb: 0x93DFFF),
+        ]
+//        viewChart.dots.color = UIColor.red
+        initGraph()
         
-        let series3 = ChartSeries([9, 8, 10, 8.5, 9.5, 10])
-        series3.color = ChartColors.purpleColor()
-        series3.area = false
+        self.tableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            
+            guard let id = self?.history["id"] as? Int else {
+                self?.tableView.cr.endHeaderRefresh()
+                self?.statistics = []
+                self?.updateGraph()
+                return
+            }
+            
+            MKProgress.show()
+            
+            // history
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "Authorization": "Token token=\(appDelegate.g_token)"
+            ]
+            let url = SERVER_URL + "statistics/session/\(id)"
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { response in
+                    var error = false
+                    switch response.result
+                    {
+                    case .failure( _):
+                        error = true
+                        
+                    case .success( _):
+                        
+                        guard let raw = response.result.value as? [String: Any] else {
+                            error = true
+                            break
+                        }
+                        
+                        guard let data = raw["data"] as? [[String: Any]] else {
+                            error = true
+                            break
+                        }
+                        
+                        self?.statistics = data
+                        self?.statistics = [
+                            ["distance": 10, "wattage": 3, "speed": 5, "strokes_per_minute": 8, "calories": 2],
+                            ["distance": 3, "wattage": 10, "speed": 1, "strokes_per_minute": 4, "calories": 3],
+                            ["distance": 20, "wattage": 7, "speed": 7, "strokes_per_minute": 2, "calories": 5],
+                            ["distance": 5, "wattage": 15, "speed": 0, "strokes_per_minute": 8, "calories": 7],
+                        ]
+                        
+                    }
+                    if error == true {
+                        self?.tableView.cr.endHeaderRefresh()
+                        MKProgress.hide()
+                        self?.statistics = []
+                        self?.updateGraph()
+                    }
+                    else {
+                        self?.tableView.cr.endHeaderRefresh()
+                        MKProgress.hide()
+                        self?.updateGraph()
+                    }
+            }
+        }
         
-        let series4 = ChartSeries([5, 4, 5.5, 4.2, 3.5, 4, 3.8, 3.3, 4])
-        series4.color = ChartColors.blueColor()
-        series4.area = false
+        self.tableView.cr.beginHeaderRefresh()
+
+    }
+    
+    func initGraph() {
+        self.viewChart.clear()
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+    }
+    
+    func updateGraph() {
         
-        let series5 = ChartSeries([3, 2, 3.5, 1.2, 3, 2, 3.8, 3.3, 4])
-        series5.color = ChartColors.purpleColor()
-        series5.area = false
-        
-        viewChart.add([series1, series2, series3, series4, series5])
+        DispatchQueue.main.async {
+            // simple arrays
+            
+//            print(self.statistics)
+            
+            if self.statistics.count == 0 {
+                self.initGraph()
+                return
+            }
+            
+            self.viewChart.clear()
+            
+            var data: [CGFloat]
+            data = self.statistics.map({ (point) -> CGFloat in
+                return CGFloat(point["distance"] as? Int ?? 0)
+            })
+            self.viewChart.addLine(data)
+            data = self.statistics.map({ (point) -> CGFloat in
+                return CGFloat(point["calories"] as? Int ?? 0)
+            })
+            self.viewChart.addLine(data)
+            data = self.statistics.map({ (point) -> CGFloat in
+                return CGFloat(point["speed"] as? Int ?? 0)
+            })
+            self.viewChart.addLine(data)
+            data = self.statistics.map({ (point) -> CGFloat in
+                return CGFloat(point["strokes_per_minute"] as? Int ?? 0)
+            })
+            self.viewChart.addLine(data)
+            data = self.statistics.map({ (point) -> CGFloat in
+                return CGFloat(point["wattage"] as? Int ?? 0)
+            })
+            self.viewChart.addLine(data)
+
+//
+//            let data: [CGFloat] = [3, 4, -2, 11, 13, 15, 3, 4, -2, 11, 13, 15]
+//            let data2: [CGFloat] = [1, 3, 5, 13, 17, 20, 1, 3, 5, 13, 17, 40]
+//
+//            // simple line with custom x axis labels
+//            let xLabels: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+//            self.viewChart.addLine(data)
+//            self.viewChart.addLine(data2)
+//            self.viewChart.x.labels.values = xLabels
+
+        }
+
     }
     
     @IBAction func onSummary(_ sender: Any) {
@@ -61,6 +204,14 @@ class SummaryOneViewController: SuperViewController {
     @IBAction func onGraph(_ sender: Any) {
         let vc = self.getStoryboardWithIdentifier(identifier: "SummaryTwoViewController") as! SummaryTwoViewController
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func didSelectDataPoint(_ x: CGFloat, yValues: Array<CGFloat>) {
+        lblDistance.text = "\(Int(yValues[0]))"
+        lblCalories.text = "\(Int(yValues[1]))"
+        lblSpeed.text = "\(Int(yValues[2]))"
+        lblStrokes.text = "\(Int(yValues[3]))"
+        lblWattage.text = "\(Int(yValues[4]))"
     }
     
 }
