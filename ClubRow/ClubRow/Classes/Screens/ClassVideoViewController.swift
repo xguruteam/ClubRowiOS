@@ -19,6 +19,7 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var strokesTableView: UITableView!
     @IBOutlet weak var wattageTableView: UITableView!
     @IBOutlet weak var playerView: YouTubePlayerView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var time: Int = 0
     var distance: Int = 0
@@ -36,6 +37,7 @@ class ClassVideoViewController: SuperViewController {
     var membersForWattage = [ClassMember]()
     
     var lobbyId: Int = 0
+    var classData: [String: Any]!
     
     @IBOutlet weak var playerListPanel: UIView!
     @IBOutlet weak var pllayerListScrollView: UIScrollView!
@@ -88,9 +90,20 @@ class ClassVideoViewController: SuperViewController {
             "rel": "0",
             "cc_load_policy": "0",
             ] as YouTubePlayerView.YouTubePlayerParameters
-        playerView.loadVideoID("tQvWfRolsaQ")
+        
+        if let media = classData["media"] as? [String: Any] {
+            let url = media["url"] as! String
+            playerView.loadVideoURL(URL(string: url)!)
+            loadingIndicator.isHidden = false
+        }
+        else {
+            loadingIndicator.isHidden = true
+        }
+        
+//        playerView.loadVideoID("tQvWfRolsaQ")
 //        playerView.loadVideoID("_6u6UrtXUEI")
         playerView.isHidden = true
+
         
         pllayerListScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         MKProgress.show()

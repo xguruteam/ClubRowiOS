@@ -81,6 +81,7 @@ class LobbiesViewController: SuperViewController {
                         print("enter lobby \(newLobbyId)")
                         let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
                         vc.lobbyId = newLobbyId
+                        vc.classData = self.classData
                         self.present(vc, animated: true, completion: nil)
                     })
                 }
@@ -238,6 +239,7 @@ extension LobbiesViewController: SelectLobbyDelegate {
         print("\(lobby["id"] as! Int) lobby selected")
         let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
         vc.lobbyId = lobby["id"] as! Int
+        vc.classData = classData
         self.present(vc, animated: true, completion: nil)
     }
 }

@@ -3348,6 +3348,7 @@
                         <outlet property="distanceView" destination="PvF-Ou-nik" id="BIu-Gm-a83"/>
                         <outlet property="labelTotalDistance" destination="XrZ-t9-t1g" id="hOm-b0-jTD"/>
                         <outlet property="lblLobbyState" destination="Nvf-xs-oIR" id="FgH-Mu-UEo"/>
+                        <outlet property="loadingIndicator" destination="gQv-LN-fZk" id="W6F-uO-KBs"/>
                         <outlet property="playerListPanel" destination="FuJ-ZB-g0u" id="1Vr-th-w8c"/>
                         <outlet property="playerView" destination="sJa-lY-eJZ" id="dzt-fc-ZYi"/>
                         <outlet property="pllayerListScrollView" destination="dPS-ng-36S" id="lfI-Jw-36N"/>

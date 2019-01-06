@@ -40,6 +40,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
 //            SocketManager.sharedManager.connectChannel(topic: topic)
             let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
             vc.lobbyId = classItem["lobby_id"] as! Int
+            vc.classData = classItem
             self.present(vc, animated: true, completion: nil)
         case 2:
             print("Set notify")
