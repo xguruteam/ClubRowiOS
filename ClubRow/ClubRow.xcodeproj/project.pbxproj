@@ -186,6 +186,11 @@
 		CACDCADD21C0BBC900E7A85D /* InstrcutorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCADC21C0BBC900E7A85D /* InstrcutorCollectionViewCell.swift */; };
 		CACF145021D97D2B006817E2 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACF144F21D97D2B006817E2 /* RootViewController.swift */; };
 		CAEAB53D21E1481E00507A58 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEAB53C21E1481C00507A58 /* LineChart.swift */; };
+		CAEAB54121E18AAD00507A58 /* ic_rewards.png in Resources */ = {isa = PBXBuildFile; fileRef = CAEAB53E21E18A9F00507A58 /* ic_rewards.png */; };
+		CAEAB54221E18AAD00507A58 /* ic_rewards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAEAB53F21E18AA400507A58 /* ic_rewards@2x.png */; };
+		CAEAB54321E18AAD00507A58 /* ic_rewards@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAEAB54021E18AA900507A58 /* ic_rewards@3x.png */; };
+		CAEAB54521E1944E00507A58 /* UIColor+colorFromHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEAB54421E1944E00507A58 /* UIColor+colorFromHex.swift */; };
+		CAEAB54721E1968F00507A58 /* ParameterView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEAB54621E1968F00507A58 /* ParameterView2.swift */; };
 		F580CC481327293742D752A2 /* Pods_ClubRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D769B2ED5F887EC1438CC1 /* Pods_ClubRow.framework */; };
 /* End PBXBuildFile section */
 
@@ -375,6 +380,11 @@
 		CACDCADC21C0BBC900E7A85D /* InstrcutorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrcutorCollectionViewCell.swift; sourceTree = "<group>"; };
 		CACF144F21D97D2B006817E2 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		CAEAB53C21E1481C00507A58 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
+		CAEAB53E21E18A9F00507A58 /* ic_rewards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_rewards.png; sourceTree = "<group>"; };
+		CAEAB53F21E18AA400507A58 /* ic_rewards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_rewards@2x.png"; sourceTree = "<group>"; };
+		CAEAB54021E18AA900507A58 /* ic_rewards@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_rewards@3x.png"; sourceTree = "<group>"; };
+		CAEAB54421E1944E00507A58 /* UIColor+colorFromHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+colorFromHex.swift"; sourceTree = "<group>"; };
+		CAEAB54621E1968F00507A58 /* ParameterView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +402,7 @@
 		3E0D70D6216A430300F6BC95 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CAEAB54621E1968F00507A58 /* ParameterView2.swift */,
 				CAEAB53C21E1481C00507A58 /* LineChart.swift */,
 				CAC1A76521E04D9F000CB386 /* SegmentedView.swift */,
 				3EFFA6842175E6D5002B5678 /* DragView.xib */,
@@ -442,6 +453,9 @@
 		3E3DA4322163495300B5055C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CAEAB53E21E18A9F00507A58 /* ic_rewards.png */,
+				CAEAB53F21E18AA400507A58 /* ic_rewards@2x.png */,
+				CAEAB54021E18AA900507A58 /* ic_rewards@3x.png */,
 				CAC4368E21C112C900B0BDCA /* ic_group.png */,
 				CAC4369121C112DA00B0BDCA /* ic_group@2x.png */,
 				CAC4369021C112D500B0BDCA /* ic_group@3x.png */,
@@ -603,6 +617,7 @@
 		3EE73C1F216AAEFB00A20AF4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CAEAB54421E1944E00507A58 /* UIColor+colorFromHex.swift */,
 				A493DD75219F0E380057C3A9 /* TSCDesignableView.swift */,
 				A40951AD217C7B91001EE7A5 /* Log.swift */,
 				3EE73C20216AAEFB00A20AF4 /* CGRect+Utils.swift */,
@@ -790,6 +805,7 @@
 				A492E4BF219B3EFB001A6766 /* ic_star_selected@3x.png in Resources */,
 				A492E4A4219B3EFB001A6766 /* ic_profile_select.png in Resources */,
 				CAC4369621C112F100B0BDCA /* ic_group@3x.png in Resources */,
+				CAEAB54121E18AAD00507A58 /* ic_rewards.png in Resources */,
 				A492E49A219B3EFB001A6766 /* bg_rec.png in Resources */,
 				A492E493219B3EFB001A6766 /* ic_distance.png in Resources */,
 				A492E4C4219B3EFB001A6766 /* btn_join_class.png in Resources */,
@@ -798,6 +814,7 @@
 				A492E491219B3EFB001A6766 /* ic_arrow_down.png in Resources */,
 				A492E4A0219B3EFB001A6766 /* ic_bell_unselect.png in Resources */,
 				A492E4BC219B3EFB001A6766 /* ic_play_select.png in Resources */,
+				CAEAB54321E18AAD00507A58 /* ic_rewards@3x.png in Resources */,
 				A492E497219B3EFB001A6766 /* ic_calendar_select@3x.png in Resources */,
 				A41BF385219E63D000374C5B /* ic_double_arrow_up@3x.png in Resources */,
 				CACDCAD921C0AF0900E7A85D /* btn_close@3x.png in Resources */,
@@ -813,6 +830,7 @@
 				3E3DA4282163489100B5055C /* Assets.xcassets in Resources */,
 				A492E4C3219B3EFB001A6766 /* ic_star_selected@2x.png in Resources */,
 				CACDCACE21C0AF0900E7A85D /* ic_flag_unselect@2x.png in Resources */,
+				CAEAB54221E18AAD00507A58 /* ic_rewards@2x.png in Resources */,
 				A492E4C0219B3EFB001A6766 /* ic_profile_unselect@2x.png in Resources */,
 				A492E4C6219B3EFB001A6766 /* ic_action_more.png in Resources */,
 				3EFFA6852175E6D5002B5678 /* DragView.xib in Resources */,
@@ -963,6 +981,7 @@
 				CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */,
 				A40AABC421AB176D00D7E371 /* LobbyTableViewCell.swift in Sources */,
 				A492E44F219A7427001A6766 /* Shadow.swift in Sources */,
+				CAEAB54521E1944E00507A58 /* UIColor+colorFromHex.swift in Sources */,
 				A493DD76219F0E380057C3A9 /* TSCDesignableView.swift in Sources */,
 				A40297BD2194834200F69E60 /* ClassMember.swift in Sources */,
 				A4DD2178219820ED00D7DC2E /* UIDevice.swift in Sources */,
@@ -1019,6 +1038,7 @@
 				3E0D70D8216A432A00F6BC95 /* ClassCell.swift in Sources */,
 				CAC1A76621E04DA0000CB386 /* SegmentedView.swift in Sources */,
 				A4973DB021AF23D000A29EBD /* LiveClass.swift in Sources */,
+				CAEAB54721E1968F00507A58 /* ParameterView2.swift in Sources */,
 				3E565587216DEEDC00EF8964 /* SummaryTwoViewController.swift in Sources */,
 				3EDED410216B535B00167FEF /* SortFilterViewController.swift in Sources */,
 				A463F1FA219276C30091B7ED /* Teacher.swift in Sources */,

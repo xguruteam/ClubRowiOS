@@ -7,136 +7,75 @@
 //
 
 import UIKit
-import EChart
+import ScrollableGraphView
 
-class SummaryTwoViewController: SuperViewController , EColumnChartDelegate, EColumnChartDataSource{
+class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSource {
     
-    func eColumnChart(_ eColumnChart: EColumnChart!, didSelect eColumn: EColumn!) {
-        
-    }
-    
-    func eColumnChart(_ eColumnChart: EColumnChart!, fingerDidEnter eColumn: EColumn!) {
-//        let eFloatBoxX = eColumn.frame.origin.x + eColumn.frame.size.width * 1.25
-//        var eFloatBoxY = eColumn.frame.origin.y + eColumn.frame.size.height * CGFloat(1 - eColumn.grade)
-//        if (eFloatBox != nil){
-//            eFloatBox?.removeFromSuperview()
-//            eFloatBox?.frame = CGRect.init(x: eFloatBoxX, y: eFloatBoxY, width: (eFloatBox?.frame.size.width)!, height: eFloatBox!.frame.size.height)
-//            eFloatBox?.value = eColumn.eColumnDataModel.value
-//            viewChart .addSubview(eFloatBox!)
-//        } else {
-//            eFloatBox = EFloatBox.init(position: CGPoint.init(x: eFloatBoxX, y: eFloatBoxY), value: eColumn!.eColumnDataModel.value, unit: "kWh", title: "Title")
-//            eFloatBox?.alpha = 0.0
-//            eColumnChart.addSubview(eFloatBox!)
-//        }
-//        eFloatBoxY = eFloatBoxY - ((eFloatBox?.frame.size.height)! + eColumn.frame.size.width * 0.25)
-//        eFloatBox?.frame = CGRect.init(x: eFloatBoxX, y: eFloatBoxY, width: (eFloatBox?.frame.size.width)!, height: (eFloatBox?.frame.size.height)!)
-    }
-    
-    func eColumnChart(_ eColumnChart: EColumnChart!, fingerDidLeave eColumn: EColumn!) {
-        
-    }
+    @IBOutlet weak var lblDuration: UILabel!
+    @IBOutlet weak var lblAverage: UILabel!
+    @IBOutlet weak var lblUnit: UILabel!
+    @IBOutlet weak var lblType: UILabel!
+    @IBOutlet weak var graph: ScrollableGraphView!
+    @IBOutlet weak var lblValue: UILabel!
     
     
-    func fingerDidLeave(_ eColumnChart: EColumnChart!) {
-        
-    }
+    @IBOutlet weak var lblType2: UILabel!
+    @IBOutlet weak var lblUnit2: UILabel!
+    @IBOutlet weak var lblClassAverage: UILabel!
+    @IBOutlet weak var lblDuration2: UILabel!
     
-    func numberOfColumns(in eColumnChart: EColumnChart!) -> Int {
-        return data.count
-    }
+    @IBOutlet weak var lblTypeTop: UILabel!
+    var type: Int = 0
     
-    func number(ofColumnsPresentedEveryTime eColumnChart: EColumnChart!) -> Int {
-        return 7
-    }
-    
-    func highestValueEColumnChart(_ eColumnChart: EColumnChart!) -> EColumnDataModel! {
-        var maxModel: EColumnDataModel? = nil
-        var maxValue = -Float.leastNormalMagnitude
-        for model in data {
-            let item = model as! EColumnDataModel
-            if (item.value > maxValue){
-                maxValue = item.value
-                maxModel = item
-            }
-        }
-        return maxModel
-    }
-    
-    func eColumnChart(_ eColumnChart: EColumnChart!, valueFor index: Int) -> EColumnDataModel! {
-        if (index >= data.count || index < 0){
-            return nil;
-        }
-        return (data.object(at: index) as! EColumnDataModel)
-    }
-    
-    
-    var viewChart: EColumnChart!
-    var data = NSArray()
-    var eFloatBox:EFloatBox? = nil
- 
     @IBOutlet var viewContainer: UIView!
     @IBOutlet var tableview: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let typeString = Util.convertTypeString(type)
+        lblTypeTop.text = typeString
+        lblType.text = typeString
+        lblType2.text = typeString
+        let unitString = Util.convertUnitString(type)
+        lblUnit.text = unitString
+        lblUnit2.text = unitString
         
-        viewChart = EColumnChart.init(frame: viewContainer.frame)
         
-        // Do any additional setup after loading the view.
-        let temp = NSMutableArray.init()
-        for i in 0..<50 {
-            let val = arc4random() % 100
-            let model = EColumnDataModel.init(label: String.init(format: "%d", i), value: Float(val), index: i, unit: "k+")
-            temp.add(model as Any)
-        }
-        data = temp
+        let graphView = graph!
+        graphView.dataSource = self
+        // Setup the plot
+        let barPlot = BarPlot(identifier: "bar")
         
-        viewChart.normalColumnColor = UIColor.green
-        viewChart.maxColumnColor = UIColor.green
-        viewChart.minColumnColor = UIColor.green
+        barPlot.barWidth = 25
+        barPlot.barLineWidth = 1
+        barPlot.barLineColor = UIColor.colorFromHex(hexString: "#10E5C0")
+        barPlot.barColor = UIColor.colorFromHex(hexString: "#15ECC1")
+        
+        barPlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
+        barPlot.animationDuration = 1
+        
+        // Setup the reference lines
+        let referenceLines = ReferenceLines()
+        
+        referenceLines.referenceLineLabelFont = UIFont.boldSystemFont(ofSize: 8)
+        referenceLines.referenceLineColor = UIColor.black.withAlphaComponent(0.2)
+        referenceLines.referenceLineLabelColor = UIColor.black
+        
+        referenceLines.dataPointLabelColor = UIColor.black.withAlphaComponent(0.5)
+        
+        // Setup the graph
+        graphView.backgroundFillColor = UIColor.colorFromHex(hexString: "#FFFFFF")
+        
+        graphView.shouldAnimateOnStartup = true
+        
+        graphView.rangeMax = 100
+        graphView.rangeMin = 0
+        
+        // Add everything
+        graphView.addPlot(plot: barPlot)
+        graphView.addReferenceLines(referenceLines: referenceLines)
 
-        viewChart.showHighAndLowColumnWithColor = true
-
-        viewChart.columnsIndexStartFromLeft = true
-        viewChart.delegate = self
-        viewChart.dataSource = self
-        
-        
-        tableview.addSubview(viewChart)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.viewChart.addGestureRecognizer(swipeRight)
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
-        self.viewChart.addGestureRecognizer(swipeLeft)
-    }
-    
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            
-            switch swipeGesture.direction {
-            case UISwipeGestureRecognizer.Direction.right:
-                print("Swiped right")
-                if (viewChart != nil){
-                    viewChart.moveLeft()
-                }
-            case UISwipeGestureRecognizer.Direction.down:
-                print("Swiped down")
-            case UISwipeGestureRecognizer.Direction.left:
-                print("Swiped left")
-                if (viewChart != nil){
-                    viewChart.moveRight()
-                }
-            case UISwipeGestureRecognizer.Direction.up:
-                print("Swiped up")
-            default:
-                break
-            }
-        }
     }
     
     @IBAction func onSummary(_ sender: Any) {
@@ -157,4 +96,86 @@ class SummaryTwoViewController: SuperViewController , EColumnChartDelegate, ECol
     }
     */
 
+    // MARK: Data Properties
+    
+    private var numberOfDataItems = 29
+    
+    // Data for graphs with a single plot
+    private lazy var barPlotData: [Double] =  self.generateRandomData(self.numberOfDataItems, max: 100, shouldIncludeOutliers: false)
+    
+    // Labels for the x-axis
+    
+    private lazy var xAxisLabels: [String] =  self.generateSequentialLabels(self.numberOfDataItems, text: "FEB")
+    // MARK: ScrollableGraphViewDataSource protocol
+    // #########################################################
+    
+    // You would usually only have a couple of cases here, one for each
+    // plot you want to display on the graph. However as this is showing
+    // off many graphs with different plots, we are using one big switch
+    // statement.
+    func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
+        
+        switch(plot.identifier) {
+            
+        // Data for the graphs with a single plot
+        case "bar":
+            return barPlotData[pointIndex]
+        default:
+            return 0
+        }
+    }
+    
+    func label(atIndex pointIndex: Int) -> String {
+        // Ensure that you have a label to return for the index
+        return xAxisLabels[pointIndex]
+    }
+    
+    func numberOfPoints() -> Int {
+        return numberOfDataItems
+    }
+    
+    private func generateRandomData(_ numberOfItems: Int, max: Double, shouldIncludeOutliers: Bool = true) -> [Double] {
+        var data = [Double]()
+        for _ in 0 ..< numberOfItems {
+            var randomNumber = Double(arc4random()).truncatingRemainder(dividingBy: max)
+            
+            if(shouldIncludeOutliers) {
+                if(arc4random() % 100 < 10) {
+                    randomNumber *= 3
+                }
+            }
+            
+            data.append(randomNumber)
+        }
+        return data
+    }
+    
+    private func generateRandomData(_ numberOfItems: Int, variance: Double, from: Double) -> [Double] {
+        
+        var data = [Double]()
+        for _ in 0 ..< numberOfItems {
+            
+            let randomVariance = Double(arc4random()).truncatingRemainder(dividingBy: variance)
+            var randomNumber = from
+            
+            if(arc4random() % 100 < 50) {
+                randomNumber += randomVariance
+            }
+            else {
+                randomNumber -= randomVariance
+            }
+            
+            data.append(randomNumber)
+        }
+        return data
+    }
+    
+    private func generateSequentialLabels(_ numberOfItems: Int, text: String) -> [String] {
+        var labels = [String]()
+        for i in 0 ..< numberOfItems {
+            labels.append("\(text) \(i+1)")
+        }
+        return labels
+    }
 }
+

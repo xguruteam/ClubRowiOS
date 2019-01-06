@@ -48,4 +48,39 @@ class Util: NSObject {
             return "\(number) Lobbies"
         }
     }
+    
+    static func convertTypeString(_ number: Int) -> String {
+        switch number {
+        case 0:
+            return "Distance"
+        case 1:
+            return "Calories"
+        case 2:
+            return "Speed"
+        case 3:
+            return "Strokes Per Minute"
+        case 4:
+            return "Wattage"
+        default:
+            return "Unknown"
+        }
+        
+    }
+    
+    static func convertUnitString(_ number: Int) -> String {
+        switch number {
+        case 0:
+            return "m"
+        case 1:
+            return "cal"
+        case 2:
+            return "m/s"
+        case 3:
+            return ""
+        case 4:
+            return "wat"
+        default:
+            return "Unknown"
+        }
+    }
 }

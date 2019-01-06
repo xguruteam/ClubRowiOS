@@ -188,6 +188,13 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    @IBAction func onButtonClick(_ sender: UIButton) {
+        
+        let vc = self.getStoryboardWithIdentifier(identifier: "SummaryTwoViewController") as! SummaryTwoViewController
+        vc.type = sender.tag
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func onback(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
