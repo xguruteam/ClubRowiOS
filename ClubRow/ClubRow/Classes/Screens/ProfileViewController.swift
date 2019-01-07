@@ -197,12 +197,6 @@ class ProfileViewController: SuperViewController {
                     }
                     
                     self.statistics = data
-                    self.statistics = [
-                        ["distance": 10, "wattage": 3, "speed": 5, "strokes_per_minute": 8, "calories": 2],
-                        ["distance": 3, "wattage": 10, "speed": 1, "strokes_per_minute": 4, "calories": 3],
-                        ["distance": 20, "wattage": 7, "speed": 7, "strokes_per_minute": 2, "calories": 5],
-                        ["distance": 5, "wattage": 15, "speed": 0, "strokes_per_minute": 8, "calories": 7],
-                    ]
                 }
                 if error == true {
                     self.onLoadError()
@@ -334,11 +328,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             
             
-            cell.labelDistance.text = "\((average["distance"] as? Int) ?? 0)"
-            cell.labelCalories.text = "\(average["calories"] as? Int ?? 0)"
-            cell.labelSpeed.text = "\(average["speed"] as? Int ?? 0)"
-            cell.labelStrokes.text = "\(average["strokes_per_minute"] as? Int ?? 0)"
-            cell.labelWattage.text = "\(average["wattage"] as? Int ?? 0)"
+            cell.labelDistance.text = "\((average["distance"] as? NSNumber) ?? 0)"
+            cell.labelCalories.text = "\((average["calories"] as? NSNumber) ?? 0)"
+            cell.labelSpeed.text = "\(average["speed"] as? NSNumber ?? 0)"
+            cell.labelStrokes.text = "\(average["strokes_per_minute"] as? NSNumber ?? 0)"
+            cell.labelWattage.text = "\(average["wattage"] as? NSNumber ?? 0)"
             
             
             cell.viewChart.animation.enabled = true
@@ -357,11 +351,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             
             if self.statistics.count == 0 {
                 cell.viewChart.clear()
-                cell.viewChart.addLine([0, 0])
-                cell.viewChart.addLine([0, 0])
-                cell.viewChart.addLine([0, 0])
-                cell.viewChart.addLine([0, 0])
-                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0])
+                cell.viewChart.addLine([0])
+                cell.viewChart.addLine([0])
+                cell.viewChart.addLine([0])
+                cell.viewChart.addLine([0])
             }
             else {
             
@@ -369,23 +363,23 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 var data: [CGFloat]
                 data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(point["distance"] as? Int ?? 0)
+                    return CGFloat(truncating: point["distance"] as? NSNumber ?? 0)
                 })
                 cell.viewChart.addLine(data)
                 data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(point["calories"] as? Int ?? 0)
+                    return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
                 })
                 cell.viewChart.addLine(data)
                 data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(point["speed"] as? Int ?? 0)
+                    return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
                 })
                 cell.viewChart.addLine(data)
                 data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(point["strokes_per_minute"] as? Int ?? 0)
+                    return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
                 })
                 cell.viewChart.addLine(data)
                 data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(point["wattage"] as? Int ?? 0)
+                    return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
                 })
                 cell.viewChart.addLine(data)
             }

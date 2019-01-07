@@ -98,13 +98,6 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                         }
                         
                         self?.statistics = data
-                        self?.statistics = [
-                            ["distance": 10, "wattage": 3, "speed": 5, "strokes_per_minute": 8, "calories": 2],
-                            ["distance": 3, "wattage": 10, "speed": 1, "strokes_per_minute": 4, "calories": 3],
-                            ["distance": 20, "wattage": 7, "speed": 7, "strokes_per_minute": 2, "calories": 5],
-                            ["distance": 5, "wattage": 15, "speed": 0, "strokes_per_minute": 8, "calories": 7],
-                        ]
-                        
                     }
                     if error == true {
                         self?.tableView.cr.endHeaderRefresh()
@@ -126,11 +119,11 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     
     func initGraph() {
         self.viewChart.clear()
-        self.viewChart.addLine([0, 0])
-        self.viewChart.addLine([0, 0])
-        self.viewChart.addLine([0, 0])
-        self.viewChart.addLine([0, 0])
-        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0])
+        self.viewChart.addLine([0])
+        self.viewChart.addLine([0])
+        self.viewChart.addLine([0])
+        self.viewChart.addLine([0])
     }
     
     func updateGraph() {
@@ -149,25 +142,29 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
             
             var data: [CGFloat]
             data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(point["distance"] as? Int ?? 0)
+                return CGFloat(truncating: point["distance"] as? NSNumber ?? 0)
             })
             self.viewChart.addLine(data)
             data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(point["calories"] as? Int ?? 0)
+                return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
             })
             self.viewChart.addLine(data)
             data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(point["speed"] as? Int ?? 0)
+                return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
             })
             self.viewChart.addLine(data)
             data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(point["strokes_per_minute"] as? Int ?? 0)
+                return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
             })
             self.viewChart.addLine(data)
             data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(point["wattage"] as? Int ?? 0)
+                return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
             })
             self.viewChart.addLine(data)
+            
+            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] (_) in
+                self?.viewChart.selectPoint(0)
+            })
 
 //
 //            let data: [CGFloat] = [3, 4, -2, 11, 13, 15, 3, 4, -2, 11, 13, 15]

@@ -551,6 +551,12 @@ open class LineChart: UIView {
         self.setNeedsDisplay()
     }
     
+    open func selectPoint(_ index: Int) {
+        let yValues: [CGFloat] = getYValuesForXValue(index)
+        highlightDataPoints(index)
+        delegate?.didSelectDataPoint(CGFloat(index), yValues: yValues)
+    }
+    
     
     
     /**

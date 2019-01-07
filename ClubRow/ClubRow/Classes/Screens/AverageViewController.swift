@@ -20,11 +20,11 @@ class AverageViewController: UIViewController {
     
     var type: String = "day"
     
-    var distance:Int = 0
-    var calories: Int = 0
-    var speed: Int = 0
-    var stroke: Int = 0
-    var wattage: Int = 0
+    var distance:NSNumber = 0
+    var calories: NSNumber = 0
+    var speed: NSNumber = 0
+    var stroke: NSNumber = 0
+    var wattage: NSNumber = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,40 +71,17 @@ class AverageViewController: UIViewController {
                         error = true
                         break
                     }
-                    print(self.type)
-                    print(raw)
                     
                     guard let data = raw["data"] as? [String: Any] else {
                         error = true
                         break
                     }
                     
-                    guard let dis = data["distance"] as? Int else {
-                        error = true
-                        break
-                    }
-                    guard let cal = data["calories"] as? Int else {
-                        error = true
-                        break
-                    }
-                    guard let spd = data["speed"] as? Int else {
-                        error = true
-                        break
-                    }
-                    guard let srk = data["strokes_per_minute"] as? Int else {
-                        error = true
-                        break
-                    }
-                    guard let wat = data["wattage"] as? Int else {
-                        error = true
-                        break
-                    }
-                    
-                    self.distance = dis
-                    self.calories = cal
-                    self.speed = spd
-                    self.stroke = srk
-                    self.wattage = wat
+                    self.distance = data["distance"] as? NSNumber ?? 0
+                    self.calories = data["calories"] as? NSNumber ?? 0
+                    self.speed = data["speed"] as? NSNumber ?? 0
+                    self.stroke = data["strokes_per_minute"] as? NSNumber ?? 0
+                    self.wattage = data["wattage"] as? NSNumber ?? 0
 
 
                 }
