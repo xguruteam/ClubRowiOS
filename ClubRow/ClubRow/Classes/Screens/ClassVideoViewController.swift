@@ -10,6 +10,7 @@ import UIKit
 import CoreBluetooth
 import MKProgress
 import YouTubePlayer
+import Toast_Swift
 
 class ClassVideoViewController: SuperViewController {
     
@@ -73,6 +74,7 @@ class ClassVideoViewController: SuperViewController {
         let _ = C2ScanningManager.shared
         
         C2ScanningManager.shared.addDelegate(self)
+        C2ScanningManager.shared.reconnect()
         
         SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
@@ -319,7 +321,8 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ClassVideoViewController: C2ConnectionManagerDelegate {
     
-    func C2ConnectionManagerDidConnect() {
+    func C2ConnectionManagerDidConnect(_ deviceName: String) {
+        self.view.makeToast("\(deviceName) is connected successfully!")
     }
     
     func C2ConnectionManagerFailConnect() {

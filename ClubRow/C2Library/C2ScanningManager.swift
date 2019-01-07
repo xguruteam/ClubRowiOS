@@ -16,7 +16,7 @@ protocol C2ScanningManagerDelegate {
 }
 
 protocol C2ConnectionManagerDelegate {
-    func C2ConnectionManagerDidConnect()
+    func C2ConnectionManagerDidConnect(_ deviceName: String)
     func C2ConnectionManagerFailConnect()
     func C2ConnectionManagerDidReceiveData(_ parameter: CBCharacteristic)
 }
@@ -114,6 +114,12 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         self.centralManager.connect(currentDevice!, options: nil)
     }
     
+    open func reconnect() {
+        if isConnected == true {
+            self.centralManager.cancelPeripheralConnection(currentDevice!)
+        }
+    }
+    
     open func disconnect() {
         if isConnected == true {
             self.centralManager.cancelPeripheralConnection(currentDevice!)
@@ -126,7 +132,7 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     //MARK: Notify to Delegates
     func didConnect() {
         for item in self.delegates {
-            item.C2ConnectionManagerDidConnect()
+            item.C2ConnectionManagerDidConnect(currentDevice?.name ?? "Unknown")
         }
     }
     

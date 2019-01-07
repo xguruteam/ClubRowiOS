@@ -10,7 +10,6 @@ import UIKit
 import CoreBluetooth
 
 class DevicesViewController: SuperViewController, UITableViewDelegate, UITableViewDataSource, C2ScanningManagerDelegate, C2ConnectionManagerDelegate {
-    
     @IBOutlet weak var rightBarButtonItem: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleView: UIView!
@@ -127,8 +126,8 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
         self.devices.append(device)
     }
     
-    func C2ConnectionManagerDidConnect() {
-        let alert = UIAlertController(title: "ClubRow", message: "Concept2 is connected!", preferredStyle: .alert)
+    func C2ConnectionManagerDidConnect(_ deviceName: String) {
+        let alert = UIAlertController(title: "ClubRow", message: "\(deviceName) is connected successfully!", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
 //            C2ConnectionManager.shared.removeDelegate(self)

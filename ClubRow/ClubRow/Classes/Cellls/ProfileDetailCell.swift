@@ -11,7 +11,7 @@ import SwiftChart
 import CoreBluetooth
 
 
-class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
+class ProfileDetailCell: UITableViewCell {
 
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var viewSummaryBtn: UIButton!
@@ -30,7 +30,8 @@ class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
     @IBOutlet weak var labelSpeed: UILabel!
     @IBOutlet weak var labelStrokes: UILabel!
     @IBOutlet weak var labelWattage: UILabel!
-    
+
+    /*
     func C2ConnectionManagerDidConnect() {
     }
     
@@ -102,11 +103,12 @@ class ProfileDetailCell: UITableViewCell, C2ConnectionManagerDelegate {
         //            }
         //        }
     }
+     */
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        C2ScanningManager.shared.addDelegate(self)
+//        C2ScanningManager.shared.addDelegate(self)
         
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

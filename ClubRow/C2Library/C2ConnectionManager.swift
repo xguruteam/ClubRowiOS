@@ -77,7 +77,7 @@ class C2ConnectionManager:NSObject, CBCentralManagerDelegate, CBPeripheralDelega
     //MARK: Notify to Delegates
     func didConnect() {
         for delegate in self.delegates {
-            delegate.C2ConnectionManagerDidConnect()
+            delegate.C2ConnectionManagerDidConnect(currentDevice?.name ?? "Unknown")
         }
     }
     

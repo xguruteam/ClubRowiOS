@@ -50,8 +50,6 @@
 		A406238021954AAB00077B0B /* BluetoothModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406237F21954AAB00077B0B /* BluetoothModel.swift */; };
 		A406F8D2219DA5BC00777374 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A406F8D1219DA5BC00777374 /* DescriptionCell.swift */; };
 		A40951AE217C7B91001EE7A5 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40951AD217C7B91001EE7A5 /* Log.swift */; };
-		A40951B2217C7C3A001EE7A5 /* C2ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40951B0217C7C3A001EE7A5 /* C2ScanningManager.swift */; };
-		A40951B3217C7C3A001EE7A5 /* C2ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40951B1217C7C3A001EE7A5 /* C2ConnectionManager.swift */; };
 		A40951B5217C8093001EE7A5 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40951B4217C8093001EE7A5 /* DevicesViewController.swift */; };
 		A40AABC221AB0B1200D7E371 /* Lobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40AABC121AB0B1200D7E371 /* Lobby.swift */; };
 		A40AABC421AB176D00D7E371 /* LobbyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40AABC321AB176D00D7E371 /* LobbyTableViewCell.swift */; };
@@ -152,6 +150,8 @@
 		A4973DAE21AF1C9900A29EBD /* ClassLobbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4973DAC21AF1C9900A29EBD /* ClassLobbyCell.swift */; };
 		A4973DB021AF23D000A29EBD /* LiveClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4973DAF21AF23D000A29EBD /* LiveClass.swift */; };
 		A4DD2178219820ED00D7DC2E /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD2177219820EC00D7DC2E /* UIDevice.swift */; };
+		CA18D46B21E2C61100BA9BF9 /* C2ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA18D46921E2C61100BA9BF9 /* C2ConnectionManager.swift */; };
+		CA18D46C21E2C61100BA9BF9 /* C2ScanningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA18D46A21E2C61100BA9BF9 /* C2ScanningManager.swift */; };
 		CA1F42CF21A3E87B00901ADB /* ic_bell_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42C921A3E86C00901ADB /* ic_bell_selected@3x.png */; };
 		CA1F42D021A3E87B00901ADB /* ic_bell_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CA21A3E87000901ADB /* ic_bell_selected@2x.png */; };
 		CA1F42D121A3E87B00901ADB /* ic_bell_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CB21A3E87300901ADB /* ic_bell_unselected@2x.png */; };
@@ -242,8 +242,6 @@
 		A406237F21954AAB00077B0B /* BluetoothModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothModel.swift; sourceTree = "<group>"; };
 		A406F8D1219DA5BC00777374 /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		A40951AD217C7B91001EE7A5 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		A40951B0217C7C3A001EE7A5 /* C2ScanningManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = C2ScanningManager.swift; path = C2Library/C2ScanningManager.swift; sourceTree = SOURCE_ROOT; };
-		A40951B1217C7C3A001EE7A5 /* C2ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = C2ConnectionManager.swift; path = C2Library/C2ConnectionManager.swift; sourceTree = SOURCE_ROOT; };
 		A40951B4217C8093001EE7A5 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
 		A40AABC121AB0B1200D7E371 /* Lobby.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lobby.swift; sourceTree = "<group>"; };
 		A40AABC321AB176D00D7E371 /* LobbyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyTableViewCell.swift; sourceTree = "<group>"; };
@@ -346,6 +344,8 @@
 		A4DD2177219820EC00D7DC2E /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		A9D769B2ED5F887EC1438CC1 /* Pods_ClubRow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClubRow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4029E6216D84F85705C9137 /* Pods-ClubRow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClubRow.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClubRow/Pods-ClubRow.release.xcconfig"; sourceTree = "<group>"; };
+		CA18D46921E2C61100BA9BF9 /* C2ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C2ConnectionManager.swift; sourceTree = "<group>"; };
+		CA18D46A21E2C61100BA9BF9 /* C2ScanningManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C2ScanningManager.swift; sourceTree = "<group>"; };
 		CA1F42C921A3E86C00901ADB /* ic_bell_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bell_selected@3x.png"; sourceTree = "<group>"; };
 		CA1F42CA21A3E87000901ADB /* ic_bell_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bell_selected@2x.png"; sourceTree = "<group>"; };
 		CA1F42CB21A3E87300901ADB /* ic_bell_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bell_unselected@2x.png"; sourceTree = "<group>"; };
@@ -417,7 +417,7 @@
 		3E3DA4142163488B00B5055C = {
 			isa = PBXGroup;
 			children = (
-				A40951AF217C7BC7001EE7A5 /* C2Library */,
+				CA18D46821E2C5EB00BA9BF9 /* C2Library */,
 				3E3DA41F2163488B00B5055C /* ClubRow */,
 				3E3DA41E2163488B00B5055C /* Products */,
 				DB79D9911181FC10015977F9 /* Pods */,
@@ -668,16 +668,6 @@
 			path = Cellls;
 			sourceTree = "<group>";
 		};
-		A40951AF217C7BC7001EE7A5 /* C2Library */ = {
-			isa = PBXGroup;
-			children = (
-				A40951B1217C7C3A001EE7A5 /* C2ConnectionManager.swift */,
-				A40951B0217C7C3A001EE7A5 /* C2ScanningManager.swift */,
-			);
-			name = C2Library;
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		A463F1F8219276860091B7ED /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,6 +678,15 @@
 				A4973DAF21AF23D000A29EBD /* LiveClass.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CA18D46821E2C5EB00BA9BF9 /* C2Library */ = {
+			isa = PBXGroup;
+			children = (
+				CA18D46921E2C61100BA9BF9 /* C2ConnectionManager.swift */,
+				CA18D46A21E2C61100BA9BF9 /* C2ScanningManager.swift */,
+			);
+			path = C2Library;
 			sourceTree = "<group>";
 		};
 		DB79D9911181FC10015977F9 /* Pods */ = {
@@ -999,12 +998,13 @@
 				3EE73C27216AAEFB00A20AF4 /* Font.swift in Sources */,
 				A40AABC221AB0B1200D7E371 /* Lobby.swift in Sources */,
 				A43D96EF21A839A2007ACD56 /* SignUpViewController.swift in Sources */,
-				A40951B3217C7C3A001EE7A5 /* C2ConnectionManager.swift in Sources */,
 				A40951AE217C7B91001EE7A5 /* Log.swift in Sources */,
 				3E3DA44B21634A1800B5055C /* SuperViewController.swift in Sources */,
 				3EFFA6812175E6A8002B5678 /* MyImageCollectionViewCell.swift in Sources */,
 				A403D0132191E995007833C1 /* SelectedTeacherCell.swift in Sources */,
 				A431BABA219322D8002BB3EF /* SocketManager.swift in Sources */,
+				CA18D46B21E2C61100BA9BF9 /* C2ConnectionManager.swift in Sources */,
+				CA18D46C21E2C61100BA9BF9 /* C2ScanningManager.swift in Sources */,
 				3EE73C2A216AAEFB00A20AF4 /* UIScreen+Utils.swift in Sources */,
 				3EE73C26216AAEFB00A20AF4 /* CGRect+Utils.swift in Sources */,
 				CAC1A76821E05591000CB386 /* ParameterView.swift in Sources */,
@@ -1047,7 +1047,6 @@
 				3EDED412216B5A3F00167FEF /* ClassVideoViewController.swift in Sources */,
 				A4467B6221B67755002F3A8C /* ClassMemberForStrokesCell.swift in Sources */,
 				A4809BFE21AC753A005C041B /* Util.swift in Sources */,
-				A40951B2217C7C3A001EE7A5 /* C2ScanningManager.swift in Sources */,
 				3E565591216F327B00EF8964 /* SummaryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
