@@ -181,9 +181,7 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         Log.d("didFailToConnect")
         if isConnected == true {
             if peripheral.isEqual(currentDevice) {
-                isConnected = false
-                currentDevice = nil
-                failConnect()
+                tryReconnect()
             }
         }
     }
@@ -193,18 +191,22 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         // try to re-connect
         if isConnected == true {
             if peripheral.isEqual(currentDevice) {
-                let peripherals = self.centralManager.retrievePeripherals(withIdentifiers: [currentDevice!.identifier])
-                
-                if let item = peripherals.first {
-                    currentDevice = item
-                    self.centralManager.connect(currentDevice!, options: nil)
-                }
-                else {
-                    isConnected = false
-                    currentDevice = nil
-                    failConnect()
-                }
+                tryReconnect()
             }
+        }
+    }
+    
+    func tryReconnect() {
+        let peripherals = self.centralManager.retrievePeripherals(withIdentifiers: [currentDevice!.identifier])
+        
+        if let item = peripherals.first {
+            currentDevice = item
+            self.centralManager.connect(currentDevice!, options: nil)
+        }
+        else {
+            isConnected = false
+            currentDevice = nil
+            failConnect()
         }
     }
     
