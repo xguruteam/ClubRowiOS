@@ -74,7 +74,7 @@ class ClassVideoViewController: SuperViewController {
         let _ = C2ScanningManager.shared
         
         C2ScanningManager.shared.addDelegate(self)
-        C2ScanningManager.shared.reconnect()
+//        C2ScanningManager.shared.reconnect()
         
         SocketManager.sharedManager.delegate = self
         SocketManager.sharedManager.socketConnect(url: "ws://159.89.117.106:4000/socket/websocket", params: ["username": "test"])
@@ -140,9 +140,6 @@ class ClassVideoViewController: SuperViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
-        
-        C2ScanningManager.shared.removeDelegate(self)
     }
     
     @IBAction func onClose(_ sender: Any) {
@@ -151,6 +148,11 @@ class ClassVideoViewController: SuperViewController {
         SocketManager.sharedManager.leaveChannel()
         SocketManager.sharedManager.socket.disconnect()
 //        self.navigationController?.popViewController(animated: true)
+        
+        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+        
+        C2ScanningManager.shared.removeDelegate(self)
+        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -329,6 +331,10 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
     }
     
     func C2ConnectionManagerDidReceiveData(_ parameter: CBCharacteristic) {
+        if lobbyState != KEY_LOBBY_STATE_PROGRESS {
+            return
+        }
+        
         if parameter.uuid.uuidString == C2ScanningManager.PM5_CHAR31_UUID {
             if let value = parameter.value {
                 let data = [UInt8](value).map { (i) -> Int in
