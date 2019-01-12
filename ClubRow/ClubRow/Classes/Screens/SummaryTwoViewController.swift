@@ -94,7 +94,7 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
                 "Content-Type": "application/json",
                 "Authorization": "Token token=\(appDelegate.g_token)"
             ]
-            let url = SERVER_URL + "statistics/user/\(appDelegate.g_userID)/daily"
+            let url = SERVER_URL + KEY_API_LOAD_DAILY
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
                 .responseJSON { response in
                     var error = false
@@ -177,7 +177,7 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + "/statistics/average?period=day"
+        let url = SERVER_URL + KEY_API_LOAD_AVERAGE + "?period=day"
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 var error = false

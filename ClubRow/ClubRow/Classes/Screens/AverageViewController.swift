@@ -56,7 +56,7 @@ class AverageViewController: UIViewController {
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + "/statistics/average?period=\(self.type)"
+        let url = SERVER_URL + KEY_API_LOAD_AVERAGE + "?period=\(self.type)"
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 var error = false

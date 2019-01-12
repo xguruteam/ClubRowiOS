@@ -45,7 +45,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         case 2:
             print("Set notify")
             let classItem = self.nextClasses[indexPath.row]
-            let alert = UIAlertController(title: "Setup Notification", message: "ClubRow will notify at \(Util.convertTimeStamp(classItem["starts_at"] as! String, format: "E, MMM d yyyy\nh:mm a 'EST'")!)", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Setup Notification", message: "ClubRow will notify at \(Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "E, MMM d yyyy\nh:mm a 'EST'")!)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         case 3:
@@ -101,7 +101,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClassDetailCell") as! ClassDetailCell
             let classItem = self.nextClasses[indexPath.row]
             cell.headerLabel.text = classItem["name"] as? String
-            cell.lblClassTime.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "E, MMM d yyyy\nh:mm a 'EST'")
+            cell.lblClassTime.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "E, MMM d yyyy\nh:mm a 'EST'")
             cell.lblClassTime.isHidden = false
             cell.joinClassBtn.setTitle("Notify", for: .normal)
             cell.viewDot.backgroundColor = UIColor(red: 0xED, green: 0xED, blue: 0xED)

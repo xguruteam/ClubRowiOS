@@ -211,12 +211,12 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellClass") as! ClassCell
         let classItem = self.classes[indexPath.row]
         let instructor = classItem["teacher"] as! [String: Any]
-        cell.lblMonth.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "MMMM")
-        cell.lblDate.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "d")
-        cell.lblDay.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "E")
+        cell.lblMonth.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "MMMM")
+        cell.lblDate.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "d")
+        cell.lblDay.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "E")
         cell.lblNameOfClass.text = classItem["name"] as! String
         cell.lblInstructorName.text = instructor["name"] as! String
-        cell.lblTime.text = Util.convertTimeStamp(classItem["starts_at"] as! String, format: "h:mm a 'EST'")
+        cell.lblTime.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "h:mm a 'EST'")
         cell.delegate = self
         return cell
     }
