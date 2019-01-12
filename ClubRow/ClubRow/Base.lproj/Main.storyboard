@@ -3663,7 +3663,7 @@
                                                         <action selector="onButtonClick:" destination="eBy-OI-dkx" eventType="touchUpInside" id="Drm-30-dSV"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9f-gd-Mra">
+                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9f-gd-Mra">
                                                     <rect key="frame" x="0.0" y="115" width="105" height="105"/>
                                                     <connections>
                                                         <action selector="onButtonClick:" destination="eBy-OI-dkx" eventType="touchUpInside" id="7Yq-eD-hW6"/>

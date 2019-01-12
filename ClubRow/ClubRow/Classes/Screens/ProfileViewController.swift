@@ -113,7 +113,7 @@ class ProfileViewController: SuperViewController {
 
                 }
                 if error == true {
-                    self.onLoadError()
+                    self.onLoadError(0)
                 }
                 
         }
@@ -153,7 +153,7 @@ class ProfileViewController: SuperViewController {
                     self.loadGraph()
                 }
                 if error == true {
-                    self.onLoadError()
+                    self.onLoadError(1)
                 }
                 
         }
@@ -191,15 +191,20 @@ class ProfileViewController: SuperViewController {
                         break
                     }
                     
-                    guard let data = raw["data"] as? [[String: Any]] else {
+                    guard let data = raw["data"] as? [String: Any] else {
                         error = true
                         break
                     }
                     
-                    self.statistics = data
+                    guard let snapshots = data["workout_snapshots"] as? [[String: Any]] else {
+                        error = true
+                        break
+                    }
+                    
+                    self.statistics = snapshots
                 }
                 if error == true {
-                    self.onLoadError()
+                    self.onLoadError(2)
                 }
                 else {
                     self.onLoadFinish()
@@ -207,10 +212,18 @@ class ProfileViewController: SuperViewController {
         }
     }
     
-    func onLoadError() {
-        histories = []
-        average = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
-        statistics = []
+    func onLoadError(_ type: Int) {
+        switch type {
+        case 1:
+            histories = []
+            statistics = []
+        case 2:
+            statistics = []
+        default:
+            histories = []
+            average = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+            statistics = []
+        }
         DispatchQueue.main.async(execute: {
             //                            self?.collectionView.reloadData()
             self.profileTableView.cr.endHeaderRefresh()
@@ -266,6 +279,9 @@ class ProfileViewController: SuperViewController {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.g_token = ""
             RootViewController.instance.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
         }))
 
         self.present(alert, animated: true, completion: nil)
@@ -382,6 +398,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
                 })
                 cell.viewChart.addLine(data)
+                
+                cell.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
+                    let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
+                    let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
+                    return NSString(format: "%02d:%02d:%02d", h, m, s) as String
+                })
+                
             }
             return cell
         default:
@@ -389,7 +412,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             
             let history = histories[indexPath.row - 1]
-            cell.lblDate.text = Util.convertTimeStamp("\(history["inserted_at"] as! String)Z", format: "MM/dd/yyyy")
+            cell.lblDate.text = Util.convertUnixTimeToDateString(history["inserted_at"] as! Int, format: "MM/dd/yyyy")
             cell.lblClassName.text = history["class_name"] as? String
             return cell
         }

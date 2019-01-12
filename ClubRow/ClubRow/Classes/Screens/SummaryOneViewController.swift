@@ -38,7 +38,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        lblDate.text = Util.convertTimeStamp("\(history["inserted_at"] as! String)Z", format: "MM/dd/yyyy")
+        lblDate.text = Util.convertUnixTimeToDateString(history["inserted_at"] as! Int, format: "MM/dd/yyyy")
         lblClassName.text = history["class_name"] as? String
         
         viewChart.animation.enabled = true
@@ -92,12 +92,17 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                             break
                         }
                         
-                        guard let data = raw["data"] as? [[String: Any]] else {
+                        guard let data = raw["data"] as? [String: Any] else {
                             error = true
                             break
                         }
                         
-                        self?.statistics = data
+                        guard let snapshots = data["workout_snapshots"] as? [[String: Any]] else {
+                            error = true
+                            break
+                        }
+                        
+                        self?.statistics = snapshots
                     }
                     if error == true {
                         self?.tableView.cr.endHeaderRefresh()
@@ -162,6 +167,12 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
             })
             self.viewChart.addLine(data)
             
+            self.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
+                let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
+                let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
+                return NSString(format: "%02d:%02d:%02d", h, m, s) as String
+            })
+            
             Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] (_) in
                 self?.viewChart.selectPoint(0)
             })
@@ -211,11 +222,11 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     }
     
     func didSelectDataPoint(_ x: CGFloat, yValues: Array<CGFloat>) {
-        lblDistance.text = "\(Int(yValues[0]))"
-        lblCalories.text = "\(Int(yValues[1]))"
-        lblSpeed.text = "\(Int(yValues[2]))"
+        lblDistance.text = "\(Int(yValues[0]))m"
+        lblCalories.text = "\(Int(yValues[1]))cal"
+        lblSpeed.text = "\(Int(yValues[2]))m/s"
         lblStrokes.text = "\(Int(yValues[3]))"
-        lblWattage.text = "\(Int(yValues[4]))"
+        lblWattage.text = "\(Int(yValues[4]))wat"
     }
     
 }

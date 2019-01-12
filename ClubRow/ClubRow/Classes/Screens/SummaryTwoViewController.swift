@@ -8,6 +8,10 @@
 
 import UIKit
 import ScrollableGraphView
+import CRRefresh
+import Alamofire
+import SwiftyJSON
+import MKProgress
 
 class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSource {
     
@@ -29,6 +33,10 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
     
     @IBOutlet var viewContainer: UIView!
     @IBOutlet var tableview: UITableView!
+    
+    var max: Double = 0
+    
+    var average: [String: Any]! = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +84,135 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
         graphView.addPlot(plot: barPlot)
         graphView.addReferenceLines(referenceLines: referenceLines)
 
+        self.tableview.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            MKProgress.show()
+            
+            // API
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "Authorization": "Token token=\(appDelegate.g_token)"
+            ]
+            let url = SERVER_URL + "statistics/user/\(appDelegate.g_userID)/daily"
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { response in
+                    var error = false
+                    switch response.result
+                    {
+                    case .failure( _):
+                        error = true
+                        
+                    case .success( _):
+                        
+                        guard let raw = response.result.value as? [String: Any] else {
+                            error = true
+                            break
+                        }
+                        
+                        guard let data = raw["data"] as? [[String: Any]] else {
+                            error = true
+                            break
+                        }
+                        
+                        self?.xAxisLabels = []
+                        self?.barPlotData =  data.map({ (point) -> Double in
+                            var para1, para2 : String
+                            switch self?.type {
+                            case 0, 1:
+                                para1 = "totals"
+                            default:
+                                para1 = "means"
+                            }
+                            para2  = Util.convertTypeToKey((self?.type)!)
+                            
+                            let block1 = point[para1] as! [String: Any]
+                            let block2 = block1[para2] as! NSNumber
+                            let label = Util.convertUnixTimeToDateString(point["date"] as! Int, format: "MMM dd")
+
+                            self?.xAxisLabels.append(label!)
+                            return Double(truncating: block2)
+                        })
+
+                        self?.max = self?.barPlotData.max() ?? 0
+                        self?.numberOfDataItems = self?.barPlotData.count ?? 0
+                       
+//                        self?.instructors = data
+                        
+                    }
+                    
+                    if error == true {
+//                        self?.instructors = []
+                        self?.barPlotData = []
+                        self?.xAxisLabels = []
+                        
+                        DispatchQueue.main.async(execute: {
+                            self?.graph.rangeMax = 100
+                            self?.graph.rangeMin = 0
+                            self?.graph.reload()
+                            self?.view.makeToast(MSG_INSTRUCTORS_FAILED_LOAD_ALL_INSTRUCTORS)
+                        })
+                    }
+                    else {
+                        DispatchQueue.main.async(execute: {
+                            self?.graph.rangeMax = self?.max ?? 100
+                            self?.graph.rangeMin = 0
+                            self?.graph.reload()
+                        })
+                    }
+                    
+                    self?.loadAverage()
+            }
+        }
+        
+        self.tableview.cr.beginHeaderRefresh()
+
+    }
+    
+    func loadAverage() {
+        // API
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let url = SERVER_URL + "/statistics/average?period=day"
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                var error = false
+                switch response.result
+                {
+                case .failure( _):
+                    error = true
+                    
+                case .success( _):
+                    
+                    guard let raw = response.result.value as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    guard let data = raw["data"] as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    self.average = data
+                    
+                }
+                
+                if error == true {
+                    self.average = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+                }
+                
+                DispatchQueue.main.async(execute: {
+                    self.lblAverage.text = "\((self.average[Util.convertTypeToKey(self.type)] as? NSNumber) ?? 0)"
+                    self.tableview.cr.endHeaderRefresh()
+                    MKProgress.hide()
+                })
+
+        }
     }
     
     @IBAction func onSummary(_ sender: Any) {
@@ -98,14 +235,14 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
 
     // MARK: Data Properties
     
-    private var numberOfDataItems = 29
+    private var numberOfDataItems = 0
     
     // Data for graphs with a single plot
-    private lazy var barPlotData: [Double] =  self.generateRandomData(self.numberOfDataItems, max: 100, shouldIncludeOutliers: false)
+    private lazy var barPlotData: [Double] =  []
     
     // Labels for the x-axis
     
-    private lazy var xAxisLabels: [String] =  self.generateSequentialLabels(self.numberOfDataItems, text: "FEB")
+    private lazy var xAxisLabels: [String] =  []
     // MARK: ScrollableGraphViewDataSource protocol
     // #########################################################
     
@@ -134,48 +271,5 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
         return numberOfDataItems
     }
     
-    private func generateRandomData(_ numberOfItems: Int, max: Double, shouldIncludeOutliers: Bool = true) -> [Double] {
-        var data = [Double]()
-        for _ in 0 ..< numberOfItems {
-            var randomNumber = Double(arc4random()).truncatingRemainder(dividingBy: max)
-            
-            if(shouldIncludeOutliers) {
-                if(arc4random() % 100 < 10) {
-                    randomNumber *= 3
-                }
-            }
-            
-            data.append(randomNumber)
-        }
-        return data
-    }
-    
-    private func generateRandomData(_ numberOfItems: Int, variance: Double, from: Double) -> [Double] {
-        
-        var data = [Double]()
-        for _ in 0 ..< numberOfItems {
-            
-            let randomVariance = Double(arc4random()).truncatingRemainder(dividingBy: variance)
-            var randomNumber = from
-            
-            if(arc4random() % 100 < 50) {
-                randomNumber += randomVariance
-            }
-            else {
-                randomNumber -= randomVariance
-            }
-            
-            data.append(randomNumber)
-        }
-        return data
-    }
-    
-    private func generateSequentialLabels(_ numberOfItems: Int, text: String) -> [String] {
-        var labels = [String]()
-        for i in 0 ..< numberOfItems {
-            labels.append("\(text) \(i+1)")
-        }
-        return labels
-    }
 }
 

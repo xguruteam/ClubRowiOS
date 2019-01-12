@@ -9,7 +9,7 @@
 import Foundation
 
 let APP_NAME = "ClubRow"
-let SERVER_URL = "http://35.196.177.1:4000/api/"
+let SERVER_URL = "http://35.247.62.121:4000/api/"
 
 // API KEYS
 let KEY_API_SIGNUP = "users/participants/sign-up"

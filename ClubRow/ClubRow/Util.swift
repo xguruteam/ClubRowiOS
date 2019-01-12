@@ -19,12 +19,20 @@ class Util: NSObject {
     
     static func convertTimeStamp(_ input: String, format: String) -> String? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let date = dateFormatter.date(from: input)
         
         let targetDateFormatter = DateFormatter()
         targetDateFormatter.dateFormat = format
         return targetDateFormatter.string(from: date!)
+    }
+    
+    static func convertUnixTimeToDateString(_ unix: Int, format: String) -> String? {
+        let date = Date(timeIntervalSince1970: TimeInterval(unix))
+        
+        let targetDateFormatter = DateFormatter()
+        targetDateFormatter.dateFormat = format
+        return targetDateFormatter.string(from: date)
     }
     
     static func generateNumberOfClassesText(_ number: Int) -> String {
@@ -47,6 +55,10 @@ class Util: NSObject {
         default:
             return "\(number) Lobbies"
         }
+    }
+    
+    static func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
     static func convertTypeString(_ number: Int) -> String {
@@ -79,6 +91,23 @@ class Util: NSObject {
             return ""
         case 4:
             return "wat"
+        default:
+            return "Unknown"
+        }
+    }
+    
+    static func convertTypeToKey(_ number: Int) -> String {
+        switch number {
+        case 0:
+            return "distance"
+        case 1:
+            return "calories"
+        case 2:
+            return "speed"
+        case 3:
+            return "strokes_per_minute"
+        case 4:
+            return "wattage"
         default:
             return "Unknown"
         }
