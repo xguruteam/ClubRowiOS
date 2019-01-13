@@ -24,6 +24,7 @@ let KEY_API_LOAD_LOBBIES_FOR_CLASS = "classes"
 let KEY_API_CREATE_LOBBY_FOR_CLASS = "classes"
 let KEY_API_LOAD_NEXT_CLASSES = "classes/next"
 let KEY_API_LOAD_AVERAGE = "statistics/user/average"
+let KEY_API_LOAD_GLOBAL_AVERAGE = "statistics/class/"
 let KEY_API_LOAD_HISTORY = "statistics/user/history"
 let KEY_API_LOAD_DAILY = "statistics/user/daily"
 

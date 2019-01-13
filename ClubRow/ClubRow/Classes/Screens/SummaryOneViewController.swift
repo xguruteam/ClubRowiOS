@@ -200,6 +200,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
         
         let vc = self.getStoryboardWithIdentifier(identifier: "SummaryTwoViewController") as! SummaryTwoViewController
         vc.type = sender.tag
+        vc.history = self.history
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -218,6 +219,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     
     @IBAction func onGraph(_ sender: Any) {
         let vc = self.getStoryboardWithIdentifier(identifier: "SummaryTwoViewController") as! SummaryTwoViewController
+        vc.history = self.history
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

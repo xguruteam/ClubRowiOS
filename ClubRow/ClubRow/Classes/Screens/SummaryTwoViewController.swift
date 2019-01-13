@@ -37,6 +37,8 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
     var max: Double = 0
     
     var average: [String: Any]! = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+    var averageGlobal: [String: Any]! = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+    var history: [String: Any]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,7 +213,56 @@ class SummaryTwoViewController: SuperViewController, ScrollableGraphViewDataSour
                     self.tableview.cr.endHeaderRefresh()
                     MKProgress.hide()
                 })
+                
+                self.loadGlobalAverage()
 
+        }
+    }
+    
+    func loadGlobalAverage() {
+        // API
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Token token=\(appDelegate.g_token)"
+        ]
+        let classId = self.history["class_id"] as! Int
+        let url = SERVER_URL + KEY_API_LOAD_GLOBAL_AVERAGE + "\(classId)/average"
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { response in
+                var error = false
+                switch response.result
+                {
+                case .failure( _):
+                    error = true
+                    
+                case .success( _):
+                    
+                    guard let raw = response.result.value as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    guard let data = raw["data"] as? [String: Any] else {
+                        error = true
+                        break
+                    }
+                    
+                    self.averageGlobal = data
+                    
+                }
+                
+                if error == true {
+                    self.averageGlobal = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+                }
+                
+                DispatchQueue.main.async(execute: {
+                    self.lblClassAverage.text = "\((self.averageGlobal[Util.convertTypeToKey(self.type)] as? NSNumber) ?? 0)"
+                    self.tableview.cr.endHeaderRefresh()
+                    MKProgress.hide()
+                })
+                
         }
     }
     
