@@ -24,6 +24,7 @@ class ProfileViewController: SuperViewController {
     @IBOutlet weak var titleView: UIView!
     
     @IBOutlet var viewChart: LineChart!
+    @IBOutlet weak var scrollChart: UIScrollView!
     
     var histories: [[String: Any]]! = []
     var average: [String: Any]! = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
@@ -353,8 +354,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.viewChart.animation.enabled = true
             cell.viewChart.area = false
-            cell.viewChart.x.grid.visible = false
-            cell.viewChart.y.grid.visible = false
+            cell.viewChart.x.grid.visible = true
+            cell.viewChart.y.grid.visible = true
             cell.viewChart.y.labels.visible = false
             cell.viewChart.x.labels.visible = true
             cell.viewChart.colors = [
@@ -367,11 +368,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             
             if self.statistics.count == 0 {
                 cell.viewChart.clear()
-                cell.viewChart.addLine([0])
-                cell.viewChart.addLine([0])
-                cell.viewChart.addLine([0])
-                cell.viewChart.addLine([0])
-                cell.viewChart.addLine([0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.addLine([0, 0])
+                cell.viewChart.x.labels.values = ["00:00", "00:00"]
             }
             else {
             
@@ -402,10 +404,19 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
                     let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
                     let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
-                    return NSString(format: "%02d:%02d:%02d", h, m, s) as String
+                    return NSString(format: "%02d:%02d", h, m) as String
                 })
                 
             }
+            
+            if cell.viewChart.x.labels.values.count < 8 {
+                cell.viewChart.frame = CGRect(x: 0, y: 0, width: cell.scrollChart.bounds.width, height: 270)
+            }
+            else {
+                cell.viewChart.frame = CGRect(x: 0, y: 0, width: cell.viewChart.x.labels.values.count * 50, height: 270)
+            }
+            cell.scrollChart.contentSize = cell.viewChart.frame.size
+
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileHistoryCell") as! ProfileHistoryCell
@@ -421,7 +432,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
-            return 1090
+            return 1095
         default:
             return 49
         }

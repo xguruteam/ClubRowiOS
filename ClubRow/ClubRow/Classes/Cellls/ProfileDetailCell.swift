@@ -25,6 +25,7 @@ class ProfileDetailCell: UITableViewCell {
     
     @IBOutlet var viewChart: LineChart!
     
+    @IBOutlet weak var scrollChart: UIScrollView!
     @IBOutlet weak var labelDistance: UILabel!
     @IBOutlet weak var labelCalories: UILabel!
     @IBOutlet weak var labelSpeed: UILabel!

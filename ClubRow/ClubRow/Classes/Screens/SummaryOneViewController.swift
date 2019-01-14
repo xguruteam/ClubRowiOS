@@ -19,6 +19,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     @IBOutlet weak var lblClassName: UILabel!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var viewChart: LineChart!
+    @IBOutlet weak var scrollChart: UIScrollView!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -41,10 +42,11 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
         lblDate.text = Util.convertUnixTimeToDateString(history["inserted_at"] as! Int, format: "MM/dd/yyyy")
         lblClassName.text = history["class_name"] as? String
         
+        
         viewChart.animation.enabled = true
         viewChart.area = false
-        viewChart.x.grid.visible = false
-        viewChart.y.grid.visible = false
+        viewChart.x.grid.visible = true
+        viewChart.y.grid.visible = true
         viewChart.y.labels.visible = false
         viewChart.x.labels.visible = true
         viewChart.delegate = self
@@ -124,11 +126,20 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     
     func initGraph() {
         self.viewChart.clear()
-        self.viewChart.addLine([0])
-        self.viewChart.addLine([0])
-        self.viewChart.addLine([0])
-        self.viewChart.addLine([0])
-        self.viewChart.addLine([0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.addLine([0, 0])
+        self.viewChart.x.labels.values = ["00:00", "00:00"]
+        
+        if self.viewChart.x.labels.values.count < 8 {
+            self.viewChart.frame = CGRect(x: 0, y: 0, width: self.scrollChart.bounds.width, height: 270)
+        }
+        else {
+            self.viewChart.frame = CGRect(x: 0, y: 0, width: self.viewChart.x.labels.values.count * 50, height: 270)
+        }
+        self.scrollChart.contentSize = self.viewChart.frame.size
     }
     
     func updateGraph() {
@@ -170,12 +181,22 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
             self.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
                 let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
                 let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
-                return NSString(format: "%02d:%02d:%02d", h, m, s) as String
+                return NSString(format: "%02d:%02d", h, m) as String
             })
+            
+            if self.viewChart.x.labels.values.count < 8 {
+                self.viewChart.frame = CGRect(x: 0, y: 0, width: self.scrollChart.bounds.width, height: 270)
+            }
+            else {
+                self.viewChart.frame = CGRect(x: 0, y: 0, width: self.viewChart.x.labels.values.count * 50, height: 270)
+            }
+            self.scrollChart.contentSize = self.viewChart.frame.size
             
             Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] (_) in
                 self?.viewChart.selectPoint(0)
             })
+            
+            
 
 //
 //            let data: [CGFloat] = [3, 4, -2, 11, 13, 15, 3, 4, -2, 11, 13, 15]
