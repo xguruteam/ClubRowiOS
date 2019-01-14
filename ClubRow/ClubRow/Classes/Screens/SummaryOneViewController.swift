@@ -131,7 +131,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
         self.viewChart.addLine([0, 0])
         self.viewChart.addLine([0, 0])
         self.viewChart.addLine([0, 0])
-        self.viewChart.x.labels.values = ["00:00", "00:00"]
+        self.viewChart.x.labels.values = ["00:00:00", "00:00:00"]
         
         if self.viewChart.x.labels.values.count < 8 {
             self.viewChart.frame = CGRect(x: 0, y: 0, width: self.scrollChart.bounds.width, height: 270)
@@ -181,7 +181,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
             self.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
                 let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
                 let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
-                return NSString(format: "%02d:%02d", h, m) as String
+                return NSString(format: "%02d:%02d:%02d", h, m, s) as String
             })
             
             if self.viewChart.x.labels.values.count < 8 {

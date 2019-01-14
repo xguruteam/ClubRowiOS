@@ -373,7 +373,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.viewChart.addLine([0, 0])
                 cell.viewChart.addLine([0, 0])
                 cell.viewChart.addLine([0, 0])
-                cell.viewChart.x.labels.values = ["00:00", "00:00"]
+                cell.viewChart.x.labels.values = ["00:00", "00:00", "00:00"]
             }
             else {
             
@@ -404,7 +404,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
                     let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
                     let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
-                    return NSString(format: "%02d:%02d", h, m) as String
+                    return NSString(format: "%02d:%02d:%02d", h, m, s) as String
                 })
                 
             }
