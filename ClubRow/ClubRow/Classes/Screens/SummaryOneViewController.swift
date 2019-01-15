@@ -104,7 +104,16 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                             break
                         }
                         
+                        if snapshots.count == 0 {
+                            error = true
+                            break
+                        }
+                        
                         self?.statistics = snapshots
+                        
+                        if snapshots.count < 2 {
+                            self?.statistics.append(snapshots[0])
+                        }
                     }
                     if error == true {
                         self?.tableView.cr.endHeaderRefresh()
@@ -248,7 +257,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
         lblDistance.text = "\(Int(yValues[0]))m"
         lblCalories.text = "\(Int(yValues[1]))cal"
         lblSpeed.text = "\(Int(yValues[2]))m/s"
-        lblStrokes.text = "\(Int(yValues[3]))"
+        lblStrokes.text = "\(Int(yValues[3]))s/m"
         lblWattage.text = "\(Int(yValues[4]))wat"
     }
     

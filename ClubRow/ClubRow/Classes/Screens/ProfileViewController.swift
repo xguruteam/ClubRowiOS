@@ -87,7 +87,7 @@ class ProfileViewController: SuperViewController {
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + KEY_API_LOAD_AVERAGE + "?period=day"
+        let url = SERVER_URL + KEY_API_LOAD_STATISTIC_TODAY
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 var error = false
@@ -108,7 +108,19 @@ class ProfileViewController: SuperViewController {
                         break
                     }
                     
-                    self.average = data
+                    self.average = ["distance": 0, "calories": 0, "speed": 0, "strokes_per_minute": 0, "wattage": 0]
+                    
+                    if let totals = data["totals"] as? [String: Any] {
+                        self.average.merge(totals, uniquingKeysWith: { (_, new) -> Any in
+                            new
+                        })
+                    }
+                    
+                    if let max = data["max"] as? [String: Any] {
+                        self.average.merge(max, uniquingKeysWith: { (_, new) -> Any in
+                            new
+                        })
+                    }
                     
                     self.loadHistory()
 
@@ -128,7 +140,7 @@ class ProfileViewController: SuperViewController {
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + KEY_API_LOAD_HISTORY
+        let url = SERVER_URL + KEY_API_LOAD_STATISTIC_HISTORY
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 var error = false
@@ -149,7 +161,11 @@ class ProfileViewController: SuperViewController {
                         break
                     }
                     
-                    self.histories = data
+                    self.histories = data.sorted {
+                        let first = $0["inserted_at"] as? Int ?? 0
+                        let second = $1["inserted_at"] as? Int ?? 0
+                        return first > second
+                    }
                     
                     self.loadGraph()
                 }
@@ -162,7 +178,7 @@ class ProfileViewController: SuperViewController {
 
     func loadGraph() {
         
-        guard let lastHistory = self.histories.last else {
+        guard let lastHistory = self.histories.first else {
             self.statistics = []
             onLoadFinish()
             return
@@ -202,7 +218,17 @@ class ProfileViewController: SuperViewController {
                         break
                     }
                     
+                    if snapshots.count == 0 {
+                        error = true
+                        break
+                    }
+                    
                     self.statistics = snapshots
+                    
+                    if snapshots.count < 2 {
+                        self.statistics.append(snapshots[0])
+                    }
+                    
                 }
                 if error == true {
                     self.onLoadError(2)
@@ -249,7 +275,7 @@ class ProfileViewController: SuperViewController {
     
     @IBAction func onViewSummary(_ sender: Any) {
         
-        guard let lastHistory = self.histories.last else {
+        guard let lastHistory = self.histories.first else {
             self.statistics = []
             onLoadFinish()
             return

@@ -88,7 +88,7 @@ class Util: NSObject {
         case 2:
             return "m/s"
         case 3:
-            return ""
+            return "s/m"
         case 4:
             return "wat"
         default:

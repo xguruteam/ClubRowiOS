@@ -159,6 +159,7 @@
 		CA1F42D321A3E87B00901ADB /* ic_bell_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */; };
 		CA1F42D421A3E87B00901ADB /* ic_bell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */; };
 		CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA87661C21C16C2700B31B7E /* UIView+Box.swift */; };
+		CAB6B5F421ED9025000FEB68 /* NSNumber+Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6B5F321ED9025000FEB68 /* NSNumber+Round.swift */; };
 		CAC1A76421E0467B000CB386 /* AverageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76321E0467B000CB386 /* AverageViewController.swift */; };
 		CAC1A76621E04DA0000CB386 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76521E04D9F000CB386 /* SegmentedView.swift */; };
 		CAC1A76821E05591000CB386 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76721E05591000CB386 /* ParameterView.swift */; };
@@ -353,6 +354,7 @@
 		CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_unselected.png; sourceTree = "<group>"; };
 		CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_selected.png; sourceTree = "<group>"; };
 		CA87661C21C16C2700B31B7E /* UIView+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Box.swift"; sourceTree = "<group>"; };
+		CAB6B5F321ED9025000FEB68 /* NSNumber+Round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Round.swift"; sourceTree = "<group>"; };
 		CAC1A76321E0467B000CB386 /* AverageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageViewController.swift; sourceTree = "<group>"; };
 		CAC1A76521E04D9F000CB386 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		CAC1A76721E05591000CB386 /* ParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				A4DD2177219820EC00D7DC2E /* UIDevice.swift */,
 				A492E44E219A7427001A6766 /* Shadow.swift */,
 				CA87661C21C16C2700B31B7E /* UIView+Box.swift */,
+				CAB6B5F321ED9025000FEB68 /* NSNumber+Round.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				3E3DA4212163488B00B5055C /* AppDelegate.swift in Sources */,
 				3E3DA4552163552A00B5055C /* TabbarViewController.swift in Sources */,
 				A416C2B1219D23050038D67E /* ClassesCell.swift in Sources */,
+				CAB6B5F421ED9025000FEB68 /* NSNumber+Round.swift in Sources */,
 				3EE73C2F216AB33A00A20AF4 /* DateViewController.swift in Sources */,
 				A420819A219252EF00169232 /* SelectedTeacherCollectionCell.swift in Sources */,
 				3EDED40E216B42C400167FEF /* DateFilterViewController.swift in Sources */,

@@ -1670,8 +1670,8 @@
                                                                             <color key="textColor" red="0.1215686275" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w98-kK-naV">
-                                                                            <rect key="frame" x="367" y="45.5" width="0.0" height="0.0"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="s/m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w98-kK-naV">
+                                                                            <rect key="frame" x="338.5" y="25" width="28.5" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <color key="textColor" red="0.1215686275" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3609,8 +3609,8 @@
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQz-wL-5LT">
-                                                            <rect key="frame" x="45" y="68" width="15" height="27"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0s/m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQz-wL-5LT">
+                                                            <rect key="frame" x="26" y="68" width="53" height="27"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -4637,8 +4637,8 @@
                                                 <color key="textColor" red="0.1215686275" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asa-e0-dvO">
-                                                <rect key="frame" x="367" y="45.5" width="0.0" height="0.0"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="s/m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asa-e0-dvO">
+                                                <rect key="frame" x="338.5" y="25" width="28.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.1215686275" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>

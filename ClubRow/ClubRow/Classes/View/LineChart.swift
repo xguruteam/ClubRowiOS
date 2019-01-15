@@ -76,7 +76,7 @@ open class LineChart: UIView {
     
     public struct Animation {
         public var enabled: Bool = true
-        public var duration: CFTimeInterval = 1
+        public var duration: CFTimeInterval = 0.5
     }
     
     public struct Dots {
