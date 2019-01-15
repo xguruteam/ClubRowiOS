@@ -92,6 +92,9 @@ class LobbiesViewController: SuperViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(removeVideoPlayerWindow), name: NSNotification.Name(rawValue: "dismissVideoWindow"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
         tableView?.backgroundColor = .clear
         tableView?.contentInset = UIEdgeInsets(top: 23, left: 0, bottom: 10, right: 0)
         self.viewHeader.makeBox()
@@ -180,14 +183,33 @@ class LobbiesViewController: SuperViewController {
         self.tableView.cr.beginHeaderRefresh()
     }
     
-
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+    @objc func removeVideoPlayerWindow() {
+        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
     }
     
+    @objc func orientationChanged() {
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+    }
+  
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    
+//
+//    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+//        return .portrait
+//    }
     /*
     // MARK: - Navigation
 
@@ -240,6 +262,9 @@ extension LobbiesViewController: SelectLobbyDelegate {
         let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
         vc.lobbyId = lobby["id"] as! Int
         vc.classData = classData
-        self.present(vc, animated: true, completion: nil)
+        
+        UIDevice.current.setValue(Int(UIInterfaceOrientation.landscapeRight.rawValue), forKey: "orientation")
+        
+        self.present(vc, animated: false, completion: nil)
     }
 }

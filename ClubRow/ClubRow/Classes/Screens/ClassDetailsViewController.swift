@@ -157,6 +157,8 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(removeVideoPlayerWindow), name: NSNotification.Name(rawValue: "dismissVideoWindow"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         // shadow
         titleView.layer.shadowColor = UIColor.black.cgColor
@@ -265,6 +267,19 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
 
     }
 
+    @objc func removeVideoPlayerWindow() {
+        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+    }
+    
+    @objc func orientationChanged() {
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let value = UIInterfaceOrientation.portrait.rawValue

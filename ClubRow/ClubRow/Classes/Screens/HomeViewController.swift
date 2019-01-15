@@ -53,7 +53,7 @@ class HomeViewController: SuperViewController {
         
         super.viewWillAppear(animated)
         let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+//        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
     func canRotate() -> Void {}

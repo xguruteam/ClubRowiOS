@@ -111,6 +111,11 @@ class ClassVideoViewController: SuperViewController {
         MKProgress.show()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    
     func sortMembers() {
         if classMembers.count == 0 {
             return
@@ -122,38 +127,21 @@ class ClassVideoViewController: SuperViewController {
         membersForWattage = classMembers.sorted(by: {Int32($0.wattage)! > Int32($1.wattage)!})
     }
     
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-    
     @IBAction func onClose(_ sender: Any) {
         
+        playerView.stop()
+        playerView.clear()
         SocketManager.sharedManager.delegate = nil
         SocketManager.sharedManager.leaveChannel()
         SocketManager.sharedManager.socket.disconnect()
-//        self.navigationController?.popViewController(animated: true)
         
-        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+//        self.navigationController?.popViewController(animated: true)
         
         C2ScanningManager.shared.removeDelegate(self)
         
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissVideoWindow"), object: nil)
+        }
     }
     
     @IBAction func onTapBackground(_ sender: Any) {
