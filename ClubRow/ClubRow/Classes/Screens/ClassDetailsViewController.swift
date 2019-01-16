@@ -26,8 +26,10 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
     var nextClasses: [[String: Any]]! = []
     
     @IBAction func onJoinClass(_ sender: Any) {
+        UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
         let vc = self.getStoryboardWithIdentifier(identifier: "ClassVideoViewController") as! ClassVideoViewController
-        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
+//        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: false, completion: nil)
     }
     
     func classDetailCell(didSelect indexPath: IndexPath) {
@@ -41,7 +43,8 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
             vc.lobbyId = classItem["lobby_id"] as! Int
             vc.classData = classItem
-            self.present(vc, animated: true, completion: nil)
+            UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+            self.present(vc, animated: false, completion: nil)
         case 2:
             print("Set notify")
             let classItem = self.nextClasses[indexPath.row]

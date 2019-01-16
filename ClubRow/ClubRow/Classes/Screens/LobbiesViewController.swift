@@ -82,7 +82,8 @@ class LobbiesViewController: SuperViewController {
                         let vc = self.getStoryboardWithIdentifier(identifier:"ClassVideoViewController") as! ClassVideoViewController
                         vc.lobbyId = newLobbyId
                         vc.classData = self.classData
-                        self.present(vc, animated: true, completion: nil)
+                        UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+                        self.present(vc, animated: false, completion: nil)
                     })
                 }
         }

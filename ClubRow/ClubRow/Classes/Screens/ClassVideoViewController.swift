@@ -94,9 +94,13 @@ class ClassVideoViewController: SuperViewController {
             ] as YouTubePlayerView.YouTubePlayerParameters
         
         if let media = classData["media"] as? [String: Any] {
-            let url = media["url"] as! String
-            playerView.loadVideoURL(URL(string: url)!)
-            loadingIndicator.isHidden = false
+            if let url = media["url"] as? String {
+                playerView.loadVideoURL(URL(string: url)!)
+                loadingIndicator.isHidden = false
+            }
+            else {
+                loadingIndicator.isHidden = true
+            }
         }
         else {
             loadingIndicator.isHidden = true
