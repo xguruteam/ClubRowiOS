@@ -48,8 +48,84 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         case 2:
             print("Set notify")
             let classItem = self.nextClasses[indexPath.row]
-            let alert = UIAlertController(title: "Setup Notification", message: "ClubRow will notify at \(Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "E, MMM d yyyy\nh:mm a 'EST'")!)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            let classId = classItem["id"] as! Int
+            var subscribed = false
+            if let current_user = classItem["current_user"] as? [String: Any] {
+                subscribed = current_user["subscribed"] as? Bool ?? false
+            }
+            
+            let alert = UIAlertController(title: "Subscribe", message: "Do you really want to \(subscribed ? "unsubscribe" : "subscribe") this class?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+                MKProgress.show()
+                
+                // API
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                
+                let headers: HTTPHeaders = [
+                    "Content-Type": "application/json",
+                    "Authorization": "Token token=\(appDelegate.g_token)"
+                ]
+                
+                let url = SERVER_URL + KEY_API_SUBSCRIBE_FOR_CLASS + "\(classId)/" + (subscribed ? "unsubscribe" : "subscribe")
+                Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                    .responseJSON { response in
+                        var error = false
+                        switch response.result
+                        {
+                        case .failure( _):
+                            error = true
+                            
+                        case .success( _):
+                            
+                            guard let raw = response.result.value as? [String: Any] else {
+                                error = true
+                                break
+                            }
+                            
+                            var data: [String: Any]
+                            
+                            if let original = raw["data"] as? [String: Any] {
+                                data = original
+                            }
+                            else {
+                                data = ["subscribed": (subscribed ? false : true)]
+                            }
+                            
+                            guard let new_subscribed = data["subscribed"] as? Bool else {
+                                error = true
+                                break
+                            }
+                            
+                            var classItem = self.nextClasses[indexPath.row]
+                            var current_user = classItem["current_user"] as? [String: Any] ?? [:]
+                            current_user.merge(["subscribed": new_subscribed], uniquingKeysWith: { (old, new) -> Any in
+                                return new
+                            })
+                            classItem.merge(["current_user": current_user], uniquingKeysWith: { (old, new) -> Any in
+                                new
+                            })
+                            self.nextClasses[indexPath.row] = classItem
+                            
+                        }
+                        if error == true {
+                            DispatchQueue.main.async(execute: {
+                                MKProgress.hide()
+                            })
+                        }
+                        else {
+                            DispatchQueue.main.async(execute: {
+                                UIView.performWithoutAnimation {
+                                    self.classDetailTableView.reloadRows(at: [indexPath], with: .none)
+                                }
+                                MKProgress.hide()
+                            })
+                        }
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+            }))
+            
             self.present(alert, animated: true, completion: nil)
         case 3:
             print("Goto Lobbies screen")
@@ -106,8 +182,17 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             cell.headerLabel.text = classItem["name"] as? String
             cell.lblClassTime.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "E, MMM d yyyy\nh:mm a 'EST'")
             cell.lblClassTime.isHidden = false
-            cell.joinClassBtn.setTitle("Notify", for: .normal)
             cell.viewDot.backgroundColor = UIColor(red: 0xED, green: 0xED, blue: 0xED)
+            if let current_user = classItem["current_user"] as? [String: Any], let subscribed = current_user["subscribed"] as? Bool {
+                if subscribed {
+                    cell.joinClassBtn.setTitle("Unsubscribe", for: .normal)
+                }
+                else {
+                    cell.joinClassBtn.setTitle("Subscribe", for: .normal)
+                }
+                
+            }
+
             cell.indexPath = indexPath
             cell.delegate = self
             return cell
@@ -203,7 +288,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
                 "Authorization": "Token token=\(appDelegate.g_token)"
             ]
             
-            let url = SERVER_URL + KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR + "?teacher_user_id=\(teacherId)"
+            let url = SERVER_URL + KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR + "teacher_user_id=\(teacherId)"
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
                 .responseJSON { response in
                     var error = false

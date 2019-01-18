@@ -217,11 +217,103 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
         cell.lblNameOfClass.text = classItem["name"] as! String
         cell.lblInstructorName.text = instructor["name"] as! String
         cell.lblTime.text = Util.convertUnixTimeToDateString(classItem["starts_at"] as! Int, format: "h:mm a 'EST'")
+        if let current_user = classItem["current_user"] as? [String: Any], let subscribed = current_user["subscribed"] as? Bool {
+            if subscribed {
+                cell.ivSubscriptionStatus.image = UIImage.init(named: "ic_bell_selected")
+            }
+            else {
+                cell.ivSubscriptionStatus.image = UIImage.init(named: "ic_bell_unselected")
+            }
+            
+        }
+        cell.tag = indexPath.row
         cell.delegate = self
         return cell
     }
     
-    func onViewClass(_ cell: ClassCell?) {
+    func onViewClass(_ cell: ClassCell) {
+        let classItem = self.classes[cell.tag]
+        let classId = classItem["id"] as! Int
+        var subscribed = false
+        if let current_user = classItem["current_user"] as? [String: Any] {
+            subscribed = current_user["subscribed"] as? Bool ?? false
+        }
+        
+        let alert = UIAlertController(title: "Subscribe", message: "Do you really want to \(subscribed ? "unsubscribe" : "subscribe") this class?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+            MKProgress.show()
+            
+            // API
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/json",
+                "Authorization": "Token token=\(appDelegate.g_token)"
+            ]
+            
+            let url = SERVER_URL + KEY_API_SUBSCRIBE_FOR_CLASS + "\(classId)/" + (subscribed ? "unsubscribe" : "subscribe")
+            Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+                .responseJSON { response in
+                    var error = false
+                    switch response.result
+                    {
+                    case .failure( _):
+                        error = true
+                        
+                    case .success( _):
+                        
+                        guard let raw = response.result.value as? [String: Any] else {
+                            error = true
+                            break
+                        }
+                        
+                        var data: [String: Any]
+                        
+                        if let original = raw["data"] as? [String: Any] {
+                            data = original
+                        }
+                        else {
+                            data = ["subscribed": (subscribed ? false : true)]
+                        }
+                        
+                        guard let new_subscribed = data["subscribed"] as? Bool else {
+                            error = true
+                            break
+                        }
+                        
+                        var classItem = self.classes[cell.tag]
+                        var current_user = classItem["current_user"] as? [String: Any] ?? [:]
+                        current_user.merge(["subscribed": new_subscribed], uniquingKeysWith: { (old, new) -> Any in
+                            return new
+                        })
+                        classItem.merge(["current_user": current_user], uniquingKeysWith: { (old, new) -> Any in
+                            new
+                        })
+                        self.classes[cell.tag] = classItem
+                        
+                    }
+                    if error == true {
+                        DispatchQueue.main.async(execute: {
+                            MKProgress.hide()
+                        })
+                    }
+                    else {
+                        DispatchQueue.main.async(execute: {
+                            UIView.performWithoutAnimation {
+                                self.tableview.reloadRows(at: [IndexPath.init(row: cell.tag, section: 0)], with: .none)
+                            }
+                            MKProgress.hide()
+                        })
+                    }
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        /*
         let controller = self.getStoryboardWithIdentifier(identifier: "DateFilterViewController") as! DateFilterViewController
         
         let presenter: Presentr = {
@@ -242,6 +334,7 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
         }()
         
         customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
+ */
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

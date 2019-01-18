@@ -5148,7 +5148,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btSubscribe" destination="zyo-Xl-UhN" id="PI5-T5-kck"/>
                                             <outlet property="cardView" destination="gHc-dD-ni8" id="Wzu-fS-QTz"/>
+                                            <outlet property="ivSubscriptionStatus" destination="ANC-Hf-5Aj" id="IFu-lE-Kbf"/>
                                             <outlet property="lblDate" destination="5TY-6u-41w" id="S0E-MI-AiJ"/>
                                             <outlet property="lblDay" destination="iMU-T6-8NZ" id="jFn-4a-Url"/>
                                             <outlet property="lblInstructorName" destination="YXL-Kh-85A" id="Eo8-Nh-ubH"/>

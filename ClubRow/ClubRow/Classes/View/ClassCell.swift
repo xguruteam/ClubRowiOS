@@ -10,7 +10,7 @@ import UIKit
 
 @objc protocol ClassCellDelegate {
     
-    @objc optional func onViewClass(_ cell: ClassCell?)
+    @objc optional func onViewClass(_ cell: ClassCell)
     
 }
 
@@ -24,6 +24,8 @@ class ClassCell: UITableViewCell {
     @IBOutlet weak var lblMonth: UILabel!
     @IBOutlet weak var lblDay: UILabel!
     @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var ivSubscriptionStatus: UIImageView!
+    @IBOutlet weak var btSubscribe: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
