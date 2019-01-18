@@ -78,7 +78,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                 "Content-Type": "application/json",
                 "Authorization": "Token token=\(appDelegate.g_token)"
             ]
-            let url = SERVER_URL + "statistics/session/\(id)"
+            let url = SERVER_URL + KEY_API_LOAD_STATISTIC_SESSION_PROGRESS + "\(id)"
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
                 .responseJSON { response in
                     var error = false

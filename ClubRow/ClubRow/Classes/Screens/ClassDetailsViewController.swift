@@ -203,7 +203,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
                 "Authorization": "Token token=\(appDelegate.g_token)"
             ]
             
-            let url = SERVER_URL + KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR + "/\(teacherId)/classes"
+            let url = SERVER_URL + KEY_API_LOAD_CLASSES_FOR_INSTRUCTOR + "?teacher_user_id=\(teacherId)"
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
                 .responseJSON { response in
                     var error = false

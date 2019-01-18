@@ -192,7 +192,7 @@ class ProfileViewController: SuperViewController {
             "Content-Type": "application/json",
             "Authorization": "Token token=\(appDelegate.g_token)"
         ]
-        let url = SERVER_URL + "statistics/session/\(lastHistory["id"] as! Int)"
+        let url = SERVER_URL + KEY_API_LOAD_STATISTIC_SESSION_PROGRESS + "\(lastHistory["id"] as! Int)"
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { response in
                 var error = false
