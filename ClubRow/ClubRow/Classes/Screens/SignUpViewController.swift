@@ -20,6 +20,10 @@ class SignUpViewController: SuperViewController {
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtConfirmPassword: UITextField!
     
+    var email: String?
+    var password: String?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -79,6 +83,8 @@ class SignUpViewController: SuperViewController {
                                 
                                 let alert = UIAlertController(title: APP_NAME, message: MSG_SIGNUP_SUCCESS, preferredStyle: UIAlertController.Style.alert)
                                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
+                                    self.email = self.txtEmail.text
+                                    self.password = self.txtPassword.text
                                     self.performSegue(withIdentifier: "segueToLogin", sender: nil)
                                 }))
                                 self.present(alert, animated: true, completion: nil)
@@ -91,6 +97,18 @@ class SignUpViewController: SuperViewController {
                         }
                 }
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let loginVC = segue.destination as? LoginViewController else {
+            return
+        }
+        
+        if let _ = self.email, let _ = self.password {
+            print("registered")
+            loginVC.registeredEmail = self.email
+            loginVC.registeredPassword = self.password
         }
     }
     

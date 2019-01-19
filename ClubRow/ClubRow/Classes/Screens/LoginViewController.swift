@@ -15,20 +15,33 @@ class LoginViewController: SuperViewController {
 
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+
+    var registeredEmail: String?
+    var registeredPassword: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let _ = registeredEmail, let _ = registeredPassword {
+            txtEmail.text = registeredEmail
+            txtPassword.text = registeredPassword
+            onLogin(self)
+            return
+        }
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if (appDelegate.g_token == "") {
         } else {
-            MKProgress.show()
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
-                MKProgress.hide()
+//            MKProgress.show()
+//            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
+//                MKProgress.hide()
                 let vc = self.getStoryboardWithIdentifier(identifier: "MainViewController")
-                self.present(vc, animated: true, completion: nil)
-            }
+                self.present(vc, animated: false, completion: nil)
+//            }
         }
+        
+        
 
     }
 		
