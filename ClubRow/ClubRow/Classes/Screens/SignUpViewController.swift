@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import KRProgressHUD
+import MKProgress
 import Toast_Swift
 
 class SignUpViewController: SuperViewController {
@@ -61,10 +61,10 @@ class SignUpViewController: SuperViewController {
                     KEY_PASSWORD_CONFIRMATION: txtConfirmPassword.text!
                 ]
             ]
-            KRProgressHUD.show()
+            MKProgress.show()
             let signupRequest: String = SERVER_URL + KEY_API_SIGNUP
             Alamofire.request(signupRequest, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
-                KRProgressHUD.dismiss()
+                MKProgress.hide()
                 switch response.result
                 {
                     case .failure(let error):
