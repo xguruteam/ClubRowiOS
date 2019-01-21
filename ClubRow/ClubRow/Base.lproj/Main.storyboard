@@ -2036,7 +2036,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="225"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_avatar_default.png" translatesAutoresizingMaskIntoConstraints="NO" id="p4I-Se-tVY" customClass="SwiftyAvatar" customModule="SwiftyAvatar">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_avatar_default.png" translatesAutoresizingMaskIntoConstraints="NO" id="p4I-Se-tVY" customClass="SwiftyAvatar" customModule="SwiftyAvatar">
                                                     <rect key="frame" x="156.5" y="35" width="101" height="101"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="101" id="L14-yx-lgt"/>
@@ -2044,10 +2044,13 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="value" red="1" green="0.52941176470588236" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
-                                                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
@@ -2283,6 +2286,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="y0o-ec-ogw"/>
                     <connections>
+                        <outlet property="avatarView" destination="p4I-Se-tVY" id="Wz0-y8-V5o"/>
                         <outlet property="classDetailTableView" destination="Kfx-xB-9gf" id="JSz-rw-Jme"/>
                         <outlet property="detailView" destination="r6p-Hs-qnM" id="WDz-XZ-90c"/>
                         <outlet property="lblInstructorName" destination="afH-OE-spU" id="YXg-sr-018"/>

@@ -11,6 +11,7 @@ import CRRefresh
 import MKProgress
 import Alamofire
 import SwiftyJSON
+import SwiftyAvatar
 
 class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITableViewDataSource, ClassDetailCellDelegate {
     
@@ -19,11 +20,13 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
     @IBOutlet weak var classDetailTableView: UITableView!
     @IBOutlet weak var lblInstructorName: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var avatarView: SwiftyAvatar!
     
     var instructor: [String: Any]!
     var pastClasses: [[String: Any]]! = []
     var liveClasses: [[String: Any]]! = []
     var nextClasses: [[String: Any]]! = []
+    var instrutorDescription: String!
     
     @IBAction func onJoinClass(_ sender: Any) {
         UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
@@ -163,7 +166,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         switch indexPath.section {
         case 0:
            let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell") as! DescriptionCell
-           cell.textView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
+           cell.textView.text = self.instrutorDescription
            cell.selectionStyle = .none
             return cell
         case 1:
@@ -215,7 +218,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell") as! DescriptionCell
             
             
-            cell.textView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
+            cell.textView.text = self.instrutorDescription
             
             let fixedWidth = tableView.frame.size.width - 28 * 2
             
@@ -263,6 +266,33 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         else {
             self.lblInstructorName.text = "Unknown"
             self.lblTitle.text = "Unknown"
+        }
+        
+        if let avatarURL = instructor["image_url"] as? String {
+            let imageUrl:URL = URL(string: avatarURL)!
+            
+            // Start background thread so that image loading does not make app unresponsive
+            DispatchQueue.global(qos: .userInitiated).async {
+                
+                if let imageData:NSData = NSData(contentsOf: imageUrl) {
+                
+                // When from background thread, UI needs to be updated on main_queue
+                DispatchQueue.main.async {
+                    let image = UIImage(data: imageData as Data)
+                    self.avatarView.image = image
+                }
+                }
+            }
+        }
+        else {
+            
+        }
+        
+        if let des = instructor["description"] as? String {
+            self.instrutorDescription = des
+        }
+        else {
+            self.instrutorDescription = "               "
         }
         
         self.classDetailTableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in

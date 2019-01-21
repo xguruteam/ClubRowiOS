@@ -59,6 +59,14 @@ class InstructorsViewController: SuperViewController {
                         
                         
                         self?.instructors = data
+//                            .map({ (original) in
+//                            original.merging(
+//                                ["image_url": "http://swiftdeveloperblog.com/wp-content/uploads/2015/07/1.jpeg",
+//                                 "description": "Our hardware is in the prototyping stage (2nd iteration) and is developed by an experienced design studio. The software drivers for the core hardware components are present and thus the functionality of the hardware is checked, with the sole exception of the microphone.The first task is to work on the microphone of the device, implementing recording to the present SD card. In a second step, the audio should be streamed using Wifi and the speaker of the device and the speaker will enable to use the device as a walkie-talkie. This will happen in conjunction with our app and backend developer. Later on, the LED needs to be controlled using the tactile switches of device as well as NFC tags. An event queuing for light effects and parallel audio playback should be implemented allowing triggering from NFC, tactile switches or commands send via radio. Alarm functionality should allow users to set alarms and timers for specific times to trigger sound and/or light enable ‘time-to-get-out-of-bed’.Next, gesture control by utilizing the accelerometer/gyroscope sensor. While the SPI connection is already working, implementing single and double tap gestures as well as a shake gesture.We are also looking for a full-stack app developer to build a straightforward multi-user (+admin) GPS/IP based subscription app (Android and iOS) that allows members to utilize a home, enabling them to check in/out of a house securely via smart/IoT enabled locking mechanisms. The mobile app will have 4 key pages (incl. functionality) as follows:" ],
+//                                uniquingKeysWith: { (old, new) in
+//                                new
+//                            })
+//                        })
 
                     }
                     if error == true {
