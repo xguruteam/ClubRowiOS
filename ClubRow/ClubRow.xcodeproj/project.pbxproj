@@ -158,6 +158,7 @@
 		CA1F42D221A3E87B00901ADB /* ic_bell_unselected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CC21A3E87500901ADB /* ic_bell_unselected@3x.png */; };
 		CA1F42D321A3E87B00901ADB /* ic_bell_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */; };
 		CA1F42D421A3E87B00901ADB /* ic_bell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */; };
+		CA4AD46621F666FB0068D798 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA4AD46521F666FA0068D798 /* GoogleService-Info.plist */; };
 		CA87661D21C16C2700B31B7E /* UIView+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA87661C21C16C2700B31B7E /* UIView+Box.swift */; };
 		CAB6B5F421ED9025000FEB68 /* NSNumber+Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6B5F321ED9025000FEB68 /* NSNumber+Round.swift */; };
 		CAC1A76421E0467B000CB386 /* AverageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1A76321E0467B000CB386 /* AverageViewController.swift */; };
@@ -353,6 +354,7 @@
 		CA1F42CC21A3E87500901ADB /* ic_bell_unselected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bell_unselected@3x.png"; sourceTree = "<group>"; };
 		CA1F42CD21A3E87700901ADB /* ic_bell_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_unselected.png; sourceTree = "<group>"; };
 		CA1F42CE21A3E87900901ADB /* ic_bell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bell_selected.png; sourceTree = "<group>"; };
+		CA4AD46521F666FA0068D798 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA87661C21C16C2700B31B7E /* UIView+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Box.swift"; sourceTree = "<group>"; };
 		CAB6B5F321ED9025000FEB68 /* NSNumber+Round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Round.swift"; sourceTree = "<group>"; };
 		CAC1A76321E0467B000CB386 /* AverageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageViewController.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 		3E3DA41F2163488B00B5055C /* ClubRow */ = {
 			isa = PBXGroup;
 			children = (
+				CA4AD46521F666FA0068D798 /* GoogleService-Info.plist */,
 				3EE73C1F216AAEFB00A20AF4 /* Utils */,
 				3E3DA4492163495F00B5055C /* Classes */,
 				3E3DA4322163495300B5055C /* Resources */,
@@ -835,6 +838,7 @@
 				CAEAB54221E18AAD00507A58 /* ic_rewards@2x.png in Resources */,
 				A492E4C0219B3EFB001A6766 /* ic_profile_unselect@2x.png in Resources */,
 				A492E4C6219B3EFB001A6766 /* ic_action_more.png in Resources */,
+				CA4AD46621F666FB0068D798 /* GoogleService-Info.plist in Resources */,
 				3EFFA6852175E6D5002B5678 /* DragView.xib in Resources */,
 				CAC4369721C112F200B0BDCA /* ic_group@2x.png in Resources */,
 				A492E4A6219B3EFB001A6766 /* ic_star@3x.png in Resources */,
@@ -896,6 +900,7 @@
 				"${BUILT_PRODUCTS_DIR}/Device/Device.framework",
 				"${BUILT_PRODUCTS_DIR}/EChart/EChart.framework",
 				"${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KRActivityIndicatorView/KRActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/KRProgressHUD/KRProgressHUD.framework",
@@ -915,6 +920,7 @@
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/XLSlidingContainer/XLSlidingContainer.framework",
 				"${BUILT_PRODUCTS_DIR}/YouTubePlayer/YouTubePlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -924,6 +930,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Device.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EChart.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCalendar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KRActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KRProgressHUD.framework",
@@ -943,6 +950,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLSlidingContainer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YouTubePlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

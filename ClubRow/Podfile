@@ -45,5 +45,7 @@ target 'ClubRow' do
   
   # Chart & Graph
   pod 'ScrollableGraphView'
+  
+  pod 'Firebase/Core'
 
 end
