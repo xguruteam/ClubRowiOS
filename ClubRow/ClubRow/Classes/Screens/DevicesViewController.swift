@@ -20,6 +20,7 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
         let _ = C2ScanningManager.shared
         let _ = C2ConnectionManager.shared
         
+        C2ScanningManager.shared.disconnect()
         C2ScanningManager.shared.addDelegate(self)
         
         self.status = false
