@@ -22,7 +22,10 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var avatarView: SwiftyAvatar!
     @IBOutlet weak var titleBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backButtonTopConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var topSafeAreaView: UIView!
     @IBOutlet weak var connectButton: UIButton!
     var instructor: [String: Any]!
     var pastClasses: [[String: Any]]! = []
@@ -403,6 +406,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -411,6 +415,18 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         UIDevice.current.setValue(value, forKey: "orientation")
         titleBarBottomConstraint.constant = C2ScanningManager.shared.isConnected ? -66 : -106
         connectButton.isHidden = C2ScanningManager.shared.isConnected ? true : false
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let topPadding = window?.safeAreaInsets.top
+            let bottomPadding = window?.safeAreaInsets.bottom
+            
+            let topSafeAreaHeight = topPadding ?? 44
+            if topSafeAreaHeight < 44 {
+                titleLabelTopConstraint.constant = 43
+                backButtonTopConstraint.constant = 44
+            }
+
+        }
     }
     
     override var shouldAutorotate: Bool {
