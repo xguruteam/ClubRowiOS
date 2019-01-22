@@ -19,12 +19,21 @@ class LobbiesViewController: SuperViewController {
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var lblInstructorName: UILabel!
     @IBOutlet weak var lblClassName: UILabel!
+    @IBOutlet weak var connectButton: UIButton!
+    @IBOutlet weak var titleLabelBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var topBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backButtonBottomConstraint: NSLayoutConstraint!
     var classData: [String: Any]!
     var lobbies: [[String: Any]]! = []
     
     @IBAction func onBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func onConnectDevice(_ sender: Any) {
+        let vc = self.getStoryboardWithIdentifier(identifier: "DevicesViewController") as! DevicesViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func onCreate(_ sender: Any) {
@@ -200,6 +209,12 @@ class LobbiesViewController: SuperViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        
+        topBarBottomConstraint.constant = C2ScanningManager.shared.isConnected ? -66 : -106
+        connectButton.isHidden = C2ScanningManager.shared.isConnected ? true : false
+        titleLabelBottomConstraint.constant = C2ScanningManager.shared.isConnected ? 22 : 62
+        backButtonBottomConstraint.constant = C2ScanningManager.shared.isConnected ? 10 : 50
+
     }
   
     override var shouldAutorotate: Bool {

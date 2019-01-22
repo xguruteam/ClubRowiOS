@@ -123,7 +123,7 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
             meter = 0.89976 * pow(ratio, 7.7095) + 0.111
         }
         
-        cell.detailLabel.text = "\(NSNumber(value: meter))m"
+        cell.detailLabel.text = "\(NSNumber(value: meter))m away"
         
         cell.tag = indexPath.row
         
@@ -165,6 +165,9 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
     
     func C2ScanningManagerDidDiscover(_ device: Concept2Device) {
         self.devices.append(device)
+        self.devices.sort {
+            $0.rssi > $1.rssi
+        }
     }
     
     func C2ConnectionManagerDidConnect(_ deviceName: String) {

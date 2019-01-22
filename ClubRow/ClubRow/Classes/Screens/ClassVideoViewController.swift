@@ -271,7 +271,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tmpCell
         } else if tableView == self.strokesTableView {
             let tmpCell: ClassMemberForStrokesCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForStrokesCell") as! ClassMemberForStrokesCell
-            valueToSet = "\(membersForStrokes[indexPath.row].strokes)st"
+            valueToSet = "\(membersForStrokes[indexPath.row].strokes)s/m"
             tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
             tmpCell.nameLabel.text = "\(membersForStrokes[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet
@@ -290,7 +290,7 @@ extension ClassVideoViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tmpCell
         } else {
             let tmpCell: ClassMemberForWattageCell = tableView.dequeueReusableCell(withIdentifier: "ClassMemberForWattageCell") as! ClassMemberForWattageCell
-            valueToSet = "\(membersForWattage[indexPath.row].wattage)wa"
+            valueToSet = "\(membersForWattage[indexPath.row].wattage)wat"
             tmpCell.numberLabel.text = "\(indexPath.row + 1)st"
             tmpCell.nameLabel.text = "\(membersForWattage[indexPath.row].name)"
             tmpCell.valueLabel.text = valueToSet

@@ -239,6 +239,9 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
             cell.textView.frame = newFrame
             
+            if instrutorDescription.isEmpty {
+                return cell.textView.frame.height
+            }
             return cell.textView.frame.height + 50
         case 1:
             return 170
@@ -302,7 +305,7 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
             self.instrutorDescription = des
         }
         else {
-            self.instrutorDescription = "               "
+            self.instrutorDescription = ""
         }
         
         self.classDetailTableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in

@@ -201,7 +201,7 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
             }
             self.scrollChart.contentSize = self.viewChart.frame.size
             
-            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { [weak self] (_) in
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] (_) in
                 self?.viewChart.selectPoint(0)
             })
             

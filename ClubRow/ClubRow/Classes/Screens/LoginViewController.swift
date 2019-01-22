@@ -44,6 +44,12 @@ class LoginViewController: SuperViewController {
         
 
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        txtEmail.text = nil
+        txtPassword.text = nil
+    }
 		
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
