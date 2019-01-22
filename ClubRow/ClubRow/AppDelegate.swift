@@ -29,6 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.enableAutoToolbar = false
         
+        let _ = C2ScanningManager.shared
+        let _ = C2ConnectionManager.shared
+        
+
         let userdefaults = UserDefaults.standard
         if let savedValue = userdefaults.string(forKey: KEY_TOKEN){
             g_token = savedValue

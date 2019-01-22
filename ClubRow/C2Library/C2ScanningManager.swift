@@ -12,7 +12,7 @@ import CoreBluetooth
 protocol C2ScanningManagerDelegate {
     func C2ScanningManagerDidStartScan()
     func C2ScanningManagerDidStopScan(with error: String?)
-    func C2ScanningManagerDidDiscover(_ device: CBPeripheral)
+    func C2ScanningManagerDidDiscover(_ device: Concept2Device)
 }
 
 protocol C2ConnectionManagerDelegate {
@@ -163,7 +163,8 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         
         Log.d("discover a peripheral - \(peripheral.name ?? "Unknown")")
 //        if peripheral.name?.starts(with: "PM5") == true {
-            self.delegate?.C2ScanningManagerDidDiscover(peripheral)
+        let c2device = Concept2Device(name: peripheral.name ?? "Unknown", rssi: RSSI.doubleValue, id: peripheral.identifier.uuidString, peripheral: peripheral)
+            self.delegate?.C2ScanningManagerDidDiscover(c2device)
 //        }
         
     }

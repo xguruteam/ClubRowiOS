@@ -14,28 +14,43 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleView: UIView!
     
+    var isRemoveing: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let _ = C2ScanningManager.shared
-        let _ = C2ConnectionManager.shared
-        
         C2ScanningManager.shared.disconnect()
         C2ScanningManager.shared.addDelegate(self)
         
         self.status = false
         
-
+        tableView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 20, right: 0)
+        
         // Do any additional setup after loading the view.
+        isRemoveing = false
+        startScanning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isRemoveing == true {
+            return
+        }
+        
+        stopScanning()
+        C2ScanningManager.shared.removeDelegate(self)
+        self.navigationController?.popViewController(animated: false)
     }
     
     @IBAction func onBack(_ sender: Any) {
+        isRemoveing = true
         stopScanning()
         C2ScanningManager.shared.removeDelegate(self)
         self.navigationController?.popViewController(animated: true)
     }
     
-    var devices = [CBPeripheral]() {
+    var devices = [Concept2Device]() {
         didSet {
             self.tableView.reloadData()
         }
@@ -61,7 +76,7 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
     }
     
     func startScanning() {
-        self.devices = [CBPeripheral]()
+        self.devices = [Concept2Device]()
         C2ScanningManager.shared.delegate = self
         C2ScanningManager.shared.startScan()
     }
@@ -85,15 +100,40 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath) as! DeviceCell
 
         //        if cell == nil {
         //            cell = UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
         //        }
 
-        cell.textLabel?.text = self.devices[indexPath.row].name ?? "Unknow"
-        cell.detailTextLabel?.text = self.devices[indexPath.row].identifier.uuidString
-
+        cell.titleLabel.text = self.devices[indexPath.row].name
+//        cell.detailLabel.text = self.devices[indexPath.row].id
+        
+        let txPower: Double = -62
+        var meter: Double = 0
+        let rssi: Double = self.devices[indexPath.row].rssi
+        if rssi == 0 {
+            meter = 0
+        }
+        let ratio = rssi * 1.0 / txPower
+        if ratio < 1.0 {
+            meter = pow(ratio, 10)
+        }
+        else {
+            meter = 0.89976 * pow(ratio, 7.7095) + 0.111
+        }
+        
+        cell.detailLabel.text = "\(NSNumber(value: meter))m"
+        
+        cell.tag = indexPath.row
+        
+        cell.action = { (tag) in
+            let selectedDevice = self.devices[tag]
+            self.stopScanning()
+            //        C2ConnectionManager.shared.connectTo(selectedDevice)
+            C2ScanningManager.shared.connectTo(selectedDevice.peripheral)
+        }
+        
         return cell
     }
     
@@ -101,7 +141,7 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
         let selectedDevice = self.devices[indexPath.row]
         stopScanning()
 //        C2ConnectionManager.shared.connectTo(selectedDevice)
-        C2ScanningManager.shared.connectTo(selectedDevice)
+        C2ScanningManager.shared.connectTo(selectedDevice.peripheral)
     }
     
     /*
@@ -123,7 +163,7 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
         C2ScanningManager.shared.delegate = nil
     }
     
-    func C2ScanningManagerDidDiscover(_ device: CBPeripheral) {
+    func C2ScanningManagerDidDiscover(_ device: Concept2Device) {
         self.devices.append(device)
     }
     
