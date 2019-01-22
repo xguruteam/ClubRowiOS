@@ -2026,10 +2026,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2a7-Xh-HNK">
-                                <rect key="frame" x="0.0" y="110" width="414" height="786"/>
+                                <rect key="frame" x="0.0" y="150" width="414" height="746"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="202" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kfx-xB-9gf">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="786"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="746"/>
                                         <color key="backgroundColor" red="0.98431372549019602" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="sectionIndexBackgroundColor" red="0.98431372549019602" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <view key="tableHeaderView" contentMode="scaleToFill" id="r6p-Hs-qnM">
@@ -2242,7 +2242,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xvz-yy-MRN">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nate Morris" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FkO-Fe-ZTy">
                                         <rect key="frame" x="160" y="67" width="94" height="21"/>
@@ -2260,14 +2260,35 @@
                                             <action selector="onback:" destination="DVM-KM-Jiy" eventType="touchUpInside" id="oFm-3J-hQ0"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHq-AE-uDH">
+                                        <rect key="frame" x="16" y="110" width="382" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.52941176469999995" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="mSN-WA-NfG"/>
+                                        </constraints>
+                                        <state key="normal" title="Connect Your Concept2 Device">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onConnectDevice:" destination="DVM-KM-Jiy" eventType="touchUpInside" id="I7C-Pl-dJY"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="FkO-Fe-ZTy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="034-eh-IaW" secondAttribute="trailing" constant="8" symbolic="YES" id="3fm-qT-UPN"/>
-                                    <constraint firstAttribute="bottom" secondItem="FkO-Fe-ZTy" secondAttribute="bottom" constant="22" id="BOH-wD-TYU"/>
+                                    <constraint firstAttribute="trailing" secondItem="zHq-AE-uDH" secondAttribute="trailing" constant="16" id="9HP-Hf-XXP"/>
+                                    <constraint firstItem="FkO-Fe-ZTy" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="top" constant="67" id="Hce-1f-Gfa"/>
+                                    <constraint firstItem="zHq-AE-uDH" firstAttribute="top" secondItem="034-eh-IaW" secondAttribute="bottom" constant="10" id="OYE-3J-Cun"/>
                                     <constraint firstItem="034-eh-IaW" firstAttribute="leading" secondItem="Xvz-yy-MRN" secondAttribute="leading" constant="16" id="RIB-mo-Cns"/>
+                                    <constraint firstItem="034-eh-IaW" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="top" constant="66" id="Y6V-Bs-W5q"/>
                                     <constraint firstItem="FkO-Fe-ZTy" firstAttribute="centerX" secondItem="Xvz-yy-MRN" secondAttribute="centerX" id="eO5-Qq-x2O"/>
-                                    <constraint firstAttribute="bottom" secondItem="034-eh-IaW" secondAttribute="bottom" constant="10" id="nN6-YO-wBe"/>
+                                    <constraint firstItem="zHq-AE-uDH" firstAttribute="leading" secondItem="Xvz-yy-MRN" secondAttribute="leading" constant="16" id="fjN-Qo-MKI"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2276,7 +2297,7 @@
                             <constraint firstAttribute="bottom" secondItem="2a7-Xh-HNK" secondAttribute="bottom" id="Tgs-p3-t7b"/>
                             <constraint firstItem="2a7-Xh-HNK" firstAttribute="trailing" secondItem="6dD-Iy-Qca" secondAttribute="trailing" id="UCq-9G-1jr"/>
                             <constraint firstItem="Xvz-yy-MRN" firstAttribute="top" secondItem="3a2-g2-Xpt" secondAttribute="top" id="Xwi-YD-JNR"/>
-                            <constraint firstItem="6dD-Iy-Qca" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="bottom" constant="-66" id="bMb-Pe-IWq"/>
+                            <constraint firstItem="6dD-Iy-Qca" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="bottom" constant="-106" id="bMb-Pe-IWq"/>
                             <constraint firstItem="2a7-Xh-HNK" firstAttribute="top" secondItem="Xvz-yy-MRN" secondAttribute="bottom" id="gb1-fP-Mqk"/>
                             <constraint firstItem="2a7-Xh-HNK" firstAttribute="leading" secondItem="6dD-Iy-Qca" secondAttribute="leading" id="iiS-ym-7el"/>
                             <constraint firstItem="Xvz-yy-MRN" firstAttribute="leading" secondItem="6dD-Iy-Qca" secondAttribute="leading" id="jCN-Rq-h5w"/>
@@ -2288,9 +2309,11 @@
                     <connections>
                         <outlet property="avatarView" destination="p4I-Se-tVY" id="Wz0-y8-V5o"/>
                         <outlet property="classDetailTableView" destination="Kfx-xB-9gf" id="JSz-rw-Jme"/>
+                        <outlet property="connectButton" destination="zHq-AE-uDH" id="ZVF-QF-Ntg"/>
                         <outlet property="detailView" destination="r6p-Hs-qnM" id="WDz-XZ-90c"/>
                         <outlet property="lblInstructorName" destination="afH-OE-spU" id="YXg-sr-018"/>
                         <outlet property="lblTitle" destination="FkO-Fe-ZTy" id="6j2-mn-EMK"/>
+                        <outlet property="titleBarBottomConstraint" destination="bMb-Pe-IWq" id="hdG-Fr-cEA"/>
                         <outlet property="titleView" destination="Xvz-yy-MRN" id="BJD-g7-kwH"/>
                     </connections>
                 </viewController>

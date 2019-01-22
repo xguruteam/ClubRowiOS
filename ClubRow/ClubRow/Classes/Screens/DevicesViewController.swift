@@ -132,13 +132,14 @@ class DevicesViewController: SuperViewController, UITableViewDelegate, UITableVi
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
 //            C2ConnectionManager.shared.removeDelegate(self)
 //            self.navigationController?.popViewController(animated: true)
+            self.onBack(self)
         }))
         
         present(alert, animated: true, completion: nil)
     }
     
     func C2ConnectionManagerFailConnect() {
-        let alert = UIAlertController(title: "ClubRow", message: "Connection fail!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "ClubRow", message: "This device is unable to connect.\n Please try another device!", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
         }))

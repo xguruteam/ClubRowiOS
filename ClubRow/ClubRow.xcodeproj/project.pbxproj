@@ -440,7 +440,6 @@
 		3E3DA41F2163488B00B5055C /* ClubRow */ = {
 			isa = PBXGroup;
 			children = (
-				CA4AD46521F666FA0068D798 /* GoogleService-Info.plist */,
 				3EE73C1F216AAEFB00A20AF4 /* Utils */,
 				3E3DA4492163495F00B5055C /* Classes */,
 				3E3DA4322163495300B5055C /* Resources */,
@@ -449,6 +448,7 @@
 				3E3DA4272163489100B5055C /* Assets.xcassets */,
 				3E3DA4292163489100B5055C /* LaunchScreen.storyboard */,
 				3E3DA42C2163489100B5055C /* Info.plist */,
+				CA4AD46521F666FA0068D798 /* GoogleService-Info.plist */,
 				A4809BFB21AC722D005C041B /* Constant.swift */,
 				A4809BFD21AC753A005C041B /* Util.swift */,
 			);

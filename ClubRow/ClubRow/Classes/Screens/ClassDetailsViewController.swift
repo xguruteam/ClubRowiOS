@@ -21,7 +21,9 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
     @IBOutlet weak var lblInstructorName: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var avatarView: SwiftyAvatar!
+    @IBOutlet weak var titleBarBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var connectButton: UIButton!
     var instructor: [String: Any]!
     var pastClasses: [[String: Any]]! = []
     var liveClasses: [[String: Any]]! = []
@@ -33,6 +35,11 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         let vc = self.getStoryboardWithIdentifier(identifier: "ClassVideoViewController") as! ClassVideoViewController
 //        MainViewController.getInstance().navigationController?.pushViewController(vc, animated: true)
         self.present(vc, animated: false, completion: nil)
+    }
+    
+    @IBAction func onConnectDevice(_ sender: Any) {
+        let vc = self.getStoryboardWithIdentifier(identifier: "DevicesViewController") as! DevicesViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func classDetailCell(didSelect indexPath: IndexPath) {
@@ -402,6 +409,8 @@ class ClassDetailsViewController: SuperViewController, UITableViewDelegate, UITa
         super.viewWillAppear(animated)
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        titleBarBottomConstraint.constant = C2ScanningManager.shared.isConnected ? -66 : -106
+        connectButton.isHidden = C2ScanningManager.shared.isConnected ? true : false
     }
     
     override var shouldAutorotate: Bool {

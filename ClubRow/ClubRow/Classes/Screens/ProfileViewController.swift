@@ -295,7 +295,7 @@ class ProfileViewController: SuperViewController {
     @IBAction func onSetting(_ sender: Any) {
         
         let alert = UIAlertController(title: "Settings", message: "Where would you like to go?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Scan", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Connect Concept2", style: .default, handler: { (_) in
             let vc = self.getStoryboardWithIdentifier(identifier: "DevicesViewController") as! DevicesViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }))

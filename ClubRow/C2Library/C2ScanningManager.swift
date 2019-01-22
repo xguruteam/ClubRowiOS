@@ -74,6 +74,7 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     private func start() {
 //        self.centralManager.delegate = self
         self.isRunning = true
+        disconnect()
         self.centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
     }
     
@@ -122,11 +123,11 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     open func disconnect() {
         if isConnected == true {
+            isConnected = false
             self.centralManager.cancelPeripheralConnection(currentDevice!)
         }
         
         currentDevice = nil
-        isConnected = false
     }
     
     //MARK: Notify to Delegates
@@ -137,6 +138,7 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     }
     
     func failConnect() {
+        disconnect()
         for item in self.delegates {
             item.C2ConnectionManagerFailConnect()
         }
@@ -181,7 +183,7 @@ class C2ScanningManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         Log.d("didFailToConnect")
         if isConnected == true {
             if peripheral.isEqual(currentDevice) {
-                tryReconnect()
+                failConnect()
             }
         }
     }
