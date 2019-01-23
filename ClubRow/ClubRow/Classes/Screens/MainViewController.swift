@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftEntryKit
-import Presentr
+//import Presentr
 
 class MainViewController: SuperViewController {
 
@@ -88,27 +88,27 @@ class MainViewController: SuperViewController {
     }
     
     public func showBottomView(){
-        let controller = self.getStoryboardWithIdentifier(identifier: "DateFilterViewController") as! DateFilterViewController
-        
-        let presenter: Presentr = {
-            let width = ModalSize.full
-            let height = ModalSize.fluid(percentage: 0.50)
-            let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
-            let customType = PresentationType.custom(width: width, height: height, center: center)
-            
-            let customPresenter = Presentr(presentationType: customType)
-            customPresenter.transitionType = .coverVerticalFromTop
-            customPresenter.dismissTransitionType = .coverVerticalFromTop
-            customPresenter.roundCorners = false
-            customPresenter.backgroundColor = .clear
-            customPresenter.backgroundOpacity = 0.5
-            customPresenter.dismissOnSwipe = true
-            customPresenter.dismissOnSwipeDirection = .top
-            return customPresenter
-        }()
-        
-        customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
-        
+//        let controller = self.getStoryboardWithIdentifier(identifier: "DateFilterViewController") as! DateFilterViewController
+//        
+//        let presenter: Presentr = {
+//            let width = ModalSize.full
+//            let height = ModalSize.fluid(percentage: 0.50)
+//            let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
+//            let customType = PresentationType.custom(width: width, height: height, center: center)
+//            
+//            let customPresenter = Presentr(presentationType: customType)
+//            customPresenter.transitionType = .coverVerticalFromTop
+//            customPresenter.dismissTransitionType = .coverVerticalFromTop
+//            customPresenter.roundCorners = false
+//            customPresenter.backgroundColor = .clear
+//            customPresenter.backgroundOpacity = 0.5
+//            customPresenter.dismissOnSwipe = true
+//            customPresenter.dismissOnSwipeDirection = .top
+//            return customPresenter
+//        }()
+//        
+//        customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
+//        
     }
     
     public func showPopupMessage(attributes: EKAttributes, title: String, titleColor: UIColor, description: String, descriptionColor: UIColor, buttonTitleColor: UIColor, buttonBackgroundColor: UIColor, image: UIImage? = nil) {

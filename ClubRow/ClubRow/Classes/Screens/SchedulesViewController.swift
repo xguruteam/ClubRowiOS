@@ -9,7 +9,7 @@
 import UIKit
 import FSCalendar
 import SwiftEntryKit
-import Presentr
+//import Presentr
 import CRRefresh
 import MKProgress
 import Alamofire

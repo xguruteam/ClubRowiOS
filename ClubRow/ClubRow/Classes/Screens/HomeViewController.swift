@@ -9,9 +9,6 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import KRProgressHUD
-import SimpleAlert
-import Device
 
 class HomeViewController: SuperViewController {
 
@@ -77,7 +74,7 @@ class HomeViewController: SuperViewController {
         self.aryLiveClasses.removeAll(keepingCapacity: false)
         // API
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        KRProgressHUD.show()
+//        KRProgressHUD.show()
 //        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
 
         let headers: HTTPHeaders = [
@@ -130,7 +127,7 @@ class HomeViewController: SuperViewController {
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON
             { response in
-                KRProgressHUD.dismiss()
+//                KRProgressHUD.dismiss()
 //                self.view.activityStopAnimating()
                 switch response.result
                 {
@@ -157,31 +154,31 @@ class HomeViewController: SuperViewController {
     }
     
     func resizeTopView() {
-        switch "\(Device.version())" {
-        case "simulator":
-            let string = UIDevice().modelName
-            let start = String.Index(encodedOffset: 6)
-            let end = String.Index(encodedOffset: 8)
-            let substring = String(string[start..<end])
-            print(substring)
-            
-            if substring == "10" {
-                top.constant = 44
-            } else {
-                top.constant = 0
-            }
-        case "iPhoneX":
-            top.constant = 44
-        case "iPhoneXS":
-            top.constant = 44
-        case "iPhoneXS_Max":
-            top.constant = 44
-        case "iPhoneXR":
-            top.constant = 44
-        default:
-            top.constant = 0
-            print("unkown")
-        }
+//        switch "\(Device.version())" {
+//        case "simulator":
+//            let string = UIDevice().modelName
+//            let start = String.Index(encodedOffset: 6)
+//            let end = String.Index(encodedOffset: 8)
+//            let substring = String(string[start..<end])
+//            print(substring)
+//            
+//            if substring == "10" {
+//                top.constant = 44
+//            } else {
+//                top.constant = 0
+//            }
+//        case "iPhoneX":
+//            top.constant = 44
+//        case "iPhoneXS":
+//            top.constant = 44
+//        case "iPhoneXS_Max":
+//            top.constant = 44
+//        case "iPhoneXR":
+//            top.constant = 44
+//        default:
+//            top.constant = 0
+//            print("unkown")
+//        }
     }
     
     func dropShadowOn(view: UIView) {

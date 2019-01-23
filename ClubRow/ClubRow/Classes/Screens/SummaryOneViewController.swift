@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftChart
 import CRRefresh
 import MKProgress
 import Alamofire

@@ -124,7 +124,7 @@ public class Channel {
         self.joinPush.receive("timeout") { [weak self] (_) in
             guard let strongSelf = self else { return }
             guard !strongSelf.isJoining else { return }
-            strongSelf.socket?.logItems("channel", "timeout \(strongSelf.topic) \(strongSelf.joinRef) after \(strongSelf.timeout)ms")
+            strongSelf.socket?.logItems("channel", "timeout \(strongSelf.topic) \(strongSelf.joinRef ?? "") after \(strongSelf.timeout)ms")
             
             let leavePush = Push(channel: strongSelf, event: ChannelEvent.leave, payload: [:], timeout: strongSelf.timeout)
             leavePush.send()
@@ -343,8 +343,8 @@ public class Channel {
     }
     
     /// The Ref send during the join message.
-    var joinRef: String {
-        return self.joinPush.ref ?? ""
+    var joinRef: String? {
+        return self.joinPush.ref
     }
     
     /// - return: True if the Channel can push messages, meaning the socket

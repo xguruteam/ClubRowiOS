@@ -1,6 +1,0 @@
-framework module EChart {
-  umbrella header "EChart-umbrella.h"
-
-  export *
-  module * { export * }
-}

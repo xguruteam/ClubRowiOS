@@ -7,11 +7,9 @@ target 'ClubRow' do
 
   # Pods for ClubRow
   pod 'FSCalendar'
-  pod 'SwiftChart'
   pod 'SwiftEntryKit', '0.8.2'
-  pod 'Presentr'
+  #  pod 'Presentr'
   pod 'SwiftyAvatar', '~> 1.1'
-  pod 'EChart'
   pod 'XLSlidingContainer', '~> 2.0'
   pod 'IQKeyboardManagerSwift'
 
@@ -23,22 +21,16 @@ target 'ClubRow' do
   pod 'SwiftyJSON', '~> 4.2'
 
  # progress 
-  pod 'ProgressHUD', '~> 2.60'
-  pod 'KRProgressHUD', '~> 3.4'
   pod 'MKProgress', '~> 1.0.9'
   
  # pull to refress
   pod 'CRRefresh'
   
   # ViewPager & Tab
-  pod 'XLPagerTabStrip', '~> 8.1'
   pod 'BmoViewPager'
 
  # Alert
-  pod 'SimpleAlert', '~> 3.1'
   pod 'Toast-Swift', '~> 4.0.0'
- # Device
-  pod "Device", '~> 3.1.2'
   
   # Live Video
   pod 'YouTubePlayer'
@@ -46,6 +38,7 @@ target 'ClubRow' do
   # Chart & Graph
   pod 'ScrollableGraphView'
   
+  # Analytics
   pod 'Firebase/Core'
 
 end

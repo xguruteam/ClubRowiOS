@@ -8,7 +8,7 @@
 
 import UIKit
 import XLSlidingContainer
-import Presentr
+//import Presentr
 
 class ClassTableViewController: SuperViewController, ContainedViewController, UITableViewDataSource, UITableViewDelegate, ClassCellDelegate {
 
@@ -30,26 +30,26 @@ class ClassTableViewController: SuperViewController, ContainedViewController, UI
     }
     
     func onViewClass(_ cell: ClassCell?) {
-        let controller = self.getStoryboardWithIdentifier(identifier: "DateFilterViewController") as! DateFilterViewController
-        
-        let presenter: Presentr = {
-            let width = ModalSize.full
-            let height = ModalSize.fluid(percentage: 0.80)
-            let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
-            let customType = PresentationType.custom(width: width, height: height, center: center)
-            
-            let customPresenter = Presentr(presentationType: PresentationType.bottomHalf)
-            customPresenter.transitionType = .coverVertical
-            customPresenter.dismissTransitionType = .coverVerticalFromTop
-            customPresenter.roundCorners = false
-            customPresenter.backgroundColor = .clear
-            customPresenter.backgroundOpacity = 0.5
-            customPresenter.dismissOnSwipe = true
-            customPresenter.dismissOnSwipeDirection = .top
-            return customPresenter
-        }()
-        
-        customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
+//        let controller = self.getStoryboardWithIdentifier(identifier: "DateFilterViewController") as! DateFilterViewController
+//
+//        let presenter: Presentr = {
+//            let width = ModalSize.full
+//            let height = ModalSize.fluid(percentage: 0.80)
+//            let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
+//            let customType = PresentationType.custom(width: width, height: height, center: center)
+//
+//            let customPresenter = Presentr(presentationType: PresentationType.bottomHalf)
+//            customPresenter.transitionType = .coverVertical
+//            customPresenter.dismissTransitionType = .coverVerticalFromTop
+//            customPresenter.roundCorners = false
+//            customPresenter.backgroundColor = .clear
+//            customPresenter.backgroundOpacity = 0.5
+//            customPresenter.dismissOnSwipe = true
+//            customPresenter.dismissOnSwipeDirection = .top
+//            return customPresenter
+//        }()
+//
+//        customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Presentr
-import Device
+//import Presentr
 
 class ClassesViewController: SuperViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -27,26 +26,26 @@ class ClassesViewController: SuperViewController, UISearchBarDelegate, UITableVi
     }
     
     @IBAction func onFilter(_ sender: Any) {
-        let controller = self.getStoryboardWithIdentifier(identifier: "SortFilterViewController") as! SortFilterViewController
-        
-        let presenter: Presentr = {
-            let width = ModalSize.full
-            let height = ModalSize.fluid(percentage: 0.80)
-            let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
-            _ = PresentationType.custom(width: width, height: height, center: center)
-            
-            let customPresenter = Presentr(presentationType: PresentationType.bottomHalf)
-            customPresenter.transitionType = .coverVertical
-            customPresenter.dismissTransitionType = .coverVerticalFromTop
-            customPresenter.roundCorners = false
-            customPresenter.backgroundColor = .clear
-            customPresenter.backgroundOpacity = 0.5
-            customPresenter.dismissOnSwipe = true
-            customPresenter.dismissOnSwipeDirection = .top
-            return customPresenter
-        }()
-        
-        customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
+//        let controller = self.getStoryboardWithIdentifier(identifier: "SortFilterViewController") as! SortFilterViewController
+//        
+//        let presenter: Presentr = {
+//            let width = ModalSize.full
+//            let height = ModalSize.fluid(percentage: 0.80)
+//            let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
+//            _ = PresentationType.custom(width: width, height: height, center: center)
+//            
+//            let customPresenter = Presentr(presentationType: PresentationType.bottomHalf)
+//            customPresenter.transitionType = .coverVertical
+//            customPresenter.dismissTransitionType = .coverVerticalFromTop
+//            customPresenter.roundCorners = false
+//            customPresenter.backgroundColor = .clear
+//            customPresenter.backgroundOpacity = 0.5
+//            customPresenter.dismissOnSwipe = true
+//            customPresenter.dismissOnSwipeDirection = .top
+//            return customPresenter
+//        }()
+//        
+//        customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
     }
     
     @IBOutlet var searchBar: UISearchBar!
@@ -100,31 +99,31 @@ class ClassesViewController: SuperViewController, UISearchBarDelegate, UITableVi
     */
     
     func resizeTopView() {
-        switch "\(Device.version())" {
-        case "simulator":
-            let string = UIDevice().modelName
-            let start = String.Index(encodedOffset: 6)
-            let end = String.Index(encodedOffset: 8)
-            let substring = String(string[start..<end])
-            print(substring)
-            
-            if substring == "10" {
-                top.constant = 44
-            } else {
-                top.constant = 0
-            }
-        case "iPhoneX":
-            top.constant = 44
-        case "iPhoneXS":
-            top.constant = 44
-        case "iPhoneXS_Max":
-            top.constant = 44
-        case "iPhoneXR":
-            top.constant = 44
-        default:
-            top.constant = 0
-            print("unkown")
-        }
+//        switch "\(Device.version())" {
+//        case "simulator":
+//            let string = UIDevice().modelName
+//            let start = String.Index(encodedOffset: 6)
+//            let end = String.Index(encodedOffset: 8)
+//            let substring = String(string[start..<end])
+//            print(substring)
+//
+//            if substring == "10" {
+//                top.constant = 44
+//            } else {
+//                top.constant = 0
+//            }
+//        case "iPhoneX":
+//            top.constant = 44
+//        case "iPhoneXS":
+//            top.constant = 44
+//        case "iPhoneXS_Max":
+//            top.constant = 44
+//        case "iPhoneXR":
+//            top.constant = 44
+//        default:
+//            top.constant = 0
+//            print("unkown")
+//        }
     }
 }
 
