@@ -19,12 +19,7 @@ class DeviceCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.containerView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        self.containerView.layer.shadowOpacity = 0.16
-        self.containerView.layer.shadowRadius = 4
-        
-        self.containerView.layer.cornerRadius = 20
-        self.containerView.layer.masksToBounds = false
+        self.containerView.makeBox()
     }
 
     @IBAction func onConnect(_ sender: Any) {

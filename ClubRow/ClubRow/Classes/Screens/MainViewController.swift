@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwiftEntryKit
+//import SwiftEntryKit
 //import Presentr
 
 class MainViewController: SuperViewController {
@@ -111,22 +111,22 @@ class MainViewController: SuperViewController {
 //        
     }
     
-    public func showPopupMessage(attributes: EKAttributes, title: String, titleColor: UIColor, description: String, descriptionColor: UIColor, buttonTitleColor: UIColor, buttonBackgroundColor: UIColor, image: UIImage? = nil) {
-        
-        var themeImage: EKPopUpMessage.ThemeImage?
-        
-        if let image = image {
-            themeImage = .init(image: .init(image: image, size: CGSize(width: 60, height: 60), contentMode: .scaleAspectFit))
-        }
-        
-        let title = EKProperty.LabelContent(text: title, style: .init(font: MainFont.medium.with(size: 24), color: titleColor, alignment: .center))
-        let description = EKProperty.LabelContent(text: description, style: .init(font: MainFont.light.with(size: 16), color: descriptionColor, alignment: .center))
-        let button = EKProperty.ButtonContent(label: .init(text: "Got it!", style: .init(font: MainFont.bold.with(size: 16), color: buttonTitleColor)), backgroundColor: buttonBackgroundColor, highlightedBackgroundColor: buttonTitleColor.withAlphaComponent(0.05))
-        let message = EKPopUpMessage(themeImage: themeImage, title: title, description: description, button: button) {
-            SwiftEntryKit.dismiss()
-        }
-        
-        let contentView = EKPopUpMessageView(with: message)
-        SwiftEntryKit.display(entry: contentView, using: attributes)
-    }
+//    public func showPopupMessage(attributes: EKAttributes, title: String, titleColor: UIColor, description: String, descriptionColor: UIColor, buttonTitleColor: UIColor, buttonBackgroundColor: UIColor, image: UIImage? = nil) {
+//        
+//        var themeImage: EKPopUpMessage.ThemeImage?
+//        
+//        if let image = image {
+//            themeImage = .init(image: .init(image: image, size: CGSize(width: 60, height: 60), contentMode: .scaleAspectFit))
+//        }
+//        
+//        let title = EKProperty.LabelContent(text: title, style: .init(font: MainFont.medium.with(size: 24), color: titleColor, alignment: .center))
+//        let description = EKProperty.LabelContent(text: description, style: .init(font: MainFont.light.with(size: 16), color: descriptionColor, alignment: .center))
+//        let button = EKProperty.ButtonContent(label: .init(text: "Got it!", style: .init(font: MainFont.bold.with(size: 16), color: buttonTitleColor)), backgroundColor: buttonBackgroundColor, highlightedBackgroundColor: buttonTitleColor.withAlphaComponent(0.05))
+//        let message = EKPopUpMessage(themeImage: themeImage, title: title, description: description, button: button) {
+//            SwiftEntryKit.dismiss()
+//        }
+//        
+//        let contentView = EKPopUpMessageView(with: message)
+//        SwiftEntryKit.display(entry: contentView, using: attributes)
+//    }
 }

@@ -7,10 +7,9 @@ target 'ClubRow' do
 
   # Pods for ClubRow
   pod 'FSCalendar'
-  pod 'SwiftEntryKit', '0.8.2'
+  #  pod 'SwiftEntryKit', '0.8.2'
   #  pod 'Presentr'
   pod 'SwiftyAvatar', '~> 1.1'
-  pod 'XLSlidingContainer', '~> 2.0'
   pod 'IQKeyboardManagerSwift'
 
   # http

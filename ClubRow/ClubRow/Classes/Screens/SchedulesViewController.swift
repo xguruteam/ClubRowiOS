@@ -8,7 +8,6 @@
 
 import UIKit
 import FSCalendar
-import SwiftEntryKit
 //import Presentr
 import CRRefresh
 import MKProgress
@@ -347,55 +346,6 @@ class SchedulesViewController: SuperViewController, UITableViewDelegate, UITable
         let instructor = classItem["teacher"] as! [String: Any]
         vc.instructor = instructor
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    // 3, 2
-    private func showLightAwesomePopupMessage(attributes: EKAttributes) {
-        let image = UIImage(named: "ic_done_all_light_48pt")!
-        let title = "Awesome!"
-        let description = "You are using SwiftEntryKit, and this is a pop up with important content"
-        showPopupMessage(attributes: attributes, title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: EKColor.Gray.mid, buttonBackgroundColor: .white, image: image)
-    }
-    
-    // 0, 0
-    private func showNotificationMessage(attributes: EKAttributes, title: String, desc: String, textColor: UIColor, imageName: String? = nil) {
-        let title = EKProperty.LabelContent(text: title, style: .init(font: MainFont.medium.with(size: 16), color: textColor))
-        let description = EKProperty.LabelContent(text: desc, style: .init(font: MainFont.light.with(size: 14), color: textColor))
-        var image: EKProperty.ImageContent?
-        if let imageName = imageName {
-            image = .init(image: UIImage(named: imageName)!, size: CGSize(width: 35, height: 35))
-        }
-        
-        let simpleMessage = EKSimpleMessage(image: image, title: title, description: description)
-        let notificationMessage = EKNotificationMessage(simpleMessage: simpleMessage)
-        
-        let contentView = EKNotificationMessageView(with: notificationMessage)
-        SwiftEntryKit.display(entry: contentView, using: attributes)
-    }
-    
-    // 5, 1
-    private func showCustomViewController(attributes: EKAttributes) {
-        let viewController = DateViewController(with: NibDateView())
-        SwiftEntryKit.display(entry: viewController, using: attributes)
-    }
-    
-    private func showPopupMessage(attributes: EKAttributes, title: String, titleColor: UIColor, description: String, descriptionColor: UIColor, buttonTitleColor: UIColor, buttonBackgroundColor: UIColor, image: UIImage? = nil) {
-        
-        var themeImage: EKPopUpMessage.ThemeImage?
-        
-        if let image = image {
-            themeImage = .init(image: .init(image: image, size: CGSize(width: 60, height: 60), contentMode: .scaleAspectFit))
-        }
-        
-        let title = EKProperty.LabelContent(text: title, style: .init(font: MainFont.medium.with(size: 24), color: titleColor, alignment: .center))
-        let description = EKProperty.LabelContent(text: description, style: .init(font: MainFont.light.with(size: 16), color: descriptionColor, alignment: .center))
-        let button = EKProperty.ButtonContent(label: .init(text: "Got it!", style: .init(font: MainFont.bold.with(size: 16), color: buttonTitleColor)), backgroundColor: buttonBackgroundColor, highlightedBackgroundColor: buttonTitleColor.withAlphaComponent(0.05))
-        let message = EKPopUpMessage(themeImage: themeImage, title: title, description: description, button: button) {
-            SwiftEntryKit.dismiss()
-        }
-        
-        let contentView = EKPopUpMessageView(with: message)
-        SwiftEntryKit.display(entry: contentView, using: attributes)
     }
     
     /*

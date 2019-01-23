@@ -1,6 +1,0 @@
-framework module XLSlidingContainer {
-  umbrella header "XLSlidingContainer-umbrella.h"
-
-  export *
-  module * { export * }
-}

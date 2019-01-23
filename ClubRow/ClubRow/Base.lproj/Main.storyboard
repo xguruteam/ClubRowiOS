@@ -2386,7 +2386,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnY-8p-tdC">
                                 <rect key="frame" x="40" y="772" width="85" height="85"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time2.png" translatesAutoresizingMaskIntoConstraints="NO" id="qj3-4a-1ae">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time.png" translatesAutoresizingMaskIntoConstraints="NO" id="qj3-4a-1ae">
                                         <rect key="frame" x="31" y="18" width="23" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="23" id="rj8-Jk-JHS"/>
@@ -2448,7 +2448,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR2-XO-rKp">
                                 <rect key="frame" x="290" y="772" width="85" height="85"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_speed2.png" translatesAutoresizingMaskIntoConstraints="NO" id="nIK-Q0-a6k">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_speed.png" translatesAutoresizingMaskIntoConstraints="NO" id="nIK-Q0-a6k">
                                         <rect key="frame" x="31" y="18" width="23" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="IGs-8f-3Dl"/>
@@ -5399,7 +5399,7 @@
         <image name="ic_bg_button.png" width="313" height="50"/>
         <image name="ic_calendar_select.png" width="32" height="32"/>
         <image name="ic_calendar_unselect.png" width="32" height="32"/>
-        <image name="ic_distance.png" width="92" height="92"/>
+        <image name="ic_distance.png" width="23" height="23"/>
         <image name="ic_eye.png" width="24" height="24"/>
         <image name="ic_filter.png" width="24" height="18"/>
         <image name="ic_flag_select.png" width="23" height="26"/>
@@ -5416,8 +5416,8 @@
         <image name="ic_signup_beachbod" width="24" height="24"/>
         <image name="ic_signup_liveclasses" width="24" height="24"/>
         <image name="ic_signup_strongdata" width="24" height="24"/>
-        <image name="ic_speed2.png" width="80" height="80"/>
-        <image name="ic_time2.png" width="92" height="92"/>
+        <image name="ic_speed.png" width="20" height="20"/>
+        <image name="ic_time.png" width="23" height="23"/>
         <image name="ic_triangle.png" width="9" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
