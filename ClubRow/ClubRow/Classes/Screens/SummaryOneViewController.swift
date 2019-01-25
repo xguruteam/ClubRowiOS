@@ -110,9 +110,9 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                         
                         self?.statistics = snapshots
                         
-                        if snapshots.count < 2 {
-                            self?.statistics.append(snapshots[0])
-                        }
+//                        if snapshots.count < 2 {
+//                            self?.statistics.append(snapshots[0])
+//                        }
                     }
                     if error == true {
                         self?.tableView.cr.endHeaderRefresh()
@@ -161,36 +161,60 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                 self.initGraph()
                 return
             }
-            
-            self.viewChart.clear()
-            
-            var data: [CGFloat]
-            data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(truncating: point["distance"] as? NSNumber ?? 0)
-            })
-            self.viewChart.addLine(data)
-            data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
-            })
-            self.viewChart.addLine(data)
-            data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
-            })
-            self.viewChart.addLine(data)
-            data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
-            })
-            self.viewChart.addLine(data)
-            data = self.statistics.map({ (point) -> CGFloat in
-                return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
-            })
-            self.viewChart.addLine(data)
-            
-            self.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
-                let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
-                let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
-                return NSString(format: "%02d:%02d:%02d", h, m, s) as String
-            })
+            else {
+                
+                var chartSamples: [[String: Any]] = []
+                chartSamples.append([
+                    "distance": 0,
+                    "calories": 0,
+                    "speed": 0,
+                    "strokes_per_minute": 0,
+                    "wattage": 0,
+                    "seconds_since_workout_started": 0
+                    ])
+                chartSamples.append(contentsOf: self.statistics)
+                
+                self.viewChart.clear()
+                
+                var data: [CGFloat]
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["distance"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 1.0)
+                self.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.4)
+                self.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.2)
+                self.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.6)
+                self.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.8)
+                self.viewChart.addLine(data)
+                
+                self.viewChart.x.labels.values = chartSamples.map({ (point) -> String in
+                    let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
+                    let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
+                    return NSString(format: "%02d:%02d:%02d", h, m, s) as String
+                })
+                
+            }
             
             if self.viewChart.x.labels.values.count < 8 {
                 self.viewChart.frame = CGRect(x: 0, y: 0, width: self.scrollChart.bounds.width, height: 270)
@@ -253,11 +277,26 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
     }
     
     func didSelectDataPoint(_ x: CGFloat, yValues: Array<CGFloat>) {
-        lblDistance.text = "\(Int(yValues[0]))m"
-        lblCalories.text = "\(Int(yValues[1]))cal"
-        lblSpeed.text = "\(Int(yValues[2]))m/s"
-        lblStrokes.text = "\(Int(yValues[3]))s/m"
-        lblWattage.text = "\(Int(yValues[4]))wat"
+        
+        let index = Int(x)
+        
+        if index == 0 || self.statistics.count == 0 {
+            lblDistance.text = "0m"
+            lblCalories.text = "0cal"
+            lblSpeed.text = "0m/s"
+            lblStrokes.text = "0s/m"
+            lblWattage.text = "0wat"
+        }
+        else {
+            let point = self.statistics[index - 1]
+            
+            lblDistance.text = "\(point["distance"] as? NSNumber ?? 0)m"
+            lblCalories.text = "\(point["calories"] as? NSNumber ?? 0)cal"
+            lblSpeed.text = "\(point["speed"] as? NSNumber ?? 0)m/s"
+            lblStrokes.text = "\(point["strokes_per_minute"] as? NSNumber ?? 0)s/m"
+            lblWattage.text = "\(point["wattage"] as? NSNumber ?? 0)wat"
+        }
+
     }
     
 }

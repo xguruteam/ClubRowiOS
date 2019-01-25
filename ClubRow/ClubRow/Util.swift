@@ -112,4 +112,37 @@ class Util: NSObject {
             return "Unknown"
         }
     }
+    
+    static func reduce(samples samples: [CGFloat], multipler: CGFloat) -> [CGFloat] {
+        let count = samples.count
+        
+        var output: [CGFloat] = []
+        guard let max = samples.max() else {
+            return output
+        }
+        
+        guard let min = samples.min() else {
+            return output
+        }
+        
+        if max < 0 {
+            return output
+        }
+        
+        if min < 0 {
+            return output
+        }
+        
+        if max == 0 {
+            return samples
+        }
+        
+        let rate: CGFloat = 100.0 / max
+        
+        output = samples.map({ (old) -> CGFloat in
+            old * rate * multipler
+        })
+        
+        return output
+    }
 }

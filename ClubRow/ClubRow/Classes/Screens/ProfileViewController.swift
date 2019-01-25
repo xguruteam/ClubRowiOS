@@ -201,9 +201,9 @@ class ProfileViewController: SuperViewController {
                     
                     self.statistics = snapshots
                     
-                    if snapshots.count < 2 {
-                        self.statistics.append(snapshots[0])
-                    }
+//                    if snapshots.count < 2 {
+//                        self.statistics.append(snapshots[0])
+//                    }
                     
                 }
                 if error == true {
@@ -375,35 +375,56 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.viewChart.addLine([0, 0])
                 cell.viewChart.addLine([0, 0])
                 cell.viewChart.addLine([0, 0])
-                cell.viewChart.x.labels.values = ["00:00", "00:00", "00:00"]
+                cell.viewChart.x.labels.values = ["00:00:00", "00:00:00"]
             }
             else {
+                
+                var chartSamples: [[String: Any]] = []
+                chartSamples.append([
+                    "distance": 0,
+                    "calories": 0,
+                    "speed": 0,
+                    "strokes_per_minute": 0,
+                    "wattage": 0,
+                    "seconds_since_workout_started": 0
+                    ])
+                chartSamples.append(contentsOf: self.statistics)
             
                 cell.viewChart.clear()
                 
                 var data: [CGFloat]
-                data = self.statistics.map({ (point) -> CGFloat in
+                
+                data = chartSamples.map({ (point) -> CGFloat in
                     return CGFloat(truncating: point["distance"] as? NSNumber ?? 0)
                 })
-                cell.viewChart.addLine(data)
-                data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
-                })
-                cell.viewChart.addLine(data)
-                data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
-                })
-                cell.viewChart.addLine(data)
-                data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
-                })
-                cell.viewChart.addLine(data)
-                data = self.statistics.map({ (point) -> CGFloat in
-                    return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
-                })
+                data = Util.reduce(samples: data, multipler: 1.0)
                 cell.viewChart.addLine(data)
                 
-                cell.viewChart.x.labels.values = self.statistics.map({ (point) -> String in
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.4)
+                cell.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.2)
+                cell.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.6)
+                cell.viewChart.addLine(data)
+                
+                data = chartSamples.map({ (point) -> CGFloat in
+                    return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
+                })
+                data = Util.reduce(samples: data, multipler: 0.8)
+                cell.viewChart.addLine(data)
+                
+                cell.viewChart.x.labels.values = chartSamples.map({ (point) -> String in
                     let elapsed = point["seconds_since_workout_started"] as? Int ?? 0
                     let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: elapsed)
                     return NSString(format: "%02d:%02d:%02d", h, m, s) as String
