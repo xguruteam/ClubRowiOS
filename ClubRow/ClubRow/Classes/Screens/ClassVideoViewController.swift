@@ -117,6 +117,12 @@ class ClassVideoViewController: SuperViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     
@@ -135,6 +141,7 @@ class ClassVideoViewController: SuperViewController {
         
         playerView.stop()
         playerView.clear()
+        playerView = nil
         SocketManager.sharedManager.delegate = nil
         SocketManager.sharedManager.leaveChannel()
         SocketManager.sharedManager.socket.disconnect()
@@ -146,6 +153,7 @@ class ClassVideoViewController: SuperViewController {
         self.dismiss(animated: false) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissVideoWindow"), object: nil)
         }
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     @IBAction func onTapBackground(_ sender: Any) {
@@ -382,7 +390,7 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         MKProgress.hide(false)
         let alert = UIAlertController(title: "Lobby Error", message: "Failed to Get Data", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { [weak self] (_) in
-            self?.dismiss(animated: true, completion: nil)
+            self?.onClose(self)
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -400,7 +408,7 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         MKProgress.hide(false)
         let alert = UIAlertController(title: "Socket Error", message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { [weak self] (_) in
-            self?.dismiss(animated: true, completion: nil)
+            self?.onClose(self)
         }))
         self.present(alert, animated: true, completion: nil)
     }
