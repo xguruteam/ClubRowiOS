@@ -108,7 +108,23 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                             break
                         }
                         
-                        self?.statistics = snapshots
+                        self?.statistics = snapshots.reduce(into: [], { (result, current) in
+                            guard let last = result?.last else {
+                                result?.append(current)
+                                return
+                            }
+                            
+                            let distance = (last["distance"] as? Double ?? 0) + (current["distance"] as? Double ?? 0)
+                            let calories = (last["calories"] as? Double ?? 0) + (current["calories"] as? Double ?? 0)
+                            
+                            let new = current.merging(
+                                ["distance": distance,
+                                 "calories": calories],
+                                uniquingKeysWith: { (old, new) -> Any in
+                                    new
+                            })
+                            result?.append(new)
+                        })
                         
 //                        if snapshots.count < 2 {
 //                            self?.statistics.append(snapshots[0])
@@ -187,25 +203,25 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
                 data = chartSamples.map({ (point) -> CGFloat in
                     return CGFloat(truncating: point["calories"] as? NSNumber ?? 0)
                 })
-                data = Util.reduce(samples: data, multipler: 0.4)
+                data = Util.reduce(samples: data, multipler: 0.8)
                 self.viewChart.addLine(data)
                 
                 data = chartSamples.map({ (point) -> CGFloat in
                     return CGFloat(truncating: point["speed"] as? NSNumber ?? 0)
                 })
-                data = Util.reduce(samples: data, multipler: 0.2)
+                data = Util.reduce(samples: data, multipler: 0.4)
                 self.viewChart.addLine(data)
                 
                 data = chartSamples.map({ (point) -> CGFloat in
                     return CGFloat(truncating: point["strokes_per_minute"] as? NSNumber ?? 0)
                 })
-                data = Util.reduce(samples: data, multipler: 0.6)
+                data = Util.reduce(samples: data, multipler: 0.7)
                 self.viewChart.addLine(data)
                 
                 data = chartSamples.map({ (point) -> CGFloat in
                     return CGFloat(truncating: point["wattage"] as? NSNumber ?? 0)
                 })
-                data = Util.reduce(samples: data, multipler: 0.8)
+                data = Util.reduce(samples: data, multipler: 0.9)
                 self.viewChart.addLine(data)
                 
                 self.viewChart.x.labels.values = chartSamples.map({ (point) -> String in
