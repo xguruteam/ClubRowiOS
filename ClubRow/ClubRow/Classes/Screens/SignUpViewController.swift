@@ -19,6 +19,8 @@ class SignUpViewController: SuperViewController {
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtConfirmPassword: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var contentView: UIView!
     
     var email: String?
     var password: String?
@@ -28,6 +30,16 @@ class SignUpViewController: SuperViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let tableHeight = self.tableView.bounds.height
+        let tableWidth = self.tableView.bounds.width
+        if tableHeight > 600 {
+            let bounds = CGRect(x: 0, y: 0, width: tableWidth, height: tableHeight)
+            self.contentView.bounds = bounds
+        }
     }
 		
     override func didReceiveMemoryWarning() {

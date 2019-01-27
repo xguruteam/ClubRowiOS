@@ -15,7 +15,9 @@ class LoginViewController: SuperViewController {
 
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
-
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var contentView: UIView!
+    
     var registeredEmail: String?
     var registeredPassword: String?
     
@@ -43,6 +45,24 @@ class LoginViewController: SuperViewController {
         
         
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let tableHeight = self.tableView.bounds.height
+        let tableWidth = self.tableView.bounds.width
+        if tableHeight > 500 {
+            let bounds = CGRect(x: 0, y: 0, width: tableWidth, height: tableHeight)
+            self.contentView.bounds = bounds
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
