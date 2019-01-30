@@ -180,14 +180,16 @@ class SummaryOneViewController: SuperViewController, LineChartDelegate {
             else {
                 
                 var chartSamples: [[String: Any]] = []
-                chartSamples.append([
-                    "distance": 0,
-                    "calories": 0,
-                    "speed": 0,
-                    "strokes_per_minute": 0,
-                    "wattage": 0,
-                    "seconds_since_workout_started": 0
-                    ])
+                if self.statistics.count == 1 {
+                    chartSamples.append([
+                        "distance": 0,
+                        "calories": 0,
+                        "speed": 0,
+                        "strokes_per_minute": 0,
+                        "wattage": 0,
+                        "seconds_since_workout_started": 0
+                        ])
+                }
                 chartSamples.append(contentsOf: self.statistics)
                 
                 self.viewChart.clear()
