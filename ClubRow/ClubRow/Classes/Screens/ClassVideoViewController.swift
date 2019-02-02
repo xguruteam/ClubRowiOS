@@ -44,7 +44,7 @@ class ClassVideoViewController: SuperViewController {
             guard let _ = speedLabel else {
                 return
             }
-            speedLabel.text = "\(speed * 3600)m/h"
+            speedLabel.text = "\(speed)m/s"
         }
     }
     var wattage: Int = 0 {
@@ -60,7 +60,7 @@ class ClassVideoViewController: SuperViewController {
             guard let _ = caloriesLabel else {
                 return
             }
-            caloriesLabel.text = "\(calories * 1000)kcal"
+            caloriesLabel.text = "\(calories)cal"
         }
     }
     var strokes_per_minute: Int = 0 {
@@ -116,6 +116,8 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var btnStart: UIButton!
     @IBOutlet weak var btnLeave: UIButton!
     @IBOutlet weak var btnLeaveWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mainPanelLeftMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var hudPanelLeftMarginConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -182,6 +184,21 @@ class ClassVideoViewController: SuperViewController {
         
         pllayerListScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         MKProgress.show()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let leftPadding = window?.safeAreaInsets.left
+            
+            let topSafeAreaHeight = leftPadding ?? 44
+            if topSafeAreaHeight < 44 {
+                mainPanelLeftMarginConstraint.constant = 60
+                hudPanelLeftMarginConstraint.constant = 20
+            }
+            
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

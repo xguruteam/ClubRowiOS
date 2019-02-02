@@ -3306,8 +3306,10 @@
                         <outlet property="distanceLabel" destination="Z9J-pD-zmi" id="OQX-pb-7Ve"/>
                         <outlet property="distanceTableView" destination="4En-gK-Qnm" id="Ycf-bR-0eD"/>
                         <outlet property="distanceView" destination="HnY-8p-tdC" id="sdQ-wm-e6c"/>
+                        <outlet property="hudPanelLeftMarginConstraint" destination="afZ-PL-ebu" id="tDO-c4-eAj"/>
                         <outlet property="lblLobbyState" destination="Nvf-xs-oIR" id="FgH-Mu-UEo"/>
                         <outlet property="loadingIndicator" destination="gQv-LN-fZk" id="W6F-uO-KBs"/>
+                        <outlet property="mainPanelLeftMarginConstraint" destination="YFP-Wx-R09" id="IVd-e3-tUy"/>
                         <outlet property="paceLabel" destination="y6e-Pf-JfO" id="FaN-ME-YgP"/>
                         <outlet property="playerListPanel" destination="FuJ-ZB-g0u" id="1Vr-th-w8c"/>
                         <outlet property="playerView" destination="sJa-lY-eJZ" id="dzt-fc-ZYi"/>
