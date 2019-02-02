@@ -22,12 +22,65 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var playerView: YouTubePlayerView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    var time: Int = 0
-    var distance: Int = 0
-    var speed: Int = 0
-    var wattage: Int = 0
-    var calories: Int = 0
-    var strokes_per_minute: Int = 0
+    var time: Int = 0 {
+        didSet {
+            guard let _ = self.timeLabel else {
+                return
+            }
+            let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: time)
+            self.timeLabel.text = NSString(format: "%d hr %d min %d sec", h, m, s) as String
+        }
+    }
+    var distance: Int = 0 {
+        didSet {
+            guard let _ = distanceLabel else {
+                return
+            }
+            distanceLabel.text = "\(distance)m"
+        }
+    }
+    var speed: Int = 0 {
+        didSet {
+            guard let _ = speedLabel else {
+                return
+            }
+            speedLabel.text = "\(speed * 3600)m/h"
+        }
+    }
+    var wattage: Int = 0 {
+        didSet {
+            guard let _ = wattageLabel else {
+                return
+            }
+            wattageLabel.text = "\(wattage)watts"
+        }
+    }
+    var calories: Int = 0 {
+        didSet {
+            guard let _ = caloriesLabel else {
+                return
+            }
+            caloriesLabel.text = "\(calories * 1000)kcal"
+        }
+    }
+    var strokes_per_minute: Int = 0 {
+        didSet {
+            guard let _ = strokeLabel else {
+                return
+            }
+            strokeLabel.text = "\(strokes_per_minute)s/m"
+        }
+    }
+    var pace500m: Int = 0 {
+        didSet {
+            guard let _ = paceLabel else {
+                return
+            }
+            let (h, m, s) = Util.secondsToHoursMinutesSeconds(seconds: pace500m)
+            paceLabel.text = NSString(format: "%d:%02d/500m", m, s) as String
+        }
+    }
+    
     var isShowingPanels: Bool = true
     var lobbyState: String = ""
     var classMembers = [ClassMember]()
@@ -44,25 +97,41 @@ class ClassVideoViewController: SuperViewController {
     @IBOutlet weak var pllayerListScrollView: UIScrollView!
     @IBOutlet weak var topBarPanel: UIView!
     @IBOutlet weak var startingTimePanel: UIView!
-    @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var distanceView: UIView!
     @IBOutlet weak var speedView: UIView!
+    @IBOutlet weak var timeView: UIView!
+    @IBOutlet weak var wattageView: UIView!
+    @IBOutlet weak var strokeView: UIView!
+    @IBOutlet weak var caloriesView: UIView!
     
     @IBOutlet weak var lblLobbyState: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
+    @IBOutlet weak var wattageLabel: UILabel!
+    @IBOutlet weak var strokeLabel: UILabel!
+    @IBOutlet weak var caloriesLabel: UILabel!
+    @IBOutlet weak var paceLabel: UILabel!
     @IBOutlet weak var labelTotalDistance: UILabel!
     @IBOutlet weak var btnStart: UIButton!
     @IBOutlet weak var btnLeave: UIButton!
+    @IBOutlet weak var btnLeaveWidthConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        time = 0
+        distance = 0
+        speed = 0
+        calories = 0
+        strokes_per_minute = 0
+        wattage = 0
+        pace500m = 0
+        
         //
-        timeLabel.text = "\(time)s"
-        distanceLabel.text = "\(distance)m"
-        speedLabel.text = "\(speed)m/s"
+//        timeLabel.text = "\(time)s"
+//        distanceLabel.text = "\(distance)m"
+//        speedLabel.text = "\(speed)m/s"
         
         
         self.distanceTableView.delegate = self
@@ -188,6 +257,9 @@ class ClassVideoViewController: SuperViewController {
                 self.distanceView.alpha = 0.0
                 self.speedView.alpha = 0.0
                 self.playerListPanel.alpha = 0.0
+                self.wattageView.alpha = 0.0
+                self.strokeView.alpha = 0.0
+                self.caloriesView.alpha = 0.0
                 if self.lobbyState == KEY_LOBBY_STATE_ACCEPTING || self.lobbyState == KEY_LOBBY_STATE_FINISHED{
                     self.startingTimePanel.alpha = 0.0
                 }
@@ -198,6 +270,9 @@ class ClassVideoViewController: SuperViewController {
                 self.distanceView.alpha = 1.0
                 self.speedView.alpha = 1.0
                 self.playerListPanel.alpha = 1.0
+                self.wattageView.alpha = 1.0
+                self.strokeView.alpha = 1.0
+                self.caloriesView.alpha = 1.0
                 if self.lobbyState == KEY_LOBBY_STATE_ACCEPTING || self.lobbyState == KEY_LOBBY_STATE_FINISHED{
                     self.startingTimePanel.alpha = 1.0
                 }
@@ -344,8 +419,8 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
                 time = Int(Float(data[0] + (data[1] << 8) + (data[2] << 16)) * 10 / 1000.0)
                 distance = Int(Float(data[3] + (data[4] << 8) + (data[5] << 16)) / 10.0)
                 
-                self.timeLabel.text = "\(time)s"
-                self.distanceLabel.text = "\(distance)m"
+//                self.timeLabel.text = "\(time)s"
+//                self.distanceLabel.text = "\(distance)m"
                 
                 SocketManager.sharedManager.pushOnChannel(distance: distance, wattage: wattage, speed: speed, calories: calories, strokes_per_minute: strokes_per_minute)
             }
@@ -359,9 +434,10 @@ extension ClassVideoViewController: C2ConnectionManagerDelegate {
                 Log.e("0x32=================== \(data)")
                 speed = Int(Float(data[3] + (data[4] << 8)) / 1000.0)
                 strokes_per_minute = data[5]
+                pace500m = Int(Float(data[7] + (data[8] << 8)) * 10 / 1000.0)
             }
             
-            self.speedLabel.text = "\(speed)m/s"
+//            self.speedLabel.text = "\(speed)m/s"
             
             SocketManager.sharedManager.pushOnChannel(distance: distance, wattage: wattage, speed: speed, calories: calories, strokes_per_minute: strokes_per_minute)
         }
@@ -436,9 +512,11 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         
         if owned == true && lobbyState != KEY_LOBBY_STATE_FINISHED {
             self.btnLeave.isHidden = false
+            self.btnLeaveWidthConstraint.constant = 90
         }
         else {
             self.btnLeave.isHidden = true
+            self.btnLeaveWidthConstraint.constant = 0
         }
 
         
@@ -500,6 +578,7 @@ extension ClassVideoViewController: SocketConnectionManagerDelegate {
         self.startingTimePanel.isHidden = false
         self.btnStart.isHidden = true
         self.btnLeave.isHidden = true
+        self.btnLeaveWidthConstraint.constant = 0
     }
     
     func onLeaderboardUpdated(response: [String : Any]) {
