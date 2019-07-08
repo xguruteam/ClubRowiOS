@@ -19,30 +19,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-welcome" translatesAutoresizingMaskIntoConstraints="NO" id="WeI-h2-fFc">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="-20" y="-20" width="454" height="936"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-white" translatesAutoresizingMaskIntoConstraints="NO" id="iux-NS-djQ">
                                 <rect key="frame" x="177.5" y="44" width="59" height="59"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#MAKEWAVES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16z-hc-HMa">
-                                <rect key="frame" x="25" y="418" width="364.5" height="70"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#MAKEWAVES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16z-hc-HMa">
+                                <rect key="frame" x="16" y="418" width="382" height="70"/>
                                 <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="60"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="3" height="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0078431372549019607" green="0.0039215686274509803" blue="0.0039215686274509803" alpha="0.42930237676056338" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JOIN LIVE CLUB ROW CLASSES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXK-5O-Cm7">
                                 <rect key="frame" x="82" y="502" width="250.5" height="23.5"/>
@@ -78,6 +64,9 @@
                                         <color key="value" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onSignup:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zXA-OE-cuw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rj6-uA-avE">
                                 <rect key="frame" x="61" y="762" width="292" height="55"/>
@@ -101,15 +90,19 @@
                                         <color key="value" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="acr-SA-qGw"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rj6-uA-avE" firstAttribute="top" secondItem="J9z-ec-FFT" secondAttribute="bottom" constant="8" id="Cph-s6-eJ8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="16z-hc-HMa" secondAttribute="trailing" constant="16" id="8Ya-bo-xkR"/>
+                            <constraint firstAttribute="bottom" secondItem="J9z-ec-FFT" secondAttribute="bottom" constant="142" id="Cph-s6-eJ8"/>
                             <constraint firstItem="VXK-5O-Cm7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="DE8-dR-Se9"/>
-                            <constraint firstAttribute="bottom" secondItem="WeI-h2-fFc" secondAttribute="bottom" id="M3f-OH-hNF"/>
-                            <constraint firstItem="WeI-h2-fFc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Mtr-jK-PUJ"/>
-                            <constraint firstItem="WeI-h2-fFc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OgP-ng-Sz2"/>
+                            <constraint firstAttribute="bottom" secondItem="WeI-h2-fFc" secondAttribute="bottom" constant="-20" id="M3f-OH-hNF"/>
+                            <constraint firstItem="WeI-h2-fFc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="20" id="Mtr-jK-PUJ"/>
+                            <constraint firstItem="WeI-h2-fFc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-20" id="OgP-ng-Sz2"/>
                             <constraint firstItem="16z-hc-HMa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="QOj-cx-eu2"/>
                             <constraint firstItem="iux-NS-djQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Qzq-iQ-pnE"/>
                             <constraint firstItem="3yR-a5-6Id" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="VUP-Eo-a4e"/>
@@ -118,14 +111,23 @@
                             <constraint firstItem="rj6-uA-avE" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Xqt-aG-5xh"/>
                             <constraint firstItem="VXK-5O-Cm7" firstAttribute="top" secondItem="16z-hc-HMa" secondAttribute="bottom" constant="14" id="Zan-e5-xw3"/>
                             <constraint firstItem="3yR-a5-6Id" firstAttribute="top" secondItem="VXK-5O-Cm7" secondAttribute="bottom" constant="35" id="gQJ-7e-l8I"/>
+                            <constraint firstItem="16z-hc-HMa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="je6-zS-8tG"/>
                             <constraint firstAttribute="bottom" secondItem="rj6-uA-avE" secondAttribute="bottom" constant="79" id="lQE-zf-p51"/>
                             <constraint firstItem="iux-NS-djQ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vOE-aa-FIw"/>
-                            <constraint firstItem="WeI-h2-fFc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wYx-dE-voA"/>
+                            <constraint firstItem="WeI-h2-fFc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-20" id="wYx-dE-voA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="ctLogin" destination="lQE-zf-p51" id="Afz-bo-zeu"/>
+                        <outlet property="ctSignup" destination="Cph-s6-eJ8" id="sdF-NN-SDD"/>
+                        <outlet property="ctSubTitle1" destination="DE8-dR-Se9" id="pTI-bZ-oFF"/>
+                        <outlet property="ctSubTitle2" destination="VUP-Eo-a4e" id="rXn-0T-yZL"/>
+                        <outlet property="ivBackground" destination="WeI-h2-fFc" id="xWr-sl-phd"/>
+                        <outlet property="ivLogo" destination="iux-NS-djQ" id="Bug-L7-bFK"/>
                         <outlet property="lblMakeWaves" destination="16z-hc-HMa" id="DCA-9B-1Dj"/>
+                        <outlet property="lblSubTitle1" destination="VXK-5O-Cm7" id="RrQ-nF-Mmu"/>
+                        <outlet property="lblSubTitle2" destination="3yR-a5-6Id" id="Xal-Oy-hAk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
