@@ -9,6 +9,11 @@
 import UIKit
 
 extension UIView {
+
+    convenience init(_ translatesAutoresizingMaskIntoConstraints: Bool) {
+        self.init()
+        self.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
+    }
     
     @IBInspectable
     var cornerRadius: CGFloat {

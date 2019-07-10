@@ -9,6 +9,19 @@
 import UIKit
 
 public extension UIColor {
+    
+    class var appPink: UIColor {
+        return UIColor("#F7C6CD")!
+    }
+    
+    class var appCyan: UIColor {
+        return UIColor("#79C9BC")!
+    }
+    
+    class var appTextFieldBackgroundColor: UIColor {
+        return UIColor("#FFFFFF", alpha: 0.8)!
+    }
+    
     typealias Hex = String
     
     convenience init?(_ hex: Hex, alpha: CGFloat? = nil) {

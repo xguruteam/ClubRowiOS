@@ -5,4 +5,5 @@ use_frameworks!
 
 target 'ClubRow' do
     pod 'DeviceKit', '~>2.0'
+    pod 'IQKeyboardManagerSwift'
 end
