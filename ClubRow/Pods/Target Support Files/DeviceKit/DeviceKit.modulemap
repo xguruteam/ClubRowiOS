@@ -1,4 +1,4 @@
-framework module DeviceKit {
+module DeviceKit {
   umbrella header "DeviceKit-umbrella.h"
 
   export *

@@ -9,5 +9,4 @@
 import UIKit
 import DeviceKit
 
-let groupOfiPhoneX: [Device] = [.iPhoneX, .iPhoneXR, .iPhoneXS, .iPhoneXSMax]
 let device = Device.current

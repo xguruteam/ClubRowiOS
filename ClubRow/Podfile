@@ -1,9 +1,9 @@
 platform :ios, '11.0'
 source 'https://github.com/CocoaPods/Specs.git'
-
-use_frameworks!
+inhibit_all_warnings!
 
 target 'ClubRow' do
     pod 'DeviceKit', '~>2.0'
     pod 'IQKeyboardManagerSwift'
+    pod 'SDWebImage', :modular_headers => true
 end

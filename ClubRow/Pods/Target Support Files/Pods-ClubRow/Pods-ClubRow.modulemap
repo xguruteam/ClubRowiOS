@@ -1,4 +1,4 @@
-framework module Pods_ClubRow {
+module Pods_ClubRow {
   umbrella header "Pods-ClubRow-umbrella.h"
 
   export *

@@ -155,6 +155,7 @@ class LoginViewController: BaseViewController {
         
         signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         signupButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -70).isActive = true
+        signupButton.addTarget(self, action: #selector(onCreate), for: .touchUpInside)
     }
     
 
@@ -167,5 +168,11 @@ class LoginViewController: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @objc func onCreate() {
+        self.dismiss(animated: true) {
+            NotificationCenter.default.post(name: .loginViewControllerDidDismissToGoSignup, object: nil)
+        }
+    }
 
 }

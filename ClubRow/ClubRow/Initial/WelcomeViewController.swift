@@ -35,12 +35,17 @@ class WelcomeViewController: BaseViewController {
     }
     
     @IBAction func onSignup(_ sender: Any) {
+        let vc = SignupViewController()
+        self.show(vc, sender: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if device.isOneOf(groupOfiPhoneX) {
+        NotificationCenter.default.addObserver(self, selector: #selector(onLoginViewControllerDidDismissToGoSignup), name: .loginViewControllerDidDismissToGoSignup, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onSignupViewControllerDidDismissToGoLogin), name: .signupViewControllerDidDismissToGoLogin, object: nil)
+        
+        if device.isOneOf(Device.allXSeriesDevices) {
             loginButtonBottomConstraint = 79
         } else {
             loginButtonBottomConstraint = 29
@@ -131,5 +136,13 @@ class WelcomeViewController: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @objc func onLoginViewControllerDidDismissToGoSignup() {
+        onSignup(self)
+    }
+    
+    @objc func onSignupViewControllerDidDismissToGoLogin() {
+        onLogin(self)
+    }
 
 }

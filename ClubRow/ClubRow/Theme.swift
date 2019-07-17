@@ -48,4 +48,14 @@ struct Theme {
         ]
         return attributes
     }()
+    
+    static let bottomButtonTextAttributes: [NSAttributedString.Key: Any] = {
+        let font = UIFont(name: .textFontName, size: 16)
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font as Any,
+            .foregroundColor: UIColor("#0A0707", alpha: 0.55) as Any,
+        ]
+        return attributes
+    }()
 }
